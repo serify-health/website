@@ -1,0 +1,40 @@
+{
+  "name": "health-verify",
+  "version": "0.0.0",
+  "description": "Description of the package",
+  "main": "index.js",
+  "scripts": {
+    "start": "node make.js run",
+    "build": "node make.js",
+    "deploy": "node make.js deploy",
+    "test": "mocha tests/**/*.js -R spec"
+  },
+  "dependencies": {
+    "jsonwebtoken": "^7.1.9",
+    "openapi-factory": "^2.0"
+  },
+  "devDependencies": {
+    "aws-architect": "^3.1",
+    "aws-sdk": "^2.2.32",
+    "chai": "^3.2.0",
+    "commander": "^2.5.0",
+    "esprima": "^2.7.2",
+    "glob": "^5.0.0",
+    "mocha": "^2.5.3",
+    "sinon": "^1.17.1",
+    "travis-build-tools": "~1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https//git@source.com/repository.git"
+  },
+  "keywords": [
+    "aws lambda microservice"
+  ],
+  "author": "Author",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://source-code.com/issues"
+  },
+  "homepage": "https://source-code.com"
+}
