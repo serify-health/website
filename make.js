@@ -65,20 +65,20 @@ commander
 	.command('deploy')
 	.description('Deploy to AWS.')
 	.action(() => {
-
+		var production = 'v1';
 		var databaseSchema = [
-			// {
-			// 	TableName: 'User',
-			// 	AttributeDefinitions: [{ AttributeName: 'UserId', AttributeType: 'S' }],
-			// 	KeySchema: [{ AttributeName: 'UserId', KeyType: 'HASH' }],
-			// 	ProvisionedThroughput: { ReadCapacityUnits: 1, WriteCapacityUnits: 1 }
-			// }
+			{
+				TableName: 'User',
+				AttributeDefinitions: [{ AttributeName: 'UserId', AttributeType: 'S' }],
+				KeySchema: [{ AttributeName: 'UserId', KeyType: 'HASH' }],
+				ProvisionedThroughput: { ReadCapacityUnits: 1, WriteCapacityUnits: 1 }
+			}
 		];
-		awsArchitect.PublishAndDeployPromise(version, databaseSchema)
+		awsArchitect.PublishAndDeployPromise(production, databaseSchema)
 		.then((result) => console.log(`${JSON.stringify(result, null, 2)}`))
 		.catch((failure) => console.log(`${failure.Details} - ${JSON.stringify(failure, null, 2)}`));
 
-		awsArchitect.PublishWebsite(version)
+		awsArchitect.PublishWebsite(production)
 		.then((result) => console.log(`${JSON.stringify(result, null, 2)}`))
 		.catch((failure) => console.log(`Failed to upload website ${failure} - ${JSON.stringify(failure, null, 2)}`));
 	});
