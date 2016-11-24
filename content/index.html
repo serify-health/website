@@ -1,23 +1,76 @@
+<!DOCTYPE html>
 <html>
-  <head>
-    <title>Angular QuickStart</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="styles.css">
-    <!-- 1. Load libraries -->
-     <!-- Polyfill for older browsers -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/shim.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/zone.js/0.6.26/zone.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/reflect-metadata/0.1.8/Reflect.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/systemjs/0.19.41/system.src.js"></script>
-    <!-- 2. Configure SystemJS -->
-    <script src="systemjs.config.js"></script>
-    <script>
-      System.import('app').catch(function(err){ console.error(err); });
-    </script>
-  </head>
-  <!-- 3. Display the application -->
-  <body>
-    <my-app>Loading...</my-app>
-  </body>
+	<head>
+		<!--
+		Customize this policy to fit your own app's needs. For more guidance, see:
+			https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+		Some notes:
+			* gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+			* https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+			* Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+				* Enable inline JS: add 'unsafe-inline' to default-src
+		-->
+		<meta http-equiv="Content-Security-Policy"
+			content="
+				default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval' netfuturesportgolfpro://*;
+				connect-src 'self' gap: https://graph.facebook.com https://*.amazonaws.com/;
+				style-src 'self' gap: https://maxcdn.bootstrapcdn.com 'unsafe-inline';
+				frame-src gap: https://*.facebook.com http://*.facebook.com;
+				script-src 'self' gap: https://cdnjs.cloudflare.com https://*.facebook.net https://graph.facebook.com/ http://connect.facebook.net/en_US/sdk.js 'unsafe-eval';
+				img-src 'self' data: file: gap: *;
+				font-src https://maxcdn.bootstrapcdn.com;
+				media-src *">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="msapplication-tap-highlight" content="no">
+		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+		<title>Health Verify</title>
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="index.css">
+		<link rel="stylesheet" href="spinner.css">
+	</head>
+	<body style="height:100%">
+		<div id="main" style="height:100%">
+			<div ng-view="" style="height:100%">
+			</div>
+		</div>
+
+		<script type="text/javascript" src="Constants.js"></script>
+		<script type="text/javascript" src="MainHandler.js"></script>
+
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-route.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-touch.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-animate.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-sanitize.min.js"></script>
+
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.7.7/aws-sdk.min.js"></script>
+
+		<!-- UserPool -->
+		<script type="text/javascript" src="userpool-lib/jsbn.js"></script>
+		<script type="text/javascript" src="userpool-lib/moment.min.js"></script>
+		<script type="text/javascript" src="userpool-lib/sjcl.js"></script>
+		<script type="text/javascript" src="userpool-lib/aws-cognito-sdk.min.js"></script>
+		<script type="text/javascript" src="userpool-lib/amazon-cognito-identity.min.js"></script>
+		<!-- UserPool -->
+
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+		<script type="text/javascript" src="index.js"></script>
+
+		<!-- Providers and Services -->
+		<script type="text/javascript" src="PageService.js"></script>
+		<script type="text/javascript" src="LoginStatusProvider.js"></script>
+		<script type="text/javascript" src="ApiProvider.js"></script>
+		<script type="text/javascript" src="StorageProviderService.js"></script>
+		<script type="text/javascript" src="EventHandler.js"></script>
+		<script type="text/javascript" src="GuiManager.js"></script>
+		<script type="text/javascript" src="UserManager.js"></script>
+		<!-- Controllers -->
+		<script type="text/javascript" src="filters.js" defer></script>
+		<script type="text/javascript" src="login/LoginController.js" defer></script>
+		<script type="text/javascript" src="login/LogoutController.js" defer></script>
+		<script type="text/javascript" src="home/HomeController.js" defer></script>
+		<script type="text/javascript" src="signup/SignUpController.js" defer></script>
+	</body>
 </html>

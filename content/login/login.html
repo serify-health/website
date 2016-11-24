@@ -1,0 +1,56 @@
+<div class="loginScreen">
+	<div class="custom-navbar">
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="container-fluid">
+				<div class="">
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<a href="mailto:golfpro@futuresporttechnologies.com?subject=GolfPro Feedback" class="btn btn-default"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Feeback</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</div>
+	<div class="ui" style="margin:0% 10% 0% 10%;width:80% !important">
+		<style type="text/css">
+			.btn-facebook {
+				color: #FFFFFF !important;
+				background-color: #3B5998 !important;
+				border-color: #3B5998 !important;
+			}
+			.btn-facebook:active {
+				color: #3B5998 !important;
+				background-color: #000000 !important;
+				border-color: #3B5998 !important;
+				outline-color: #3B5998 !important;
+			}
+			.btn-google {
+				color: #FFFFFF !important;
+				background-color: #D34836 !important;
+				border-color: #D34836 !important;
+				outline-color: #D34836 !important;
+			}
+			.btn-google:active {
+				color: #D34836 !important;
+				background-color: #000000 !important;
+				border-color: #D34836 !important;
+				outline-color: #D34836 !important;
+			}
+		</style>
+		<div>
+			<!--img src="res/icons/logo.png" style="margin: 30% 15% 10% 15% ;width:70%;" autofocus /-->
+			<div ng-show="LoginButtonsVisible">
+				<button style="width:100%;margin: 4px 0px;padding:10px !important" ng-click="SignInWithUserNameButtonClick()" class="btn btn-inverted">
+					<i style="font-size:16px;font-size:8vmin;" class="fa fa-circle-o pull-left" aria-hidden="true"></i>
+					<h8 style="font-size:12px;font-size:5vmin;">Login/Sign up with Email</h8>
+				</button>
+			</div>
+			<!--center>
+				<div ng-show="LoginButtonsVisible">
+					<h8>By logging in you agree to the <a ng-href="{{ eulaUrl }}">EULA</a>.</h8>
+				</div>
+			</center-->
+		</div>
+	</div>
+</div>
