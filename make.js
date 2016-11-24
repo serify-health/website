@@ -74,12 +74,9 @@ commander
 				ProvisionedThroughput: { ReadCapacityUnits: 1, WriteCapacityUnits: 1 }
 			}
 		];
-		awsArchitect.PublishAndDeployPromise(production, databaseSchema)
-		.then((result) => console.log(`${JSON.stringify(result, null, 2)}`))
-		.catch((failure) => console.log(`${failure.Details} - ${JSON.stringify(failure, null, 2)}`));
-
-		awsArchitect.PublishWebsite(production)
-		.then((result) => console.log(`${JSON.stringify(result, null, 2)}`))
+		var publishPromise = awsArchitect.PublishAndDeployPromise(production, databaseSchema);
+		var websitePromise = awsArchitect.PublishWebsite(production);
+		Promise.all([publishPromise, websitePromise]).then((result) => console.log(`${JSON.stringify(result, null, 2)}`))
 		.catch((failure) => console.log(`Failed to upload website ${failure} - ${JSON.stringify(failure, null, 2)}`));
 	});
 

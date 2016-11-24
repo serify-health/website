@@ -1,13 +1,7 @@
 angular.module(GOLFPRO).provider('loginStatusProvider', [function() {
-	var USER_POOL_ID = 'us-east-1_UM1aOrINW';
-	var POOL_DATA = {
-		UserPoolId : USER_POOL_ID,
-		ClientId : '7tmv8cf6rm7t2tl5u9l943a374',
-		Paranoia : 7
-	};
 	var GOOGLEPLUS_AUTH_INFO = {
 		//scopes: 'profile email',
-		webClientId: '942710094206-sjnk1ita1794lv0pqebt02u2r18lq5k8.apps.googleusercontent.com'
+		//webClientId: '942710094206-sjnk1ita1794lv0pqebt02u2r18lq5k8.apps.googleusercontent.com'
 		//offline: true, // optional, but requires the webClientId - if set to true the plugin will also return a serverAuthCode, which can be used to grant offline access to a non-Google server
 	};
 	AWS.config.region = AWS_REGION;

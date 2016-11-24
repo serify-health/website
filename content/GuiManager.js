@@ -30,6 +30,12 @@ angular.module(GOLFPRO).provider('guiManager', function() {
 					return result ? s(result) : f();
 				}
 			});
+		},
+		toast: function(message) {
+			return new Promise(function(s, f) {
+				window.alert(message);
+				s(null);
+			});
 		}
 	};
 	this.$get = function() { return service; };
