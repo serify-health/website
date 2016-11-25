@@ -62,7 +62,7 @@ angular.module(GOLFPRO).provider('eventHandler', ['apiServiceProvider', 'pageSer
 				.then(function(logObject) {
 					return $http({
 						method: 'POST',
-						url: 'https://mmc1f8pyxj.execute-api.us-east-1.amazonaws.com/prod/log',
+						url: API_LOG_URL,
 						headers: {
 							'Content-Type': 'application/json'
 						},

@@ -82,11 +82,11 @@
 		background-size: cover;
 		background-color: #000000;
 	}
-	.ui {
+	/*.ui {
 		height:92%;
 		overflow-y:scroll;
 		width: 100%;
-	}
+	}*/
 
 	/* Landscape layout (with min-width) */
 	/*@media screen and (min-aspect-ratio: 1/1) and (min-width:400px) {

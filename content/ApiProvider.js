@@ -4,7 +4,7 @@ angular.module(GOLFPRO).provider('apiService', [ function() {
 		getPromise: function(httpMethod, resourcePath, body) {
 			var lambda = new AWS.Lambda();
 			var params = {
-				FunctionName: 'arn:aws:lambda:us-east-1:273193817078:function:golf-pro-index',
+				FunctionName: LAMBDA_FUNCTION,
 				//ClientContext: 'STRING_VALUE',
 				InvocationType: 'RequestResponse',
 				LogType: 'None',
