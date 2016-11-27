@@ -73,6 +73,18 @@ AWS Architect uses [OpenAPI Factory](https://github.com/wparad/openapi-factory.j
 	var awsArchitect = new AwsArchitect(packageMetadata, apiOptions, contentOptions);
 ```
 
+## Style:
+* http://www.december.com/html/spec/color3.html
+
+Color Set: [Color Picker](http://www.perbang.dk/rgb/ADFFE5/)
+
+* #00CED1 Blue
+* #0099CC Dark Blue
+
+Disabled:
+* #989288 Border Light Grey
+* #989288 Background Light Grey
+
 ## Todo:
 * Fix the home page
 * Annoymous health results by allowing a user to generate a special link just for that login name on the other site. (so source usercode + nsource website + username is unique and will stop people stealing)

@@ -60,13 +60,13 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 				function verifySignin(pin, username, password) {
 					return loginStatusProvider.confirmUsernamePromise($routeParams.pin, username, password)
 					.then(function(){
-						return userManager.UpdateUserPromise({
-							info: {
-								Name: username.slice(0, username.indexOf('@')),
-								Email: username,
-								ShortName: username.slice(0, Math.min(4, username.indexOf('@')))
-							}
-						});
+						// return userManager.UpdateUserPromise({
+						// 	info: {
+						// 		Name: username.slice(0, username.indexOf('@')),
+						// 		Email: username,
+						// 		ShortName: username.slice(0, Math.min(4, username.indexOf('@')))
+						// 	}
+						// });
 					})
 					.then(function(){ $scope.closeThisDialog(true); });
 				}
