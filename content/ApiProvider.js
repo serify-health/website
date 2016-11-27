@@ -14,7 +14,7 @@ angular.module(GOLFPRO).provider('apiService', [ function() {
 					body: body || {}
 				})
 			};
-			if(!isDebug()) { params.Qualifier = 'PROD'; }
+			//if(!isDebug()) { params.Qualifier = 'PROD'; }
 
 			return Promise.resolve()
 			.then(function() {

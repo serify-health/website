@@ -1,28 +1,6 @@
-<div class="loginScreen">
-	<div class="custom-navbar">
-		<nav class="navbar navbar-default" role="navigation">
-			<div class="container-fluid">
-				<div class="">
-					<ul class="nav navbar-nav navbar-left">
-						<li>
-							<h4>Sign In / Sign Up</h4>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-	</div>
-	<div class="ui" ng-show="!LoginButtonsVisible">
-		<div class="cssload-loader">
-			<div class="cssload-inner cssload-one"></div>
-			<div class="cssload-inner cssload-two"></div>
-			<div class="cssload-inner cssload-three"></div>
-		</div>
-		<center><h1>Configuring User</h1></center>
-	</div>
-	<div class="ui" ng-show="LoginButtonsVisible" style="padding:0% 10%;">
+<div class="dialog-contents" style="height:330px">
+	<form style="height:300px;overflow-y:hidden;">
 		<div>
-			<!--img src="res/icons/logo.png" style="margin: 30% 0%;max-width:100%;" /-->
 			<div style="margin: 30% 0%;max-width:100%;" />
 			<div class="form-inline">
 				<div class="form-group" style="margin-bottom: 5px">
@@ -48,5 +26,5 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</form>
 </div>

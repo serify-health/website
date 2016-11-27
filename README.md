@@ -86,4 +86,7 @@ AWS Architect uses [OpenAPI Factory](https://github.com/wparad/openapi-factory.j
 * Update cognito email redirect to point to website page which will do the code login redirect authorize.  Right now it points to garbage.
 	* Create the DNS
 	* Update AWS cognito to point to the DNS/authorize_code...
-* Determine which action of aws-architect is taking so long to figure out (after s3 deployment)
+* Determine which action of aws-architect is taking so long to figure out (after s3 deployment-policy)
+* Update where you log API requests
+* Update the lambda to write to the correct DB.
+* How to encrypt data records (can I wait, I think so since I'm only signing off on what they have entered.)

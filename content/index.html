@@ -14,7 +14,7 @@
 			content="
 				default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval' netfuturesportgolfpro://*;
 				connect-src 'self' gap: https://graph.facebook.com https://*.amazonaws.com/;
-				style-src 'self' gap: https://maxcdn.bootstrapcdn.com 'unsafe-inline';
+				style-src 'self' gap: https://maxcdn.bootstrapcdn.com https://cdnjs.cloudflare.com 'unsafe-inline';
 				frame-src gap: https://*.facebook.com http://*.facebook.com;
 				script-src 'self' gap: https://cdnjs.cloudflare.com https://*.facebook.net https://graph.facebook.com/ http://connect.facebook.net/en_US/sdk.js 'unsafe-eval';
 				img-src 'self' data: file: gap: *;
@@ -27,6 +27,10 @@
 
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.6.4/css/ngDialog.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.6.4/css/ngDialog-theme-plain.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.6.4/css/ngDialog-theme-default.min.css">
+		
 		<link rel="stylesheet" href="index.css">
 		<link rel="stylesheet" href="spinner.css">
 	</head>
@@ -44,7 +48,8 @@
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-touch.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-animate.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-sanitize.min.js"></script>
-
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.6.4/js/ngDialog.min.js"></script>
+		
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.7.7/aws-sdk.min.js"></script>
 
 		<!-- UserPool -->
@@ -69,8 +74,6 @@
 		<!-- Controllers -->
 		<script type="text/javascript" src="filters.js" defer></script>
 		<script type="text/javascript" src="login/LoginController.js" defer></script>
-		<script type="text/javascript" src="login/LogoutController.js" defer></script>
 		<script type="text/javascript" src="home/HomeController.js" defer></script>
-		<script type="text/javascript" src="signup/SignUpController.js" defer></script>
 	</body>
 </html>
