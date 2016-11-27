@@ -1,5 +1,7 @@
 angular.module(GOLFPRO).config(['$routeProvider', function($routeProvider) {
-	$routeProvider.when('/:pin?', { templateUrl: 'login/login.html', controller: 'loginController' });
+	$routeProvider.when('/', { templateUrl: 'login/login.html', controller: 'loginController' });
+	$routeProvider.when('/main/:pin?', { templateUrl: 'login/login.html', controller: 'loginController' });
+	$routeProvider.when('/view/:usercode', { templateUrl: 'login/login.html', controller: 'loginController' });
 }]);
 angular.module(GOLFPRO).controller('loginController', [
 	'$scope', '$routeParams', 'loginStatusProvider', 'guiManager', 'eventHandler', 'pageService', 'userManager', 'ngDialog', 'storageProviderService',
@@ -249,4 +251,7 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 			}
 		});
 	};
+
+	
+
 }]);
