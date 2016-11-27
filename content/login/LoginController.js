@@ -31,7 +31,7 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 		})
 		.then(function(userData){
 			$scope.$apply(function(){
-				$scope.verifications = userData.Verifications;
+				$scope.verifications = (userData || {}).Verifications || [];
 				if($scope.verifications.length === 0) { $scope.AddRowButtonClick(); }
 			});
 		});
@@ -284,7 +284,7 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 	$scope.RemoveVerification = function(verificationId) {
 		$scope.verifications.splice($scope.verifications.findIndex(function(v){ return v.Id === verificationId; }), 1);
 	};
-	$scope.SubmitVerificationsClick = function() {
+	$scope.SubmitVerificationsButtonClick = function() {
 		if(!$scope.UserAuthenticated) {
 			guiManager.toast('Create account to get your test results verified.');
 			return;

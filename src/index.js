@@ -39,7 +39,7 @@ exports.handler = (event, context, callback, debug) => {
 	var resourcePath = event.resourcePath;
 	var body = event.body;
 	var functionVersion = context.functionVersion || 'PROD';
-	var environment = 'prod'; //functionVersion.match(/LATEST/) ? 'test' : 'prod';
+	var environment = 'v1'; //functionVersion.match(/LATEST/) ? 'test' : 'prod';
 
 	if(!context.identity || !context.identity.cognitoIdentityId) {
 		var logResponse = {
@@ -91,44 +91,37 @@ exports.handler = (event, context, callback, debug) => {
 			return callback(null, logResponse);
 		}
 
-		return userManager.HeadUser(userId, environment, userId)
-		.then(result => {
-			if(result) { return true; }
-			return putUser({}, environment, userId, () => {});
-		})
-		.then(() => {
-			return routes[resourcePath][httpMethod](body, environment, userId, x => {
-				var logResponse = {
-					statusCode: x.statusCode,
-					request: body,
-					response: {
-						body: x.detail || x.body,
-						message: x.title || x.error
-					},
-					api: {
-						httpMethod: httpMethod,
-						resourcePath: resourcePath,
-						userId: userId
-					}
-				};
-				if(x.statusCode == null) {
-					if(!debug) { console.error(`StatusCode not defined: ${JSON.stringify(logResponse, null, 2)}`); }
-					return callback(null, {
-						statusCode: 500,
-						error: 'statusCode not defined',
-						body: x
-					});
+		return routes[resourcePath][httpMethod](body, environment, userId, x => {
+			var logResponse = {
+				statusCode: x.statusCode,
+				request: body,
+				response: {
+					body: x.detail || x.body,
+					message: x.title || x.error
+				},
+				api: {
+					httpMethod: httpMethod,
+					resourcePath: resourcePath,
+					userId: userId
 				}
-				else if(logResponse.statusCode >= 400) {
-					if(!debug) { console.error(JSON.stringify(logResponse, null, 2)); }
-					return eventManager.CreateEvent({
-						eventType: 'ApiFailure',
-						detail: logResponse
-					}, environment, userId, () => { return callback(null, x); });
-				}
-				if(!debug) { console.log(JSON.stringify(logResponse, null, 2)); }
-				return callback(null, x);
-			});
+			};
+			if(x.statusCode == null) {
+				if(!debug) { console.error(`StatusCode not defined: ${JSON.stringify(logResponse, null, 2)}`); }
+				return callback(null, {
+					statusCode: 500,
+					error: 'statusCode not defined',
+					body: x
+				});
+			}
+			else if(logResponse.statusCode >= 400) {
+				if(!debug) { console.error(JSON.stringify(logResponse, null, 2)); }
+				return eventManager.CreateEvent({
+					eventType: 'ApiFailure',
+					detail: logResponse
+				}, environment, userId, () => { return callback(null, x); });
+			}
+			if(!debug) { console.log(JSON.stringify(logResponse, null, 2)); }
+			return callback(null, x);
 		});
 	}
 	catch(exception) {

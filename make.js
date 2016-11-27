@@ -11,8 +11,8 @@ var https = require('https');
 var path = require('path');
 
 var AwsArchitect = require('aws-architect');
-var travis = require('travis-build-tools')(process.env.GIT_TAG_PUSHER);
-//var version = travis.GetVersion();
+var ci = require('ci-build-tools')(process.env.GIT_TAG_PUSHER);
+//var version = ci.GetVersion();
 var version = '0.0.1';
 var commander = require('commander');
 commander.version(version);
@@ -68,7 +68,7 @@ commander
 		var production = 'v1';
 		var databaseSchema = [
 			{
-				TableName: 'User',
+				TableName: 'users',
 				AttributeDefinitions: [{ AttributeName: 'UserId', AttributeType: 'S' }],
 				KeySchema: [{ AttributeName: 'UserId', KeyType: 'HASH' }],
 				ProvisionedThroughput: { ReadCapacityUnits: 1, WriteCapacityUnits: 1 }

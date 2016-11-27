@@ -8,17 +8,31 @@ function UserManager(docClient, s3client){
 };
 
 UserManager.prototype.GetUser = function(body, environment, userId, callback) {
+	var table = `users.health-verify.${environment}`;
 	var lookupUser = body.user || userId;
-	return this.DocClient.query({
-		TableName: `users.health-verify.${environment}`,
+	var queryPromise = this.DocClient.query({
+		TableName: table,
 		Limit: 1,
 		ScanIndexForward: false,
 		KeyConditionExpression: 'UserId = :id',
 		ExpressionAttributeValues: {
 			':id': lookupUser
 		}
-	}).promise().then(result => result.Items[0])
-	.then(result => {
+	}).promise().then(result => result.Items[0]);
+
+	if(lookupUser === userId) {
+		queryPromise = queryPromise
+		.catch(error => {
+			if(error.code !== 'ResourceNotFoundException') { return Promise.reject(error); }
+			return this.DocClient.put({
+				TableName: table,
+				Item: {
+					UserId: userId
+				}
+			}).promise();
+		});
+	}
+	return queryPromise.then(result => {
 		return callback({
 			statusCode: 200,
 			body: result
