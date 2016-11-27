@@ -1,85 +1,150 @@
-var aws = require('aws-sdk');
-var Api = require('openapi-factory');
-var jwtManager = require('jsonwebtoken');
+'use strict';
+const aws = require('aws-sdk');
+if (!aws.config.region) { aws.config.update({region: 'us-east-1'}); }
+const docClient = new aws.DynamoDB.DocumentClient();
+const snsClient = new aws.SNS();
+const s3Client = new aws.S3();
+const _ = require('lodash');
+const http = require('http');
 
-module.exports = api = new Api();
+var UserManager = require('./UserManager');
+var userManager = new UserManager(docClient, s3Client);
+var EventManager = require('./EventManager');
+var eventManager = new EventManager(docClient);
 
-//Region must match KMS KEY
-// var kms = new aws.KMS({region: 'us-east-1'});
-// var encryptedAuth0Secret = 'ENCRYPTED_SECRET';
-// var decryptedAuth0SecretPromise = kms.decrypt({CiphertextBlob: new Buffer(encryptedAuth0Secret, 'base64')}).promise().then(data => data.Plaintext.toString('UTF-8'));
+var routes = {
+	'/user': {
+		'GET': (body, environment, userId, callback) => userManager.GetUser(body, environment, userId, callback),
+	},
+	'/user/verifications': {
+		'POST': (body, environment, userId, callback) => userManager.SetVerifications(body, environment, userId, callback),	
+	},
+	'/event': {
+		'POST': (body, environment, userId, callback) => eventManager.CreateEvent(body, environment, userId, callback)
+	}
+};
 
-// api.SetAuthorizer((authorizationTokenInfo, methodArn) => {
-// 	return decryptedAuth0SecretPromise
-// 	.then(key => {
-// 		try { return jwtManager.verify(authorizationTokenInfo.Token, new Buffer(key, 'base64'), { algorithms: ['HS256'] }); }
-// 		catch (exception) { return Promise.reject(exception.stack || exception.toString()) }
-// 	})
-// 	.then(token => {
-// 		return {
-// 			"principalId": token.sub,
-// 			"policyDocument": {
-// 				"Version": "2012-10-17",
-// 				"Statement": [
-// 					{
-// 						"Effect": "Allow",
-// 						"Action": [
-// 							"execute-api:Invoke"
-// 						],
-// 						"Resource": [
-// 							'arn:aws:execute-api:*:*:*'
-// 						]
-// 					}
-// 				]
-// 			}
-// 		};
-// 	})
-// 	.catch(error => Promise.reject('Custom-Authorizer-Failure'));
-// });
 
-api.any('/{proxy+}', (event, context) => {
-	/*
-		{
-			event: {
-				"resource": "/{proxy+}",
-				"path": "/a/b/c",
-				"httpMethod": "GET",
-				"headers": {
-					"Content-type": " application/json"
-				},
-				"queryStringParameters": {
-					"param1": "1"
-				},
-				"pathParameters": {
-					"proxy": "a/b/c"
-				},
-				"stageVariables": null,
-				"requestContext": {
-					"accountId": "aws",
-					"resourceId": "wagagr",
-					"stage": "test-invoke-stage",
-					"requestId": "test-invoke-request",
-					"identity": {
-						"cognitoIdentityPoolId": null,
-						"accountId": "aws",
-						"cognitoIdentityId": null,
-						"caller": "caller",
-						"apiKey": "test-invoke-api-key",
-						"sourceIp": "test-invoke-source-ip",
-						"cognitoAuthenticationType": null,
-						"cognitoAuthenticationProvider": null,
-						"userArn": "userarn",
-						"userAgent": "agent",
-						"user": "user"
-					},
-					"resourcePath": "/{proxy+}",
-					"httpMethod": "GET",
-					"apiId": "apiId"
-				},
-				"body": null
+exports.handler = (event, context, callback, debug) => {
+	var request = {
+		Event: event,
+		Context: context
+	};
+
+	if(!event) {
+		if(!debug) { console.error('Event not defined'); }
+		return callback({statusCode: 400, error: 'Event not defined.'});
+	}
+	var httpMethod = event.httpMethod;
+	var resourcePath = event.resourcePath;
+	var body = event.body;
+	var functionVersion = context.functionVersion || 'PROD';
+	var environment = 'prod'; //functionVersion.match(/LATEST/) ? 'test' : 'prod';
+
+	if(!context.identity || !context.identity.cognitoIdentityId) {
+		var logResponse = {
+			statusCode: 400,
+			error: 'No identity defined',
+			detail: {
+				api: {
+					httpMethod: httpMethod,
+					resourcePath: resourcePath
+				}
 			}
+		};
+		if(!debug) { console.error(`No Identity defined: ${JSON.stringify(logResponse, null, 2)}`); }
+		return callback(logResponse);
+	}
+
+	var userId = context.identity.cognitoIdentityId;
+	try {
+		if(!resourcePath || !httpMethod) {
+			var logResponse = {
+				statusCode: 400,
+				error: 'The API resourcePath or httpMethod were not defined.',
+				detail: {
+					api: {
+						httpMethod: httpMethod,
+						resourcePath: resourcePath,
+						userId: userId
+					},
+					requestBody: body
+				}
+			};
+			if(!debug) { console.error(JSON.stringify(logResponse, null, 2)); }
+			return callback(null, logResponse);
 		}
-	*/
-	//Or just return a body.
-	return new Api.Response({ 'field': 'hello world' }, 200, { 'Content-Type': 'application/json' });
-});
+		if(!routes[resourcePath] || !routes[resourcePath][httpMethod]) {
+			var logResponse = {
+				statusCode: 400,
+				error: 'No route found for that api',
+				detail: {
+					api: {
+						httpMethod: httpMethod,
+						resourcePath: resourcePath,
+						userId: userId
+					},
+					requestBody: body
+				}
+			};
+			if(!debug) { console.error(JSON.stringify(logResponse, null, 2)); }
+			return callback(null, logResponse);
+		}
+
+		return userManager.HeadUser(userId, environment, userId)
+		.then(result => {
+			if(result) { return true; }
+			return putUser({}, environment, userId, () => {});
+		})
+		.then(() => {
+			return routes[resourcePath][httpMethod](body, environment, userId, x => {
+				var logResponse = {
+					statusCode: x.statusCode,
+					request: body,
+					response: {
+						body: x.detail || x.body,
+						message: x.title || x.error
+					},
+					api: {
+						httpMethod: httpMethod,
+						resourcePath: resourcePath,
+						userId: userId
+					}
+				};
+				if(x.statusCode == null) {
+					if(!debug) { console.error(`StatusCode not defined: ${JSON.stringify(logResponse, null, 2)}`); }
+					return callback(null, {
+						statusCode: 500,
+						error: 'statusCode not defined',
+						body: x
+					});
+				}
+				else if(logResponse.statusCode >= 400) {
+					if(!debug) { console.error(JSON.stringify(logResponse, null, 2)); }
+					return eventManager.CreateEvent({
+						eventType: 'ApiFailure',
+						detail: logResponse
+					}, environment, userId, () => { return callback(null, x); });
+				}
+				if(!debug) { console.log(JSON.stringify(logResponse, null, 2)); }
+				return callback(null, x);
+			});
+		});
+	}
+	catch(exception) {
+		var response = {
+			statusCode: 400,
+			error: 'Failed to retrieve data',
+			detail: {
+				exception: exception.stack || exception,
+				api: {
+					httpMethod: httpMethod,
+					resourcePath: resourcePath
+				},
+				requestBody: body
+			}
+		};
+		if(!debug) { console.log(JSON.stringify(response, null, 2)); }
+		return callback(null, response);
+	}
+};

@@ -78,15 +78,12 @@ AWS Architect uses [OpenAPI Factory](https://github.com/wparad/openapi-factory.j
 * Annoymous health results by allowing a user to generate a special link just for that login name on the other site. (so source usercode + nsource website + username is unique and will stop people stealing)
 * PNG display
 * logo.png dispaly
-* update colors
 * login flow, fix location
 * main page necessary
 * user page display
 * update eventamanger and apiProvider to contain this services lambda and log function.
 * Update cognito email redirect to point to website page which will do the code login redirect authorize.  Right now it points to garbage.
 	* Create the DNS
-	* Update AWS cognito to point to the DNS/authorize_code...
 * Determine which action of aws-architect is taking so long to figure out (after s3 deployment-policy)
 * Update where you log API requests
-* Update the lambda to write to the correct DB.
 * How to encrypt data records (can I wait, I think so since I'm only signing off on what they have entered.)

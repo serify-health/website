@@ -72,6 +72,25 @@ commander
 				AttributeDefinitions: [{ AttributeName: 'UserId', AttributeType: 'S' }],
 				KeySchema: [{ AttributeName: 'UserId', KeyType: 'HASH' }],
 				ProvisionedThroughput: { ReadCapacityUnits: 1, WriteCapacityUnits: 1 }
+			},
+			{
+				TableName: 'events',
+				AttributeDefinitions: [
+					{ AttributeName: 'UserId', AttributeType: 'S' },
+					{ AttributeName: 'Time', AttributeType: 'N' }
+					// { AttributeName: 'EventType', AttributeType: 'S' },
+					//{ AttributeName: 'DeviceInformation', AttributeType: 'S' },
+				],
+				KeySchema: [{ AttributeName: 'UserId', KeyType: 'HASH' }, { AttributeName: 'Time', KeyType: 'RANGE' }],
+				// GlobalSecondaryIndexes: [
+				// 	{
+				// 		IndexName: 'EventTypeLookup',
+				// 		KeySchema: [{ AttributeName: 'EventType', KeyType: 'HASH' }, { AttributeName: 'Time', KeyType: 'RANGE' }],
+				// 		Projection: { ProjectionType: 'ALL' },
+				// 		ProvisionedThroughput: { ReadCapacityUnits: 1, WriteCapacityUnits: 1 }
+				// 	}
+				// ],
+				ProvisionedThroughput: { ReadCapacityUnits: 1, WriteCapacityUnits: 1 }
 			}
 		];
 		var publishPromise = awsArchitect.PublishAndDeployPromise(production, databaseSchema);

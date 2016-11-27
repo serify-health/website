@@ -47,7 +47,7 @@
 		-moz-background-size: cover;
 		-o-background-size: cover;
 		background-size: cover;
-		background-color: #000000;
+		background-color: #FFFFFF;
 	}
 	.loginScreen {
 		height: 100%;
@@ -58,7 +58,7 @@
 		-moz-background-size: cover;
 		-o-background-size: cover;
 		background-size: cover;
-		background-color: #000000;
+		background-color: #FFFFFF;
 	}
 	.homeScreen {
 		height: 100%;
@@ -69,7 +69,7 @@
 		-moz-background-size: cover;
 		-o-background-size: cover;
 		background-size: cover;
-		background-color: #000000;
+		background-color: #FFFFFF;
 	}
 	.app {
 		overflow-y:hidden;
@@ -80,7 +80,7 @@
 		-moz-background-size: cover;
 		-o-background-size: cover;
 		background-size: cover;
-		background-color: #000000;
+		background-color: #FFFFFF;
 	}
 	/*.ui {
 		height:92%;
@@ -105,7 +105,7 @@
 		overflow:visible;
 		padding:0px;
 		text-align:center;
-		color: #ffab23;
+		color: #00CED1;
 	}
 
 	/*Custom Nav Bar*/
@@ -117,8 +117,8 @@
 		min-height: 20px !important;
 	}
 	.custom-navbar .navbar-default {
-		background-color: #D48200;
-		border-color: #D48200;
+		background-color: #0099CC;
+		border-color: #0099CC;
 	}
 	.custom-navbar .navbar-collapse.collapse {
 		display: block !important;
@@ -143,24 +143,24 @@
 	}
 	.btn-default {
 		margin: 4px;
-		color: #D48200 !important;
+		color: #0099CC !important;
 		background-color: #000000 !important;
 		border-color: #000000 !important;
 	}
 	.btn-default:active {
-		color: #D48200 !important;
+		color: #0099CC !important;
 		background-color: #FFFFFF !important;
 		border-color: #FFFFFF !important;
 		outline-color: #FFFFFF !important;
 	}
 	.btn-inverted {
-		color: #D48200 !important;
+		color: #0099CC !important;
 		background-color: #FFFFFF !important;
 		border-color: #FFFFFF !important;
 		outline-color: #FFFFFF !important;
 	}
 	.btn-inverted:active {
-		color: #D48200 !important;
+		color: #0099CC !important;
 		background-color: #000000 !important;
 		border-color: #FFFFFF !important;
 		outline-color: #FFFFFF !important;

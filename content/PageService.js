@@ -52,15 +52,7 @@ angular.module(GOLFPRO).provider('pageService', [function(){
 			var previousPage = stack.pop() || 'home';
 			console.log('Navigating to page: ' + currentPage + ' => ' + previousPage);
 			window.location.hash = previousPage;
-		},
-		OpenUrl: function(url) {
-			stack = ['home'];attemptFacebookLoginPromise
-			setTimeout(function() {
-				console.log('FOUND DEEP LINK: ' + url);
-				var match = url.match(/^.*authorize-login\?code=(.*)$/);
-				if(match) { window.location.hash = 'signup/' + match[1]; }
-			}, 0);
-		},
+		}
 	};
 	this.$get = function() { return service; };
 }]);

@@ -3,9 +3,14 @@
 		<nav class="navbar navbar-default" role="navigation">
 			<div class="container-fluid">
 				<div class="">
+					<ul class="nav navbar-nav navbar-left">
+						<li>
+							<div style="font-size:20px"><i class="fa fa-check-square-o" aria-hidden="true"></i> Serify</div>
+						</li>
+					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li>
-							<button type="button" class="btn btn-default btn-sm" ng-click="SignInButtonClick()">{{UserAuthenticated ? 'Sign out' : 'Sign in'}}</button>
+							<button type="button" class="btn btn-default btn-sm" ng-click="SignInButtonClick()">{{UserAuthenticated ? 'Sign out' : 'Sign in/Sign up'}}</button>
 						</li>
 					</ul>
 				</div>
@@ -13,44 +18,47 @@
 		</nav>
 	</div>
 	<div class="ui" style="margin:0% 10% 0% 10%;width:80% !important">
-		<style type="text/css">
-			.btn-facebook {
-				color: #FFFFFF !important;
-				background-color: #3B5998 !important;
-				border-color: #3B5998 !important;
-			}
-			.btn-facebook:active {
-				color: #3B5998 !important;
-				background-color: #000000 !important;
-				border-color: #3B5998 !important;
-				outline-color: #3B5998 !important;
-			}
-			.btn-google {
-				color: #FFFFFF !important;
-				background-color: #D34836 !important;
-				border-color: #D34836 !important;
-				outline-color: #D34836 !important;
-			}
-			.btn-google:active {
-				color: #D34836 !important;
-				background-color: #000000 !important;
-				border-color: #D34836 !important;
-				outline-color: #D34836 !important;
-			}
-		</style>
 		<div>
-			<!--img src="res/icons/logo.png" style="margin: 30% 15% 10% 15% ;width:70%;" autofocus /-->
-			<div ng-show="LoginButtonsVisible">
-				<button style="width:100%;margin: 4px 0px;padding:10px !important" ng-click="SignInWithUserNameButtonClick()" class="btn btn-inverted">
-					<i style="font-size:16px;font-size:8vmin;" class="fa fa-circle-o pull-left" aria-hidden="true"></i>
-					<h8 style="font-size:12px;font-size:5vmin;">Login/Sign up with Email</h8>
-				</button>
-			</div>
-			<!--center>
-				<div ng-show="LoginButtonsVisible">
-					<h8>By logging in you agree to the <a ng-href="{{ eulaUrl }}">EULA</a>.</h8>
+				UserId: {{UserId}}
+		</div>
+		<hr>
+		<div>
+			<div class="container">
+				<div class="row clearfix">
+					<div class="col-md-10 column">
+						<table class="table table-bordered table-hover">
+							<thead>
+								<tr >
+									<th class="text-center">Test</th>
+									<th class="text-center">Date</th>
+									<th class="text-center">Verified</th>
+									<th class="text-center"></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="verification in verifications">
+									<td>
+										<input type="text" placeholder='Name' ng-model="verification.Name" class="form-control"/>
+									</td>
+									<td>
+										<input type="text" placeholder='Date' ng-model="verification.Date" class="form-control"/>
+									</td>
+									<td tabindex="-1">
+										<i ng-if="verification.Status === 'Verified'" class="fa fa-check-square-o fa-2x" aria-hidden="true"></i>
+										<i ng-if="verification.Status === 'Failed'" class="fa fa-times-circle-o fa-2x" aria-hidden="true"></i>
+										<i ng-if="verification.Status === 'Unknown'" class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
+									</td>
+									<td tabindex="-1" class="text-center">
+										<button tabindex="-1" type="button" class="btn btn-default btn-sm" ng-click="RemoveVerification(verification.Id)"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
+									</th>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
-			</center-->
+				<button ng-click="AddRowButtonClick()" class="btn btn-default">Add Verfication</button>
+				<button ng-click="SubmitVerificationsClick()" class="btn btn-default">Submit</button>
+			</div>
 		</div>
 	</div>
 </div>

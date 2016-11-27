@@ -4,14 +4,41 @@ angular.module(GOLFPRO).config(['$routeProvider', function($routeProvider) {
 	$routeProvider.when('/view/:usercode', { templateUrl: 'login/login.html', controller: 'loginController' });
 }]);
 angular.module(GOLFPRO).controller('loginController', [
-	'$scope', '$routeParams', 'loginStatusProvider', 'guiManager', 'eventHandler', 'pageService', 'userManager', 'ngDialog', 'storageProviderService',
-function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pageService, userManager, ngDialog, storageProviderService) {
+	'$scope',
+	'$routeParams',
+	'loginStatusProvider',
+	'guiManager',
+	'eventHandler',
+	'pageService',
+	'userManager',
+	'ngDialog',
+	'storageProviderService',
+	'utilities',
+function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pageService, userManager, ngDialog, storageProviderService, utilities) {
 	$scope.UserAuthenticated = false;
-	loginStatusProvider.validateAuthenticationPromise().then(function() {
-		$scope.UserAuthenticated = true;
-	});
+	function SetupUser() {
+		return loginStatusProvider.validateAuthenticationPromise()
+		.then(function() {
+			$scope.UserAuthenticated = true;
+			return userManager.GetUserIdPromise().then(function(id){
+				$scope.$apply(function(){
+					$scope.UserId = id;
+				});
+			});
+		})
+		.then(function(){
+			return userManager.GetUserDataPromise();
+		})
+		.then(function(userData){
+			$scope.$apply(function(){
+				$scope.verifications = userData.Verifications;
+				if($scope.verifications.length === 0) { $scope.AddRowButtonClick(); }
+			});
+		});
+	}
+	
 
-	$scope.eulaUrl = 'https://github.com/FutureSport-Technologies/Golf-Pro/blob/master/EULA.md';
+	$scope.eulaUrl = 'EULA.md';
 	$scope.SignInButtonClick = function() {
 		if($scope.UserAuthenticated) {
 			loginStatusProvider.logoutPromise()
@@ -102,7 +129,7 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 						.then(function() {
 							storageProvider.Save('username', signinUsername);
 							storageProvider.Save('password', signinPassword);
-							$scope.closeThisDialog(false)
+							$scope.closeThisDialog(false);
 							guiManager.toast('Please check your email for a verification link.', 2000, 'center');
 						}, function(error) {
 							switch (error.code) {
@@ -206,11 +233,6 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 						});
 					}
 					else if($routeParams.pin) {
-						var username = ($scope.email || cachedUsername || '').toLowerCase();
-						var password = $scope.password || cachedPassword || '';
-						if(username.length === 0 || password.length === 0) {
-							return guiManager.toast('Please enter your username and password.', 1000, 'center');
-						}
 						return verifySignin($routeParams.pin, username, password)
 						.catch(function(error){
 							switch (error.code) {
@@ -245,13 +267,34 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 			// var isarray = Object.prototype.toString.call(dialogResult.value) === '[object Array]';
 			// if(!isarray || !dialogResult.value || dialogResult.value.length < 1) { return; }
 			if(dialogResult.value) {
-				loginStatusProvider.validateAuthenticationPromise().then(function() {
-					$scope.UserAuthenticated = true;
-				});
+				return SetupUser();
 			}
 		});
 	};
 
-	
-
+	$scope.verifications = [];
+	$scope.AddRowButtonClick = function() {
+		$scope.verifications.push({
+			Id: utilities.getGuid(),
+			Name: '',
+			Date: new Date().toLocaleDateString(),
+			Status: 'Unknown'
+		});
+	};
+	$scope.RemoveVerification = function(verificationId) {
+		$scope.verifications.splice($scope.verifications.findIndex(function(v){ return v.Id === verificationId; }), 1);
+	};
+	$scope.SubmitVerificationsClick = function() {
+		if(!$scope.UserAuthenticated) {
+			guiManager.toast('Create account to get your test results verified.');
+			return;
+		}
+		userManager.SetVerifications($scope.verifications)
+		.then(function(){
+			guiManager.toast('Verifications Submitted.', 1000, 'center');
+		}, function(failure){
+			console.error(failure);
+			guiManager.toast('Failed to submit verifications.', 1000, 'center');
+		});
+	};
 }]);

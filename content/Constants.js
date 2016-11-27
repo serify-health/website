@@ -16,7 +16,7 @@ var POOL_DATA = {
 	Paranoia : 7
 };
 /* exported API_LOG_URL */
-var API_LOG_URL = 'https://mmc1f8pyxj.execute-api.us-east-1.amazonaws.com/prod/log'
+var API_LOG_URL = 'https://mmc1f8pyxj.execute-api.us-east-1.amazonaws.com/prod/log';
 /* LAMBDA_FUNCTION */
 var LAMBDA_FUNCTION = 'arn:aws:lambda:us-east-1:273193817078:function:health-verify-index';
 /*******************/

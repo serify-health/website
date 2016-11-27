@@ -14,7 +14,7 @@ describe('src/index.js', function() {
 				assert(true);
 			}
 			catch(e) {
-				console.log(e.stack);
+				console.error(e.stack);
 				assert(false, e.toString());
 			}
 		});
@@ -24,29 +24,143 @@ describe('src/index.js', function() {
 				assert(true);
 			}
 			catch(e) {
-				console.log(e.stack);
+				console.error(e.stack);
 				assert(false, e.toString());
 			}
 		});
 	});
-	describe('Test Handler', function () {
-		it('ANY', function() {
+	describe('Test Exports Callbacks', function () {
+		it('Event not defined', function(done) {
 			try {
-				var api = require('../src/index');
-
-				var result = api.Routes['ANY']['/{proxy+}'].Handler();
-				var expectedResult = {
-					statusCode: 200,
-					body: JSON.stringify({
-						'field': 'hello world'
-					}),
-					headers: {
-						'Content-Type': 'application/json'
-					}
-				}
-				assert.equal(result.statusCode, expectedResult.statusCode, 'Expected ANY /proxy status code to have matching value.')
-				assert.deepEqual(result.headers, expectedResult.headers, 'Expected ANY /proxy headers to have matching value.')
-				assert.equal(result.body, expectedResult.body, 'Expected ANY /proxy body to have matching value.')
+				var lambda = require('../src/index');
+				new Promise((s, f) => {
+					lambda.handler(null, {}, (failure, success) => {
+						if(success && !failure) { return s(success); }
+						else { f(failure); }
+					}, true);
+				})
+				.catch(failure => {
+					assert.strictEqual(failure.statusCode, 400, 'Error should be a 400 on no event');
+					assert.strictEqual(failure.error, 'Event not defined.', 'Correct error message');
+					return true;
+				}).then(success => done(), failure => done(failure));
+			}
+			catch(e) {
+				console.error(e.stack);
+				assert(false, e.toString());
+			}
+		});
+		it('Identity not defined', function(done) {
+			try {
+				var lambda = require('../src/index');
+				new Promise((s, f) => {
+					lambda.handler({}, {}, (failure, success) => {
+						if(success && !failure) { return s(success); }
+						else { f(failure); }
+					}, true);
+				})
+				.catch(failure => {
+					assert.strictEqual(failure.statusCode, 400, 'Error should be a 400 on missing Identity');
+					assert.strictEqual(failure.error, 'No identity defined', 'Correct error message');
+					return true;
+				}).then(success => done(), failure => done(failure));
+			}
+			catch(e) {
+				console.error(e.stack);
+				assert(false, e.toString());
+			}
+		});
+		it('Identity not defined 2', function(done) {
+			try {
+				var lambda = require('../src/index');
+				new Promise((s, f) => {
+					lambda.handler({}, { identity: null}, (failure, success) => {
+						if(success && !failure) { return s(success); }
+						else { f(failure); }
+					}, true);
+				})
+				.catch(failure => {
+					assert.strictEqual(failure.statusCode, 400, 'Error should be a 400 on missing Identity');
+					assert.strictEqual(failure.error, 'No identity defined', 'Correct error message');
+					return true;
+				}).then(success => done(), failure => done(failure));
+			}
+			catch(e) {
+				console.error(e.stack);
+				assert(false, e.toString());
+			}
+		});
+		it('Identity not defined 2', function(done) {
+			try {
+				var lambda = require('../src/index');
+				new Promise((s, f) => {
+					lambda.handler({}, { 
+						identity: {
+							cognitoIdentityId: null
+						}
+					}, (failure, success) => {
+						if(success && !failure) { return s(success); }
+						else { f(failure); }
+					}, true);
+				})
+				.catch(failure => {
+					assert.strictEqual(failure.statusCode, 400, 'Error should be a 400 on missing Identity');
+					assert.strictEqual(failure.error, 'No identity defined', 'Correct error message');
+					return true;
+				}).then(success => done(), failure => done(failure));
+			}
+			catch(e) {
+				console.error(e.stack);
+				assert(false, e.toString());
+			}
+		});
+		it('Resource Path not defined', function(done) {
+			try {
+				var lambda = require('../src/index');
+				new Promise((s, f) => {
+					lambda.handler({}, { 
+						identity: {
+							cognitoIdentityId: 'id'
+						}
+					}, (failure, success) => {
+						if(success && !failure) { return s(success); }
+						else { f(failure); }
+					}, true);
+				})
+				.then(response => {
+					assert.strictEqual(response.statusCode, 400, 'Error should be a 400 on missing Identity');
+					assert.strictEqual(response.error, 'The API resourcePath or httpMethod were not defined.', 'Correct error message');
+					return done();
+				}, failure => done(new Error(JSON.stringify(failure))))
+				.catch(failure => done(failure));
+			}
+			catch(e) {
+				console.error(e.stack);
+				assert(false, e.toString());
+			}
+		});
+		it('No Resource', function(done) {
+			try {
+				var lambda = require('../src/index');
+				new Promise((s, f) => {
+					lambda.handler({
+						httpMethod: 'GET',
+						resourcePath: 'DOES-NOT-EXIST'
+					}, {
+						identity: {
+							cognitoIdentityId: 'id'
+						}
+					}, (failure, success) => {
+						if(success && !failure) { return s(success); }
+						else { f(failure); }
+					}, true);
+				})
+				.then(response => {
+					assert.strictEqual(response.statusCode, 400, 'Error should be a 400 on missing Identity');
+					assert.strictEqual(response.error, 'No route found for that api', 'Correct error message');
+					return done();
+				}, failure => done(new Error(JSON.stringify(failure))))
+				.catch(failure => done(failure));
 			}
 			catch(e) {
 				console.error(e.stack);
