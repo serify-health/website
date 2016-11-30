@@ -13,8 +13,9 @@ module.provider('utilities', [function() {
 	};
 	this.$get = function() { return service; };
 }]);
-module.config(['$animateProvider', function($animateProvider) {
+module.config(['$animateProvider', '$routeProvider', function($animateProvider, $routeProvider) {
 	!$animateProvider.classNameFilter(/^(?!do-not-animate).*$/);
+	$routeProvider.otherwise({ templateUrl: 'notFound.html', controller: 'loginController' });
 }]);
 module.factory('$exceptionHandler', ['$log', 'eventHandler', function($log, eventHandler) {
 	return function (exception, cause) {

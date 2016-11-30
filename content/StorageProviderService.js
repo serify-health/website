@@ -1,4 +1,4 @@
-module.provider('storageProviderService', function(){
+angular.module(GOLFPRO).provider('storageProviderService', function(){
 	var StorageProvider = function(id){
 		var storageId = id;
 		return {
