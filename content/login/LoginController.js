@@ -90,8 +90,8 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 		});
 	};
 	$scope.GetUserLinkClick = function() {
-		var linkname = $scope.linkname;
 		var username = $scope.username;
+		var linkname = $scope.linkname;
 		if(username == null) {
 			guiManager.toast('username is not specified.', null, null);
 			return;

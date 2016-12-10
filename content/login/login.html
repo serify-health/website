@@ -17,17 +17,15 @@
 			</div>
 		</nav>
 	</div>
-	<div ng-if="UserAuthenticated" class="ui" style="margin:0% 10% 0% 10%;width:80% !important">
+	<div ng-show="UserAuthenticated" class="ui" style="margin:0% 10% 0% 10%;width:80% !important">
 		<div>
 			Ensure your anonymity, create a custom link which identifies your profile:
 			<form class="form-inline">
 				<div class="form-group">
-					<label class="sr-only" for="username">Anonymous ID:</label>
-					<input type="text" class="form-control" id="username" placeholder="Your Username" ng-model="username">
+					<input type="text" class="form-control" placeholder="Your Username" ng-model="username">
 				</div> @ 
 				<div class="form-group">
-					<label class="sr-only" for="websiteName">Link Name</label>
-					<input type="text" class="form-control" id="websiteName" placeholder="Enter Link Name" ng-model="linkname">
+					<input type="text" class="form-control" placeholder="Enter Link Name" ng-model="linkname">
 				</div>
 				<div class="form-group">
 					<button ng-click="GetUserLinkClick()" class="btn btn-default"><i class="fa fa-link" aria-hidden="true"></i> Get User Link</button>
@@ -54,10 +52,10 @@
 							<tbody>
 								<tr ng-repeat="verification in verifications">
 									<td>
-										<input type="text" placeholder='Name' ng-model="verification.Name" class="form-control"/>
+										<input type="text" placeholder='Name' ng-model="verification.Name" class="form-control">
 									</td>
 									<td>
-										<input type="text" placeholder='Date' ng-model="verification.Date" class="form-control"/>
+										<input type="text" placeholder='Date' ng-model="verification.Date" class="form-control">
 									</td>
 									<td tabindex="-1">
 										<i ng-if="verification.Status === 'Verified'" class="fa fa-check-square-o fa-2x" aria-hidden="true"></i>
@@ -66,7 +64,7 @@
 									</td>
 									<td tabindex="-1" class="text-center">
 										<button tabindex="-1" type="button" class="btn btn-default btn-sm" ng-click="RemoveVerification(verification.Id)"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
-									</th>
+									</td>
 								</tr>
 							</tbody>
 						</table>
@@ -77,9 +75,9 @@
 			</div>
 		</div>
 	</div>
-	<div ng-if="!UserAuthenticated" class="ui" style="margin:0% 10% 0% 10%;width:80% !important">
+	<div ng-show="!UserAuthenticated" class="ui" style="margin:0% 10% 0% 10%;width:80% !important">
 		<div style="text-align: center">
-			Share your negative status. <br />
+			Share your negative status. <br>
 			<button type="button" class="btn btn-default btn-sm" ng-click="SignInButtonClick()">Create an account</button>
 		</div>
 		<hr>

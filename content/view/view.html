@@ -19,11 +19,11 @@
 	</div>
 	<div class="ui" style="margin:0% 10% 0% 10%;width:80% !important">
 		<hr>
-		<div ng-if="linkname" class="do-not-animate" style="text-align: center; border: 3px solid #00CED1;">
+		<div ng-show="linkname" class="do-not-animate" style="text-align: center; border: 3px solid #00CED1;">
 				<h4>You are viewing the unique profile for:</h4>
 				<h4>{{username}} @ {{linkname}}</h4>
 		</div>
-		<div ng-if="!linkname" class="do-not-animate" style="text-align: center; border: 3px solid #00CED1;">
+		<div ng-show="!linkname" class="do-not-animate" style="text-align: center; border: 3px solid #00CED1;">
 				<h4>Retrieving health record verifications...</h4>
 		</div>
 		<hr>
@@ -33,7 +33,7 @@
 					<div class="col-md-10 column">
 						<table class="table table-bordered table-hover">
 							<thead>
-								<tr >
+								<tr>
 									<th class="text-center">Test</th>
 									<th class="text-center">Date</th>
 									<th class="text-center">Verified</th>
