@@ -74,6 +74,23 @@ commander
 				ProvisionedThroughput: { ReadCapacityUnits: 1, WriteCapacityUnits: 1 }
 			},
 			{
+				TableName: 'links',
+				AttributeDefinitions: [
+					{ AttributeName: 'UserId', AttributeType: 'S' },
+					{ AttributeName: 'Base64Hash', AttributeType: 'S' }
+				],
+				KeySchema: [{ AttributeName: 'UserId', KeyType: 'HASH' }],
+				GlobalSecondaryIndexes: [
+					{
+						IndexName: 'HashLookup',
+						KeySchema: [{ AttributeName: 'Base64Hash', KeyType: 'HASH' }],
+						Projection: { ProjectionType: 'ALL' },
+						ProvisionedThroughput: { ReadCapacityUnits: 1, WriteCapacityUnits: 1 }
+					}
+				],
+				ProvisionedThroughput: { ReadCapacityUnits: 1, WriteCapacityUnits: 1 }
+			},
+			{
 				TableName: 'events',
 				AttributeDefinitions: [
 					{ AttributeName: 'UserId', AttributeType: 'S' },

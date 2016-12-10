@@ -102,14 +102,12 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 			guiManager.toast('Link name is not specified.', null, null);
 			return;
 		}
-		var userIdPromise = userManager.GetUserIdPromise();
-		var createUserLinkPromise = linkManager.GetNewLinkPromise(linkname, username);
-		Promise.all([userIdPromise, createUserLinkPromise]).then(function(results){
-			var id = results[0];
-			var linkResults = results[1];
+		linkManager.GetNewLinkPromise(linkname, username)
+		.then(function(linkResults){
 			$scope.$apply(function(){
-				var linkInfo = '' + linkName + ':' + username;
-				$scope.userLink = 'http://health-verify-service.s3-website-us-east-1.amazonaws.com/v1/index.html#/view/' + linkInfo; 
+				console.log('New link for user generated: ' + $scope.UserId);
+				var linkInfo = '' + linkname + ':' + username;
+				$scope.userLink = 'http://health-verify-service.s3-website-us-east-1.amazonaws.com/v1/index.html#/view/' + linkResults; 
 			});
 		});
 	};

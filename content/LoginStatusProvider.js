@@ -128,6 +128,26 @@ angular.module(GOLFPRO).provider('loginStatusProvider', [function() {
 		});
 	};
 
+	var validateUnauthenticationPromise = function() {
+		return validateAuthenticationPromise()
+		.catch(() => {
+			if(AWS.config.credentials && !AWS.config.credentials.expired && AWS.config.credentials.expireTime > new Date()) {
+				console.log('credentials not expired, reusing.');
+				return 'unauthenticated';
+			}
+
+			AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+				IdentityPoolId: IDENTITY_POOL_ID,
+			});
+
+			var returnPromise = new Promise(function(s, f) { AWS.config.credentials.get(function(error){ error ? f(error) : s({ Type: 'Unauthenticated'}); }); })
+			.catch(function(error) {
+				console.error(JSON.stringify({Title: 'Could not authenticate against Idendtity Pool or Trust for IAM Role using credentials',
+					Error: error.stack || error.toString(), Detail: error}, null, 2));
+				return Promise.reject({Error: 'AWS Credential Login issue.', Detail: error});
+			});
+		});
+	};
 	var validateAuthenticationPromise = function() {
 		var getCognitoUserPoolAuthenticationPromise = new Promise(function(s, f) {
 			var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(POOL_DATA).getCurrentUser();
@@ -203,6 +223,7 @@ angular.module(GOLFPRO).provider('loginStatusProvider', [function() {
 		startForgotPasswordPromise: startForgotPasswordPromise,
 		confirmNewPasswordPromise: confirmNewPasswordPromise,
 		validateAuthenticationPromise: validateAuthenticationPromise,
+		validateUnauthenticationPromise: validateUnauthenticationPromise,
 		logoutPromise: logoutPromise
 	};
 	this.$get = function() { return service; };

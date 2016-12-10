@@ -12,4 +12,16 @@ angular.module(GOLFPRO).service('linkManager', [ 'apiService', 'loginStatusProvi
 			});
 		});
 	};
+	this.ResolveHashPromise = function(hash) {
+		return apiService.getPromise('GET', '/link', {
+			hash: hash
+		})
+		.catch(function(failure) {
+			console.error(JSON.stringify({Title: 'Failed to resolve hash to link', Error: failure.stack || failure.toString(), Detail: failure}, null, 2));
+			return Promise.reject({
+				Error: 'Cannot resolve hash to link.',
+				Detail: failure
+			});
+		});
+	};
 }]);

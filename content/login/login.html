@@ -22,18 +22,18 @@
 			Ensure your anonymity, create a custom link which identifies your profile:
 			<form class="form-inline">
 				<div class="form-group">
-					<label class="sr-only" for="websiteName">Link Name</label>
-					<input type="text" class="form-control" id="websiteName" placeholder="Enter Link Name" ng-model="linkname">
-				</div>
-				<div class="form-group">
 					<label class="sr-only" for="username">Anonymous ID:</label>
 					<input type="text" class="form-control" id="username" placeholder="Your Username" ng-model="username">
+				</div> @ 
+				<div class="form-group">
+					<label class="sr-only" for="websiteName">Link Name</label>
+					<input type="text" class="form-control" id="websiteName" placeholder="Enter Link Name" ng-model="linkname">
 				</div>
 				<div class="form-group">
 					<button ng-click="GetUserLinkClick()" class="btn btn-default"><i class="fa fa-link" aria-hidden="true"></i> Get User Link</button>
 				</div>
 				<div class="form-group" style="margin-top:5px">
-					<input style="width:600px" type="text" class="form-control" ng-model="userLink" aria-describedby="basic-addon1">
+					<input style="width:600px" type="text" class="form-control" ng-model="userLink" aria-describedby="basic-addon1" readonly>
 				</div>
 			</form>
 		</div>

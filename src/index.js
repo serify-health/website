@@ -9,10 +9,16 @@ const http = require('http');
 
 var UserManager = require('./UserManager');
 var userManager = new UserManager(docClient, s3Client);
+var LinkManager = require('./LinkManager');
+var linkManager = new LinkManager(docClient);
 var EventManager = require('./EventManager');
 var eventManager = new EventManager(docClient);
 
 var routes = {
+	'/link': {
+		'GET': (body, environment, userId, callback) => linkManager.GetUserFromLink(body, environment, userId, callback),
+		'POST': (body, environment, userId, callback) => linkManager.CreateNewLink(body, environment, userId, callback),
+	},
 	'/user': {
 		'GET': (body, environment, userId, callback) => userManager.GetUser(body, environment, userId, callback),
 	},
