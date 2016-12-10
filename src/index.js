@@ -19,6 +19,9 @@ var routes = {
 		'GET': (body, environment, userId, callback) => linkManager.GetUserFromLink(body, environment, userId, callback),
 		'POST': (body, environment, userId, callback) => linkManager.CreateNewLink(body, environment, userId, callback),
 	},
+	'/links': {
+		'GET': (body, environment, userId, callback) => linkManager.GetAllUserLinks(body, environment, userId, callback),
+	},
 	'/user': {
 		'GET': (body, environment, userId, callback) => userManager.GetUser(body, environment, userId, callback),
 	},

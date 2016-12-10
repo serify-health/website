@@ -33,6 +33,30 @@ LinkManager.prototype.GetUserFromLink = function(body, environment, userId, call
 		});
 	});
 };
+LinkManager.prototype.GetAllUserLinks = function(body, environment, userId, callback) {
+		var table = `links.health-verify.${environment}`;
+	var queryPromise = this.DocClient.query({
+		TableName: table,
+		ScanIndexForward: false,
+		KeyConditionExpression: 'UserId = :userId',
+		ExpressionAttributeValues: {
+			':userId': userId
+		}
+	}).promise().then(result => result.Items);
+	return queryPromise.then(result => {
+		return callback({
+			statusCode: 200,
+			body: result
+		});
+	})
+	.catch(error => {
+		return callback({
+			statusCode: 400,
+			error: `Unable to retrieve user: ${error.stack || error.toString()}`,
+			detail: error
+		});
+	});
+};
 LinkManager.prototype.CreateNewLink = function(body, environment, userId, callback) {
 	var linkname = body.linkname;
 	var username = body.username;

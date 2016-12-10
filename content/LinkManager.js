@@ -24,4 +24,14 @@ angular.module(GOLFPRO).service('linkManager', [ 'apiService', 'loginStatusProvi
 			});
 		});
 	};
+	this.GetAllUserLinks = function() {
+		return apiService.getPromise('GET', '/links', {})
+		.catch(function(failure) {
+			console.error(JSON.stringify({Title: 'Failed to get all links for user', Error: failure.stack || failure.toString(), Detail: failure}, null, 2));
+			return Promise.reject({
+				Error: 'Failed to get all links for user.',
+				Detail: failure
+			});
+		});
+	};
 }]);

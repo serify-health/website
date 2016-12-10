@@ -59,7 +59,7 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 	loginStatusProvider.validateUnauthenticationPromise()
 	.then(function() {
 		return linkManager.ResolveHashPromise($routeParams.base64hash)
-		.then(data => {
+		.then(function(data) {
 			return userManager.GetUserDataPromise(data.UserId)
 			.then(function(userData){
 				$scope.$apply(function(){
@@ -69,5 +69,5 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 				});
 			});
 		});
-	}).catch(s => console.log(s));
+	});
 }]);

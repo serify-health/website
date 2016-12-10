@@ -130,7 +130,7 @@ angular.module(GOLFPRO).provider('loginStatusProvider', [function() {
 
 	var validateUnauthenticationPromise = function() {
 		return validateAuthenticationPromise()
-		.catch(() => {
+		.catch(function() {
 			if(AWS.config.credentials && !AWS.config.credentials.expired && AWS.config.credentials.expireTime > new Date()) {
 				console.log('credentials not expired, reusing.');
 				return 'unauthenticated';

@@ -15,6 +15,7 @@ angular.module(GOLFPRO).controller('loginController', [
 function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pageService, userManager, ngDialog, utilities, linkManager) {
 	/******** SignInButton Block ********/
 	$scope.UserAuthenticated = false;
+	$scope.links = [];
 	function SetupUser() {
 		return loginStatusProvider.validateAuthenticationPromise()
 		.then(function() {
@@ -26,13 +27,37 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 			});
 		})
 		.then(function(){
-			return userManager.GetUserDataPromise();
-		})
-		.then(function(userData){
-			$scope.$apply(function(){
-				$scope.verifications = (userData || {}).Verifications || [];
-				if($scope.verifications.length === 0) { $scope.AddRowButtonClick(); }
+			var usernamemetadataPromise = userManager.GetUserDataPromise()
+			.then(function(userData){
+				$scope.$apply(function(){
+					$scope.verifications = (userData || {}).Verifications || [];
+					if($scope.verifications.length === 0) { $scope.AddRowButtonClick(); }
+				});
 			});
+			var linkHistoryListPromise = linkManager.GetAllUserLinks()
+			.then(function(links) {
+				return links.map(function(link){
+					return {
+						linkname: link.Linkname,
+						username: link.Username,
+						userlink: WEBSITE_VIEW_URL + link.Base64Hash
+					};
+				});
+			})
+			.then(function(links){
+				$scope.$apply(function(){
+					links.map(function(sourcelink){
+						console.log($scope.links);
+						if(!$scope.links.find(function(cachedlink){
+							return cachedlink.Base64Hash === sourcelink.Base64Hash;
+						})) {
+							console.log(sourcelink.Base64Hash);
+							$scope.links.push(sourcelink);
+						}
+					});
+				});
+			});
+			return Promise.all([usernamemetadataPromise, linkHistoryListPromise]);
 		});
 	}
 
@@ -92,6 +117,7 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 	$scope.GetUserLinkClick = function() {
 		var username = $scope.username;
 		var linkname = $scope.linkname;
+		/* jshint -W041 */
 		if(username == null) {
 			guiManager.toast('username is not specified.', null, null);
 			return;
@@ -100,12 +126,22 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 			guiManager.toast('Link name is not specified.', null, null);
 			return;
 		}
+			/* jshint +W041 */
 		linkManager.GetNewLinkPromise(linkname, username)
-		.then(function(linkResults){
+		.then(function(base64hash){
 			$scope.$apply(function(){
 				console.log('New link for user generated: ' + $scope.UserId);
 				var linkInfo = '' + linkname + ':' + username;
-				$scope.userLink = 'http://health-verify-service.s3-website-us-east-1.amazonaws.com/v1/index.html#/view/' + linkResults; 
+				$scope.userLink = WEBSITE_VIEW_URL + base64hash;
+				if(!$scope.links.find(function(cachedlink){
+					return cachedlink.userlink === $scope.userLink;
+				})) {
+					$scope.links.push({
+						username: username,
+						linkname: linkname,
+						userlink: $scope.userLink
+					});
+				}
 			});
 		});
 	};
