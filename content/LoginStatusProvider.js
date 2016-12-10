@@ -160,12 +160,16 @@ angular.module(GOLFPRO).provider('loginStatusProvider', [function() {
 				Logins: authentication.Login
 			});
 
-			return new Promise(function(s, f) { AWS.config.credentials.get(function(error){ error ? f(error) : s(authentication); }); })
+			var returnPromise = new Promise(function(s, f) { AWS.config.credentials.get(function(error){ error ? f(error) : s(authentication); }); })
 			.catch(function(error) {
 				console.error(JSON.stringify({Title: 'Could not authenticate against Idendtity Pool or Trust for IAM Role using credentials',
 					Error: error.stack || error.toString(), Detail: error}, null, 2));
 				return Promise.reject({Error: 'AWS Credential Login issue.', Detail: error});
 			});
+			returnPromise.then(function() {
+				if(ga) { ga('set', 'userId', AWS.config.credentials.identityId); }
+			});
+			return returnPromise;
 		});
 	};
 

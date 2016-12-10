@@ -16,7 +16,7 @@
 				connect-src 'self' gap: https://graph.facebook.com https://*.amazonaws.com/;
 				style-src 'self' gap: https://maxcdn.bootstrapcdn.com https://cdnjs.cloudflare.com 'unsafe-inline';
 				frame-src gap: https://*.facebook.com http://*.facebook.com;
-				script-src 'self' gap: https://cdnjs.cloudflare.com https://*.facebook.net https://graph.facebook.com/ http://connect.facebook.net/en_US/sdk.js 'unsafe-eval';
+				script-src 'self' gap: 'sha256-Wwy8T4qUyWuyCV5NOJcw4QmXcbK4SdaMZve1QU3oueI=' https://www.google-analytics.com/ https://cdnjs.cloudflare.com https://*.facebook.net https://graph.facebook.com/ http://connect.facebook.net/en_US/sdk.js 'unsafe-eval';
 				img-src 'self' data: file: gap: *;
 				font-src https://maxcdn.bootstrapcdn.com;
 				media-src *">
@@ -25,6 +25,7 @@
 		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
 		<title>Health Verify</title>
 
+		<link rel="icon" type="image/ico" href="./favicon.ico" >
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.6.4/css/ngDialog.min.css">
@@ -43,6 +44,16 @@
 		<script type="text/javascript" src="Constants.js"></script>
 		<script type="text/javascript" src="MainHandler.js"></script>
 
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+			ga('create', 'UA-88747342-1', 'auto');
+			ga('send', 'pageview');
+
+		</script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-route.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-touch.min.js"></script>
@@ -71,6 +82,7 @@
 		<script type="text/javascript" src="EventHandler.js"></script>
 		<script type="text/javascript" src="GuiManager.js"></script>
 		<script type="text/javascript" src="UserManager.js"></script>
+		<script type="text/javascript" src="LinkManager.js"></script>
 		<!-- Controllers -->
 		<script type="text/javascript" src="filters.js" defer></script>
 		<script type="text/javascript" src="signin/SigninController.js" defer></script>

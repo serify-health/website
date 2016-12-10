@@ -11,7 +11,8 @@ angular.module(GOLFPRO).controller('loginController', [
 	'userManager',
 	'ngDialog',
 	'utilities',
-function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pageService, userManager, ngDialog, utilities) {
+	'linkManager',
+function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pageService, userManager, ngDialog, utilities, linkManager) {
 	/******** SignInButton Block ********/
 	$scope.UserAuthenticated = false;
 	function SetupUser() {
@@ -20,7 +21,7 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 			$scope.UserAuthenticated = true;
 			return userManager.GetUserIdPromise().then(function(id){
 				$scope.$apply(function(){
-					$scope.UserId = id;
+					$scope.UserId = id; 
 				});
 			});
 		})
@@ -88,6 +89,28 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 		}, function(failure){
 			console.error(failure);
 			guiManager.toast('Failed to submit verifications.', 1000, 'center');
+		});
+	};
+	$scope.GetUserLinkClick = function() {
+		var linkname = $scope.linkname;
+		var username = $scope.username;
+		if(username == null) {
+			guiManager.toast('username is not specified.', null, null);
+			return;
+		}
+		if(linkname == null) {
+			guiManager.toast('Link name is not specified.', null, null);
+			return;
+		}
+		var userIdPromise = userManager.GetUserIdPromise();
+		var createUserLinkPromise = linkManager.GetNewLinkPromise(linkname, username);
+		Promise.all([userIdPromise, createUserLinkPromise]).then(function(results){
+			var id = results[0];
+			var linkResults = results[1];
+			$scope.$apply(function(){
+				var linkInfo = '' + linkName + ':' + username;
+				$scope.userLink = 'http://health-verify-service.s3-website-us-east-1.amazonaws.com/v1/index.html#/view/' + linkInfo; 
+			});
 		});
 	};
 }]);
