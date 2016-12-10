@@ -8,20 +8,23 @@
 							<div style="font-size:20px"><i class="fa fa-check-square-o" aria-hidden="true"></i> Serify</div>
 						</li>
 					</ul>
-					<!--<ul class="nav navbar-nav navbar-right">
+					<ul class="nav navbar-nav navbar-right">
 						<li>
 							<button type="button" class="btn btn-default btn-sm" ng-click="SignInButtonClick()">{{UserAuthenticated ? 'Sign out' : 'Sign in/Sign up'}}</button>
 						</li>
-					</ul>-->
+					</ul>
 				</div>
 			</div>
 		</nav>
 	</div>
 	<div class="ui" style="margin:0% 10% 0% 10%;width:80% !important">
 		<hr>
-		<div style="text-align: center; border: 3px solid #00CED1;">
+		<div ng-if="linkname" class="do-not-animate" style="text-align: center; border: 3px solid #00CED1;">
 				<h4>You are viewing the unique profile for:</h4>
 				<h4>{{username}} @ {{linkname}}</h4>
+		</div>
+		<div ng-if="!linkname" class="do-not-animate" style="text-align: center; border: 3px solid #00CED1;">
+				<h4>Retrieving health record verifications...</h4>
 		</div>
 		<hr>
 		<div>

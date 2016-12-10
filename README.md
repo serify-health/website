@@ -87,10 +87,9 @@ Disabled:
 
 ## Todo:
 * Fix the home page
-* Annoymous health results by allowing a user to generate a special link just for that login name on the other site. (so source usercode + nsource website + username is unique and will stop people stealing)
 * PNG display
 * logo.png dispaly
-* login flow, fix location
+* Check unauth to auth login flow.
 * main page necessary
 * user page display
 * update eventamanger and apiProvider to contain this services lambda and log function.

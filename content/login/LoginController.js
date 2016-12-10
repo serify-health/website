@@ -41,7 +41,6 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 			loginStatusProvider.logoutPromise()
 			.then(function() {
 				$scope.$apply(function(){ $scope.UserAuthenticated = false; });
-				guiManager.toast('Successfully logged out.', 1000, 'center');
 			}, function(failure) {
 				console.log(failure);
 				guiManager.toast('Failed to log out.', 1000, 'center');
@@ -58,9 +57,8 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 			console.log(JSON.stringify(dialogResult, null, 2));
 			// var isarray = Object.prototype.toString.call(dialogResult.value) === '[object Array]';
 			// if(!isarray || !dialogResult.value || dialogResult.value.length < 1) { return; }
-			if(dialogResult.value) {
-				return SetupUser();
-			}
+			//if(dialogResult.value) {
+			return SetupUser();
 		});
 	};
 	SetupUser();
