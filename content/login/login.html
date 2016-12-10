@@ -46,7 +46,7 @@
 									<th class="text-center">Test</th>
 									<th class="text-center">Date</th>
 									<th class="text-center">Verified</th>
-									<th class="text-center"></th>
+									<th class="text-center">Remove</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -93,18 +93,22 @@
 									<th class="text-center">Username</th>
 									<th class="text-center">Link Name</th>
 									<th class="text-center">Link</th>
+									<th class="text-center"><i class="fa fa-link" aria-hidden="true"></i></th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr ng-repeat="link in links">
 									<td>
 										<input type="text" ng-model="link.username" class="form-control" readonly>
-									</td> @ 
+									</td>
 									<td>
 										<input type="text" ng-model="link.linkname" class="form-control" readonly>
 									</td>
 									<td>
 										<input style="width:500px" type="text" ng-model="link.userlink" class="form-control" readonly>
+									</td>
+									<td>
+										<a type="button" class="btn btn-default btn-sm" target="_blank" ng-href="{{link.userlink}}"><i class="fa fa-external-link-square" aria-hidden="true"></i></a>
 									</td>
 								</tr>
 							</tbody>
