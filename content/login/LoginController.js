@@ -46,15 +46,7 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 			})
 			.then(function(links){
 				$scope.$apply(function(){
-					links.map(function(sourcelink){
-						console.log($scope.links);
-						if(!$scope.links.find(function(cachedlink){
-							return cachedlink.Base64Hash === sourcelink.Base64Hash;
-						})) {
-							console.log(sourcelink.Base64Hash);
-							$scope.links.push(sourcelink);
-						}
-					});
+					$scope.links = links;
 				});
 			});
 			return Promise.all([usernamemetadataPromise, linkHistoryListPromise]);

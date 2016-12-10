@@ -18,13 +18,13 @@ const _ = require('lodash');
 
 api.handler({
 	httpMethod: 'GET',
-	resourcePath: '/link',
+	resourcePath: '/links',
 	body: {
-		hash: 'd2Vic2l0ZTptZQ=='
+		//hash: 'd2Vic2l0ZTptZQ=='
 	}
 }, {
 	functionVersion: '0',
 	identity: {
-		cognitoIdentityId: 'us-east-1:2af551ca-69cd-4d67-8674-92f0ed8e007f'
+		cognitoIdentityId: 'us-east-1:62eb68de-e11b-4ca7-bc3b-a07b74f601ac'
 	}
 }, (a, c) => console.log(JSON.stringify(c, null, 2)));

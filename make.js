@@ -79,7 +79,7 @@ commander
 					{ AttributeName: 'UserId', AttributeType: 'S' },
 					{ AttributeName: 'Base64Hash', AttributeType: 'S' }
 				],
-				KeySchema: [{ AttributeName: 'UserId', KeyType: 'HASH' }],
+				KeySchema: [{ AttributeName: 'UserId', KeyType: 'HASH' }, { AttributeName: 'Base64Hash', KeyType: 'RANGE' }],
 				GlobalSecondaryIndexes: [
 					{
 						IndexName: 'HashLookup',
