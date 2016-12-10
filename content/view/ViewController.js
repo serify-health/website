@@ -70,4 +70,7 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 			});
 		});
 	});
+	$scope.ProfileButtonClick = function() {
+		pageService.NavigateToPage('/');
+	};
 }]);

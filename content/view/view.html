@@ -9,6 +9,9 @@
 						</li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
+						<li ng-show="UserAuthenticated">
+							<button type="button" class="btn btn-default btn-sm" ng-click="ProfileButtonClick()">Profile</button>
+						</li>
 						<li>
 							<button type="button" class="btn btn-default btn-sm" ng-click="SignInButtonClick()">{{UserAuthenticated ? 'Sign out' : 'Sign in/Sign up'}}</button>
 						</li>
