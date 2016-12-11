@@ -167,11 +167,11 @@ angular.module(GOLFPRO).provider('loginStatusProvider', [function() {
 		});
 		return Promise.all([getCognitoUserPoolAuthenticationPromise])
 		.then(function(result){
-			console.log('RESULT: ' + JSON.stringify(result, null, 2));
+			//console.log('RESULT: ' + JSON.stringify(result, null, 2));
 			var authentication = result.find(function(r) { return r !== null; });
 			if(authentication == null) { return Promise.reject('Not authenticated with any provider, please login.'); } //jshint ignore:line
 			if(AWS.config.credentials && !AWS.config.credentials.expired && AWS.config.credentials.expireTime > new Date()) {
-				console.log('credentials not expired, reusing.');
+				//console.log('credentials not expired, reusing.');
 				return authentication;
 			}
 

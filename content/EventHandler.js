@@ -61,7 +61,7 @@ angular.module(GOLFPRO).provider('eventHandler', ['apiServiceProvider', 'pageSer
 				var $http = $injector.get('$http');
 				return getLogObjectPromise(eventType, information)
 				.then(function(logObject) {
-					return $http({
+					var compositeLogObject = {
 						method: 'POST',
 						url: API_LOG_URL,
 						headers: {
@@ -73,12 +73,13 @@ angular.module(GOLFPRO).provider('eventHandler', ['apiServiceProvider', 'pageSer
 							LogReason: 'Log Capture',
 							UserGuid: userGuid
 						}
-					});
+					};
+					if(window.document.location.hostname === 'localhost') {
+						console.log(JSON.stringify(compositeLogObject, null, 2));
+					}
+					return $http(compositeLogObject);
 				})
-				.then(function(result) {
-					console.log(JSON.stringify({Title: 'Event captured by Api', Result: result}, null, 2));
-					return result;
-				}, function(error) {
+				.catch(function(error) {
 					console.error(JSON.stringify({Title: 'Event captured failed', Error: error.stack || error.toString(), Detail: error}, null, 2));
 					return Promise.reject({
 						Error: 'Failed to log event.',

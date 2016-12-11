@@ -15,7 +15,14 @@ module.provider('utilities', [function() {
 }]);
 module.config(['$animateProvider', '$routeProvider', function($animateProvider, $routeProvider) {
 	!$animateProvider.classNameFilter(/^(?!do-not-animate).*$/);
-	$routeProvider.otherwise({ templateUrl: 'notFound.html', controller: 'loginController' });
+	$routeProvider.otherwise({
+		templateUrl: 'notFound.html',
+		controller: ['eventHandler', function(eventHandler) {
+			eventHandler.capture('404', {
+				url: window.document.location.href
+			});
+		}]
+	});
 }]);
 module.factory('$exceptionHandler', ['$log', 'eventHandler', function($log, eventHandler) {
 	return function (exception, cause) {

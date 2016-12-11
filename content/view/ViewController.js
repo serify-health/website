@@ -60,7 +60,7 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 	.then(function() {
 		return linkManager.ResolveHashPromise($routeParams.base64hash)
 		.then(function(data) {
-			if(data == null) {
+			if(data === null) {
 				return Promise.reject({title: 'No data for hash', base64Hash: $routeParams.base64hash});
 			}
 			return userManager.GetUserDataPromise(data.UserId)
