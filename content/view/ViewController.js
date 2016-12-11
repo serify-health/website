@@ -19,11 +19,6 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 		return loginStatusProvider.validateAuthenticationPromise()
 		.then(function() {
 			$scope.UserAuthenticated = true;
-			return userManager.GetUserIdPromise().then(function(id){
-				$scope.$apply(function(){
-					$scope.UserId = id;
-				});
-			});
 		});
 	}
 
@@ -32,9 +27,6 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 			loginStatusProvider.logoutPromise()
 			.then(function() {
 				$scope.$apply(function(){ $scope.UserAuthenticated = false; });
-			}, function(failure) {
-				console.log(failure);
-				guiManager.toast('Failed to log out.', 1000, 'center');
 			});
 			return;
 		}
@@ -44,11 +36,7 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 			template: 'login/signup.html',
 			controller: 'signinController',
 			className: 'ngdialog-theme-default'
-		}).closePromise.then(function(dialogResult){
-			console.log(JSON.stringify(dialogResult, null, 2));
-			// var isarray = Object.prototype.toString.call(dialogResult.value) === '[object Array]';
-			// if(!isarray || !dialogResult.value || dialogResult.value.length < 1) { return; }
-			//if(dialogResult.value) {
+		}).closePromise.then(function(){
 			return SetupUser();
 		});
 	};
