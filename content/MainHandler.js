@@ -13,5 +13,11 @@ window.onerror = function(error, func, line) {
 		window.ErrorHandlerList.map(function(handler) {
 			handler(error, func, line);
 		});
+		if(ga) {
+			ga('send', 'exception', {
+				'exDescription': message,
+				'exFatal': false
+			});
+		}
 	}
 };

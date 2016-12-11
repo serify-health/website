@@ -1,4 +1,6 @@
 /***** GLOBALS *****/
+/* exported APPLICATION */
+var APPLICATION = 'Serify';
 /* exported AWS_REGION */
 var AWS_REGION = 'us-east-1';
 /* exported IDENTITY_POOL_ID */

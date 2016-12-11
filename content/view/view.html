@@ -22,12 +22,15 @@
 	</div>
 	<div class="ui" style="margin:0% 10% 0% 10%;width:80% !important">
 		<hr>
-		<div ng-show="linkname" class="do-not-animate" style="text-align: center; border: 3px solid #00CED1;">
+		<div ng-show="linkname && error" class="do-not-animate" style="text-align: center; border: 3px solid #00CED1;">
 				<h4>You are viewing the unique profile for:</h4>
 				<h4>{{username}} @ {{linkname}}</h4>
 		</div>
-		<div ng-show="!linkname" class="do-not-animate" style="text-align: center; border: 3px solid #00CED1;">
+		<div ng-show="!linkname && !error" class="do-not-animate" style="text-align: center; border: 3px solid #00CED1;">
 				<h4>Retrieving health record verifications...</h4>
+		</div>
+		<div ng-show="error" class="do-not-animate" style="text-align: center; border: 3px solid #FF0000;">
+				<h4>{{error}}</h4>
 		</div>
 		<hr>
 		<div>

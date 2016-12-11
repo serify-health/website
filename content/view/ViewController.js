@@ -60,6 +60,9 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 	.then(function() {
 		return linkManager.ResolveHashPromise($routeParams.base64hash)
 		.then(function(data) {
+			if(data == null) {
+				return Promise.reject({title: 'No data for hash', base64Hash: $routeParams.base64hash});
+			}
 			return userManager.GetUserDataPromise(data.UserId)
 			.then(function(userData){
 				$scope.$apply(function(){
@@ -68,6 +71,11 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 					$scope.verifications = (userData || {}).Verifications || [];
 				});
 			});
+		});
+	})
+	.catch(function(error){
+		$scope.$apply(function(){
+			$scope.error = 'This link is no longer valid.';
 		});
 	});
 	$scope.ProfileButtonClick = function() {
