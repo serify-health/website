@@ -25,38 +25,7 @@ angular.module(GOLFPRO).provider('eventHandler', ['apiServiceProvider', 'pageSer
 	if(!cachedUserGuid) { storageProviderService.Save('userGuid', userGuid); }
 	this.$get = ['$injector', function($injector) {
 		return {
-			log: function(eventType, information) {
-				var $http = $injector.get('$http');
-				getLogObjectPromise(eventType, information).then(function(logObject){
-					if(!isMobile) { return logObject; }
-					var dbEventPromise = apiServiceProvider.$get().getPromise('POST', '/event', logObject)
-					.then(function(success) {
-						console.log(JSON.stringify({Title: 'Event logged', Result: logObject}, null, 2));
-						return Promise.resolve(success);
-					});
-					var streamEventPromise = $http({
-						method: 'POST',
-						url: API_LOG_URL,
-						headers: {
-							'Content-Type': 'application/json'
-						},
-						data: {
-							Application: APPLICATION,
-							LogObject: logObject,
-							LogReason: 'Log Capture',
-							UserGuid: userGuid
-						}
-					});
-					return Promise.all([dbEventPromise, streamEventPromise])
-					.catch(function(failure) {
-						console.error(JSON.stringify({Title: 'Failed to log event.', LogObject: logObject, Error: failure.stack || failure.toString(), Detail: failure}, null, 2));
-						return Promise.reject({
-							Error: 'Failed to log event.',
-							Detail: failure
-						});
-					});
-				});
-			},
+			log: function(eventType, information) { return Promise.resolve(); },
 			capture: function(eventType, information) {
 				var $http = $injector.get('$http');
 				return getLogObjectPromise(eventType, information)

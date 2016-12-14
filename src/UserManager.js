@@ -17,7 +17,8 @@ UserManager.prototype.GetUser = function(body, environment, userId, callback) {
 		KeyConditionExpression: 'UserId = :id',
 		ExpressionAttributeValues: {
 			':id': lookupUser
-		}
+		},
+		ProjectionExpression: 'UserId, Verifications'
 	}).promise().then(result => result.Items[0]);
 
 	if(lookupUser === userId) {
@@ -48,6 +49,8 @@ UserManager.prototype.GetUser = function(body, environment, userId, callback) {
 };
 
 UserManager.prototype.SetVerifications = function(body, environment, userId, callback) {
+	var verifications = body.verifications;
+	var userInfo = body.user;
 	return this.DocClient.update({
 		TableName: `users.health-verify.${environment}`,
 		Key: {
@@ -56,11 +59,24 @@ UserManager.prototype.SetVerifications = function(body, environment, userId, cal
 		AttributeUpdates: {
 			'Verifications': {
 				Action: 'PUT',
-				Value: body
+				Value: verifications
+			},
+			'Demographics': {
+				Action: 'PUT',
+				Value: userInfo
 			}
 		},
 		ReturnValues: 'NONE'
 	}).promise()
+	.then(() => {
+		return this.DocClient.put({
+			TableName: `events.health-verify.${environment}`,
+			Item: {
+				UserId: userId,
+				Time: new Date().getTime()
+			}
+		}).promise();
+	})
 	.then(result => {
 		return callback({
 			statusCode: 200,

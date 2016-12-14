@@ -55,7 +55,7 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 			.then(function(userData){
 				$scope.$apply(function(){
 					$scope.linkname = data.Linkname;
-					$scope.username = data.Username;
+					$scope.username = data.Username || 'Anonymous';
 					$scope.verifications = (userData || {}).Verifications || [];
 				});
 			});

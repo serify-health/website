@@ -22,8 +22,11 @@ angular.module(GOLFPRO).service('userManager', [ 'apiService', 'loginStatusProvi
 			});
 		});
 	};
-	this.SetVerifications = function(verifications) {
-		return apiService.getPromise('POST', '/user/verifications', verifications)
+	this.SetVerifications = function(verifications, user) {
+		return apiService.getPromise('POST', '/user/verifications', {
+			verifications: verifications,
+			user: user
+		})
 		.then(function(result) {
 			console.log(JSON.stringify({Title: 'User Update Result', Result: result.toString(), Detail: result}, null, 2));
 			return result;

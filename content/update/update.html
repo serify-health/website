@@ -9,6 +9,9 @@
 						</li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
+						<li ng-show="UserAuthenticated">
+							<button type="button" class="btn btn-default btn-sm" ng-click="ProfileButtonClick()">Profile</button>
+						</li>
 						<li>
 							<button type="button" class="btn btn-default btn-sm" ng-click="SignInButtonClick()">{{UserAuthenticated ? 'Sign out' : 'Sign in/Sign up'}}</button>
 						</li>
@@ -18,18 +21,6 @@
 		</nav>
 	</div>
 	<div ng-show="UserAuthenticated" class="ui" style="margin:0% 10% 0% 10%;width:80% !important">
-		<div style="text-align:center">
-			Ensure your anonymity, use this link which identifies your profile:
-			<form class="form-inline">
-				<!--<div class="form-group">
-					<button ng-click="GetUserLinkClick()" class="btn btn-default"><i class="fa fa-link" aria-hidden="true"></i> Get User Link</button>
-				</div>-->
-				<div class="form-group" style="margin-top:5px">
-					<input style="width:600px" type="text" class="form-control" ng-model="userLink" aria-describedby="basic-addon1" readonly>
-				</div>
-			</form>
-		</div>
-		<hr>
 		<div>
 			<div class="container">
 				<div class="row clearfix">
@@ -40,12 +31,21 @@
 									<th class="text-center">Test</th>
 									<th class="text-center">Date</th>
 									<th class="text-center">Verified</th>
+									<th class="text-center">Remove</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr ng-repeat="verification in verifications">
 									<td>
-										<input class="form-control" ng-model="verification.Name" readonly>
+										<select class="form-control" ng-model="verification.Name">
+											<option value="HIV">HIV</option>
+											<option value="Gonorrhea">Gonorrhea</option>
+											<option value="Chlamydia">Chlamydia</option>
+											<option value="Herpes">Herpes</option>
+											<option value="Syphilis">Syphilis</option>
+											<option value="HPV">HPV Vaccine</option>
+											<option value="PrEP">Pre-exposure prophylaxis</option>
+										</select>
 									</td>
 									<td>
 										<input type="text" placeholder='Date' ng-model="verification.Date" class="form-control">
@@ -55,12 +55,55 @@
 										<i ng-if="verification.Status === 'Failed'" class="fa fa-times-circle-o fa-2x" aria-hidden="true"></i>
 										<i ng-if="verification.Status === 'Unknown'" class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
 									</td>
+									<td tabindex="-1" class="text-center">
+										<button tabindex="-1" type="button" class="btn btn-default btn-sm" ng-click="RemoveVerification(verification.Id)"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
+									</td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
 				</div>
-				<button ng-click="AddVerificationsButtonClick()" class="btn btn-default">Add New Verfication</button>
+				<button ng-click="AddRowButtonClick()" class="btn btn-default"><i class="fa fa-plus-square" aria-hidden="true"></i> Add Another</button>
+			</div>
+			<hr>
+			<div>
+				<table class="table table-bordered table-hover">
+					<tbody>
+						<tr>
+							<td class="text-center">Name</td>
+							<td class="text-center">
+								<input type="text" placeholder='Full Name (as it would appear on your records)' ng-model="name" class="form-control">
+							</td>
+						</tr>
+						<tr>
+							<td class="text-center">Date of Birth</td>
+							<td class="text-center">
+								<input type="text" placeholder='YYYY/MM/DD' ng-model="dob" class="form-control">
+							</td>
+						</tr>
+						<tr>
+							<td class="text-center">Last 4 digits of SSN</td>
+							<td class="text-center">
+								<input type="text" placeholder='XXXX' ng-model="ssn" class="form-control">
+							</td>
+						</tr>
+						<tr>
+							<td class="text-center">Name of Clinic</td>
+							<td class="text-center">
+								<input type="text" placeholder='clinic' ng-model="clinicName" class="form-control">
+							</td>
+						</tr>
+						<tr>
+							<td class="text-center">Address</td>
+							<td class="text-center">
+								<input type="text" placeholder='contact information' ng-model="clinicInfo" class="form-control">
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div style="text-align:right">
+				<button class="btn btn-default" ng-click="SubmitVerificationsButtonClick()">Submit</button>
 			</div>
 		</div>
 		<hr>
