@@ -63,9 +63,12 @@
 						</table>
 					</div>
 				</div>
-				<button ng-click="AddRowButtonClick()" class="btn btn-default"><i class="fa fa-plus-square" aria-hidden="true"></i> Add Another</button>
+				<button ng-click="AddRowButtonClick()" class="btn btn-default"><i class="fa fa-plus-square" aria-hidden="true"></i> Add additional test to verify</button>
 			</div>
 			<hr>
+			<div style="text-align:center">
+				<h4>Medical Test Release Form</h4>
+			</div>
 			<div>
 				<table class="table table-bordered table-hover">
 					<tbody>
@@ -95,6 +98,22 @@
 						</tr>
 					</tbody>
 				</table>
+				<div><center>
+					<table>
+						<thead>
+							<th><center>Signature</center></th>
+							<th></th>
+						</thead>
+						<tbody>
+							<td>
+								<canvas style="border:1px solid #000000;"></canvas>
+							</td>
+							<td>
+								<button type="button" class="btn btn-default btn-sm" ng-click="ClearSignatureButtonClick()" ><i class="fa fa-refresh" aria-hidden="true"></i></button>
+							</td>
+						</tbody>
+					</table></center>
+				</div>
 			</div>
 			<div style="text-align:right">
 				<button class="btn btn-default" ng-click="SubmitVerificationsButtonClick()">Submit</button>

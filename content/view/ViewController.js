@@ -18,7 +18,12 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 	function SetupUser() {
 		return loginStatusProvider.validateAuthenticationPromise()
 		.then(function() {
-			$scope.UserAuthenticated = true;
+			$scope.$apply(function() {
+				$scope.UserAuthenticated = true;
+			});
+		})
+		.catch(function(error) {
+			console.log('Failed to log user in: ' + error);
 		});
 	}
 

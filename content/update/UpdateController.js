@@ -66,7 +66,20 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 	$scope.RemoveVerification = function(verificationId) {
 		$scope.verifications.splice($scope.verifications.findIndex(function(v){ return v.Id === verificationId; }), 1);
 	};
+
+	var canvas = document.querySelector("canvas");
+	var signatureSet = false;
+	var signaturePad = new SignaturePad(canvas);
+
 	$scope.SubmitVerificationsButtonClick = function() {
+		if($scope.verifications.length < 1) {
+			guiManager.toast('Add a test to verify.');
+			return;
+		}
+		if(signaturePad.isEmpty()) {
+			guiManager.toast('Signature on the release form is requiired.');
+			return;
+		}
 		if(!$scope.UserAuthenticated) {
 			guiManager.toast('Create account to get your test results verified.');
 			return;
@@ -92,7 +105,8 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 			dob: $scope.dob,
 			name: $scope.name,
 			clinicInfo: $scope.clinicInfo,
-			clinicName: $scope.clinicName
+			clinicName: $scope.clinicName,
+			signature: signaturePad.toDataURL()
 		};
 		var verificationPromise = userManager.VerificationRequest($scope.verifications, userDetails)
 		.then(function(){
@@ -106,5 +120,8 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 		$scope.ProfileButtonClick = function() {
 			pageService.NavigateToPage('/');
 		};
+	};
+	$scope.ClearSignatureButtonClick = function() {
+		signaturePad.clear();
 	};
 }]);
