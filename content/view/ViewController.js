@@ -54,7 +54,7 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 			return userManager.GetUserDataPromise(data.UserId)
 			.then(function(userData){
 				$scope.$apply(function(){
-					$scope.linkname = data.Linkname;
+					$scope.linkname = data.Linkname || 'NULL';
 					$scope.username = data.Username || 'Anonymous';
 					$scope.verifications = (userData || {}).Verifications || [];
 				});

@@ -27,17 +27,6 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 			});
 		}, function(notLoggedIn){
 			pageService.NavigateToPage('/');
-		})
-		.then(function(){
-			var usernamemetadataPromise = userManager.GetUserDataPromise()
-			.then(function(userData){
-				$scope.$apply(function(){
-					$scope.verifications = (userData || {}).Verifications || [];
-					if($scope.verifications.length === 0) { $scope.AddRowButtonClick(); }
-				});
-			});
-			var usernameLinkCreationPromise = linkManager.GetNewLinkPromise(null, null);
-			return Promise.all([usernamemetadataPromise, usernameLinkCreationPromise]);
 		});
 	}
 
@@ -82,10 +71,6 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 			guiManager.toast('Create account to get your test results verified.');
 			return;
 		}
-		if(!$scope.ssn) {
-			guiManager.toast('Please enter the last 4 digits of your SSN.');
-			return;
-		}
 		if(!$scope.name) {
 			guiManager.toast('Please enter your full name.');
 			return;
@@ -104,13 +89,12 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 		}
 
 		var userDetails = {
-			ssn: $scope.ssn,
 			dob: $scope.dob,
 			name: $scope.name,
 			clinicInfo: $scope.clinicInfo,
 			clinicName: $scope.clinicName
-		}
-		var verificationPromise = userManager.SetVerifications($scope.verifications, userDetails)
+		};
+		var verificationPromise = userManager.VerificationRequest($scope.verifications, userDetails)
 		.then(function(){
 			guiManager.toast('Verifications Submitted.', 1000, 'center');
 			pageService.NavigateToPage('/');

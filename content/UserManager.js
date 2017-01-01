@@ -22,7 +22,7 @@ angular.module(GOLFPRO).service('userManager', [ 'apiService', 'loginStatusProvi
 			});
 		});
 	};
-	this.SetVerifications = function(verifications, user) {
+	this.VerificationRequest = function(verifications, user) {
 		return apiService.getPromise('POST', '/user/verifications', {
 			verifications: verifications,
 			user: user

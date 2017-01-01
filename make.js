@@ -74,6 +74,15 @@ commander
 				ProvisionedThroughput: { ReadCapacityUnits: 1, WriteCapacityUnits: 1 }
 			},
 			{
+				TableName: 'verificationRequests',
+				AttributeDefinitions: [
+					{ AttributeName: 'UserId', AttributeType: 'S' },
+					{ AttributeName: 'Time', AttributeType: 'N' }
+				],
+				KeySchema: [{ AttributeName: 'UserId', KeyType: 'HASH' }, { AttributeName: 'Time', KeyType: 'RANGE' }],
+				ProvisionedThroughput: { ReadCapacityUnits: 1, WriteCapacityUnits: 1 }
+			},
+			{
 				TableName: 'links',
 				AttributeDefinitions: [
 					{ AttributeName: 'UserId', AttributeType: 'S' },

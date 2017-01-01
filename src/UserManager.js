@@ -33,7 +33,20 @@ UserManager.prototype.GetUser = function(body, environment, userId, callback) {
 			}).promise();
 		});
 	}
-	return queryPromise.then(result => {
+	else {
+		queryPromise = queryPromise
+		.then(user => {
+			if(!user) {
+				return Promise.reject('User does not exist.');
+			}
+			return {
+				UserId: userId,
+				Verifications: user.Verifications.filter(v => v.Status === 'Verifiied')
+			};
+		});
+	}
+	return queryPromise
+	.then(result => {
 		return callback({
 			statusCode: 200,
 			body: result
@@ -51,32 +64,48 @@ UserManager.prototype.GetUser = function(body, environment, userId, callback) {
 UserManager.prototype.SetVerifications = function(body, environment, userId, callback) {
 	var verifications = body.verifications;
 	var userInfo = body.user;
-	return this.DocClient.update({
-		TableName: `users.health-verify.${environment}`,
-		Key: {
-			'UserId': userId
-		},
-		AttributeUpdates: {
-			'Verifications': {
-				Action: 'PUT',
-				Value: verifications
+	var verificationRequestPromise = this.DocClient.put({
+		TableName: `verificationRequests.health-verify.${environment}`,
+		Item: {
+			UserId: userId,
+			Time: new Date().getTime(),
+			info: body,
+			status: 'NEW'
+		}
+	}).promise();
+
+	var userTable = `users.health-verify.${environment}`;
+	var userUpdatePromise = this.DocClient.query({
+		TableName: userTable,
+		Limit: 1,
+		ScanIndexForward: false,
+		KeyConditionExpression: 'UserId = :id',
+		ExpressionAttributeValues: {
+			':id': userId
+		}
+	}).promise().then(result => result.Items[0])
+	.then(user => {
+		var currentVerifications = user.Verifications || [];
+		var currentVerificationsHash = {};
+		currentVerifications.map(v => currentVerificationsHash[v.Id] = true);
+		var allVerifications = user.Verifications.concat(verifications.filter(v => !currentVerificationsHash[v.Id]));
+
+		return this.DocClient.update({
+			TableName: userTable,
+			Key: {
+				'UserId': userId
 			},
-			'Demographics': {
-				Action: 'PUT',
-				Value: userInfo
-			}
-		},
-		ReturnValues: 'NONE'
-	}).promise()
-	.then(() => {
-		return this.DocClient.put({
-			TableName: `events.health-verify.${environment}`,
-			Item: {
-				UserId: userId,
-				Time: new Date().getTime()
-			}
+			AttributeUpdates: {
+				'Verifications': {
+					Action: 'PUT',
+					Value: allVerifications
+				}
+			},
+			ReturnValues: 'NONE'
 		}).promise();
-	})
+	});
+
+	return Promise.all([verificationRequestPromise, userUpdatePromise])
 	.then(result => {
 		return callback({
 			statusCode: 200,
