@@ -20,11 +20,6 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 		return loginStatusProvider.validateAuthenticationPromise()
 		.then(function() {
 			$scope.UserAuthenticated = true;
-			return userManager.GetUserIdPromise().then(function(id){
-				$scope.$apply(function(){
-					$scope.UserId = id; 
-				});
-			});
 		}, function(notLoggedIn){
 			pageService.NavigateToPage('/');
 		});

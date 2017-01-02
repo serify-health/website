@@ -3,20 +3,7 @@
 function EventManager(docClient){
 	this.DocClient = docClient;
 };
-EventManager.prototype.GetPlatform = function(userId, environment){
-	return this.DocClient.query({
-		TableName: `events.golf-pro.${environment}`,
-		Limit: 1,
-		ScanIndexForward: false,
-		KeyConditionExpression: 'UserId = :id',
-		ExpressionAttributeValues: {
-			':id': userId
-		}
-	}).promise().then(result => {
-		var loginEvent = result.Items.find(item => item.Detail && item.Detail.device && item.Detail.device.platform);
-		return loginEvent ? loginEvent.platform : 'Android';
-	});
-};
+
 EventManager.prototype.CreateEvent = function(body, environment, userId, callback) {
 	if(!body.detail) {
 		return callback({
@@ -34,7 +21,7 @@ EventManager.prototype.CreateEvent = function(body, environment, userId, callbac
 	}
 	var creationTime = new Date();
 	return this.DocClient.put({
-		TableName: `events.golf-pro.${environment}`,
+		TableName: `events.health-verify.${environment}`,
 		Item: {
 			UserId: userId,
 			Time: creationTime.getTime(),

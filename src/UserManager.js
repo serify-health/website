@@ -23,6 +23,17 @@ UserManager.prototype.GetUser = function(body, environment, userId, callback) {
 
 	if(lookupUser === userId) {
 		queryPromise = queryPromise
+		.then(user => {
+			if(user == null) {
+				return this.DocClient.put({
+					TableName: table,
+					Item: {
+						UserId: userId
+					}
+				}).promise();
+			}
+			return user;
+		})
 		.catch(error => {
 			if(error.code !== 'ResourceNotFoundException') { return Promise.reject(error); }
 			return this.DocClient.put({
