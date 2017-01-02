@@ -1,0 +1,71 @@
+<div class="loginScreen">
+	<div class="custom-navbar">
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="container-fluid">
+				<div class="">
+					<ul class="nav navbar-nav navbar-left">
+						<li>
+							<div style="font-size:20px"><i class="fa fa-check-square-o" aria-hidden="true"></i> Serify</div>
+						</li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li ng-show="UserAuthenticated">
+							<button type="button" class="btn btn-default btn-sm" ng-click="ProfileButtonClick()">Profile</button>
+						</li>
+						<li>
+							<button type="button" class="btn btn-default btn-sm" ng-click="SignInButtonClick()">{{UserAuthenticated ? 'Sign out' : 'Sign in/Sign up'}}</button>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</div>
+	<div ng-show="UserAuthenticated" class="ui" style="margin:0% 10% 0% 10%;width:80% !important">
+		<div>
+			<div class="container">
+				<div class="row clearfix">
+					<div class="col-md-10 column">
+						<table class="table table-bordered table-hover">
+							<thead>
+								<th class="text-center">Name</th>
+								<th class="text-center">DOB</th>
+								<th class="text-center">Clinic</th>
+								<th class="text-center">Address</th>
+								<th class="text-center">Verifications</th>
+								<th class="text-center">Signature</th>
+								<th class="text-center">Approve</th>
+							</thead>
+							<tbody style="height: 40px">
+								<tr ng-repeat="verificationRequest in verificationRequests | filter:{'status':'NEW'}">
+									<td>
+										{{ verificationRequest.name }}
+									</td>
+									<td>
+										{{ verificationRequest.dob }}
+									</td>
+									<td>
+										{{ verificationRequest.clinic }}
+									</td>
+									<td>
+										{{ verificationRequest.address }}
+									</td>
+									<td>
+										<div style="width: 100px;" ng-repeat="verification in verificationRequest.verifications track by $index">
+											{{ verification.name }} - {{ verification.date }}
+										</div>
+									</td>
+									<td style="width: 200px; text-align: center">
+										<img style="max-height: 40px" ng-src="{{verificationRequest.signature}}">
+									</td>
+									<td style="width: 60px;">
+										<button tabindex="-1" type="button" class="btn btn-default btn-sm" ng-click="VerificationRequestApproveClick(verificationRequest)">Approve</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

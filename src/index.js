@@ -13,6 +13,8 @@ var LinkManager = require('./LinkManager');
 var linkManager = new LinkManager(docClient);
 var EventManager = require('./EventManager');
 var eventManager = new EventManager(docClient);
+var VerificationManager = require('./VerificationManager');
+var verificationManager = new VerificationManager(docClient);
 
 var routes = {
 	'/link': {
@@ -26,7 +28,11 @@ var routes = {
 		'GET': (body, environment, userId, callback) => userManager.GetUser(body, environment, userId, callback),
 	},
 	'/user/verifications': {
-		'POST': (body, environment, userId, callback) => userManager.SetVerifications(body, environment, userId, callback),	
+		'POST': (body, environment, userId, callback) => userManager.SetVerifications(body, environment, userId, callback),
+	},
+	'/verifications': {
+		'GET': (body, environment, userId, callback) => verificationManager.GetVerifications(body, environment, userId, callback),
+		'POST': (body, environment, userId, callback) => verificationManager.SetVerificationResult(body, environment, userId, callback)
 	},
 	'/event': {
 		'POST': (body, environment, userId, callback) => eventManager.CreateEvent(body, environment, userId, callback)

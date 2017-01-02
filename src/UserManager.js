@@ -69,8 +69,8 @@ UserManager.prototype.SetVerifications = function(body, environment, userId, cal
 		Item: {
 			UserId: userId,
 			Time: new Date().getTime(),
-			info: body,
-			status: 'NEW'
+			Info: body,
+			Status: 'NEW'
 		}
 	}).promise();
 

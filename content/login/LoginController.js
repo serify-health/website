@@ -15,6 +15,7 @@ angular.module(GOLFPRO).controller('loginController', [
 	'linkManager',
 function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pageService, userManager, ngDialog, utilities, linkManager) {
 	/******** SignInButton Block ********/
+	$scope.IsAdmin = false;
 	$scope.UserAuthenticated = false;
 	$scope.links = [];
 	function SetupUser() {
@@ -22,8 +23,15 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 		.then(function() {
 			$scope.UserAuthenticated = true;
 			return userManager.GetUserIdPromise().then(function(id){
+				function IsAdmin(userId) {
+					var adminUsers = {
+						'us-east-1:b5c9e3b0-a191-4c83-9b7b-413a8dd6bfea': true
+					};
+					return adminUsers[userId]
+				}
 				$scope.$apply(function(){
-					$scope.UserId = id; 
+					$scope.UserId = id;
+					$scope.IsAdmin = IsAdmin(id);
 				});
 			});
 		})
@@ -71,5 +79,8 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 	$scope.verifications = [];
 	$scope.AddVerificationsButtonClick = function(){
 		pageService.NavigateToPage('update');
+	};
+	$scope.AdminButtonClick = function() {
+		pageService.NavigateToPage('admin');
 	};
 }]);

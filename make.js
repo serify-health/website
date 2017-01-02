@@ -77,9 +77,18 @@ commander
 				TableName: 'verificationRequests',
 				AttributeDefinitions: [
 					{ AttributeName: 'UserId', AttributeType: 'S' },
-					{ AttributeName: 'Time', AttributeType: 'N' }
+					{ AttributeName: 'Time', AttributeType: 'N' },
+					{ AttributeName: 'Status', AttributeType: 'S' },
 				],
 				KeySchema: [{ AttributeName: 'UserId', KeyType: 'HASH' }, { AttributeName: 'Time', KeyType: 'RANGE' }],
+				GlobalSecondaryIndexes: [
+					{
+						IndexName: 'StatusLookup',
+						KeySchema: [{ AttributeName: 'Status', KeyType: 'HASH' }],
+						Projection: { ProjectionType: 'ALL' },
+						ProvisionedThroughput: { ReadCapacityUnits: 1, WriteCapacityUnits: 1 }
+					}
+				],
 				ProvisionedThroughput: { ReadCapacityUnits: 1, WriteCapacityUnits: 1 }
 			},
 			{
