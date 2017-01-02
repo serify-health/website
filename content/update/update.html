@@ -30,7 +30,6 @@
 								<tr>
 									<th class="text-center">Test</th>
 									<th class="text-center">Date</th>
-									<th class="text-center">Verified</th>
 									<th class="text-center">Remove</th>
 								</tr>
 							</thead>
@@ -49,11 +48,6 @@
 									</td>
 									<td>
 										<input type="text" placeholder='Date' ng-model="verification.Date" class="form-control">
-									</td>
-									<td tabindex="-1" style="text-align:center">
-										<i ng-if="verification.Status === 'Verified'" class="fa fa-check-square-o fa-2x" aria-hidden="true"></i>
-										<i ng-if="verification.Status === 'Failed'" class="fa fa-times-circle-o fa-2x" aria-hidden="true"></i>
-										<i ng-if="verification.Status === 'Unknown'" class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
 									</td>
 									<td tabindex="-1" class="text-center">
 										<button tabindex="-1" type="button" class="btn btn-default btn-sm" ng-click="RemoveVerification(verification.Id)"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
