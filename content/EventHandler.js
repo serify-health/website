@@ -25,7 +25,6 @@ angular.module(GOLFPRO).provider('eventHandler', ['apiServiceProvider', 'pageSer
 	if(!cachedUserGuid) { storageProviderService.Save('userGuid', userGuid); }
 	this.$get = ['$injector', function($injector) {
 		return {
-			log: function(eventType, information) { return Promise.resolve(); },
 			capture: function(eventType, information) {
 				var $http = $injector.get('$http');
 				return getLogObjectPromise(eventType, information)

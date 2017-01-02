@@ -26,7 +26,7 @@ module.config(['$animateProvider', '$routeProvider', function($animateProvider, 
 }]);
 module.factory('$exceptionHandler', ['$log', 'eventHandler', function($log, eventHandler) {
 	return function (exception, cause) {
-		eventHandler.log('AngularError', {
+		eventHandler.capture('AngularError', {
 			exception: exception.toString(),
 			stack: exception.stack,
 			cause: cause
@@ -48,7 +48,7 @@ module.run(['$rootScope', '$window', '$location', '$animate', 'eventHandler', 'p
 
 	//Force loading of the error service one time.
 	$window.ErrorHandlerList.push(function(error, func, line){
-		eventHandler.log('UnhandledUiError', {
+		eventHandler.capture('UnhandledUiError', {
 			error: error.toString(),
 			function: func.toString() + ':' + line.toString(),
 			detail: JSON.stringify(func) + ' - ' + JSON.stringify(line)

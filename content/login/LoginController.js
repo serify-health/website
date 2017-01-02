@@ -27,7 +27,7 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 					var adminUsers = {
 						'us-east-1:b5c9e3b0-a191-4c83-9b7b-413a8dd6bfea': true
 					};
-					return adminUsers[userId]
+					return adminUsers[userId];
 				}
 				$scope.$apply(function(){
 					$scope.UserId = id;

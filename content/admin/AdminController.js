@@ -102,7 +102,7 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 				var foundVerificationRequest = $scope.verificationRequests.find(function(r) {
 					return r.userId === verificationRequest.userId && r.time === verificationRequest.time;
 				});
-				foundVerificationRequest.status = 'VERIFIED'
+				foundVerificationRequest.status = 'VERIFIED';
 			});
 		})
 		.catch(function(error) {
