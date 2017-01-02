@@ -2,7 +2,7 @@
 
 function EventManager(docClient){
 	this.DocClient = docClient;
-};
+}
 
 EventManager.prototype.CreateEvent = function(body, environment, userId, callback) {
 	if(!body.detail) {

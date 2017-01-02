@@ -4,7 +4,7 @@ const fs = require('fs');
 
 function LinkManager(docClient, s3client){
 	this.DocClient = docClient;
-};
+}
 
 LinkManager.prototype.GetUserFromLink = function(body, environment, userId, callback) {
 	var base64hash = body.hash;
@@ -61,7 +61,7 @@ LinkManager.prototype.CreateNewLink = function(body, environment, userId, callba
 	var linkname = body.linkname;
 	var username = body.username;
 	var hash = `${linkname}:${username}:${userId}`;
-	var base64hash = new Buffer(hash).toString('base64')
+	var base64hash = new Buffer(hash).toString('base64');
 	return this.DocClient.put({
 		TableName: `links.health-verify.${environment}`,
 		Item: {

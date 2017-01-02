@@ -5,7 +5,7 @@ const fs = require('fs');
 function UserManager(docClient, s3client){
 	this.DocClient = docClient;
 	this.S3client = s3client;
-};
+}
 
 UserManager.prototype.GetUser = function(body, environment, userId, callback) {
 	var table = `users.health-verify.${environment}`;
@@ -24,7 +24,9 @@ UserManager.prototype.GetUser = function(body, environment, userId, callback) {
 	if(lookupUser === userId) {
 		queryPromise = queryPromise
 		.then(user => {
+			/* jshint -W041 */
 			if(user == null) {
+			/* jshint +W041 */
 				return this.DocClient.put({
 					TableName: table,
 					Item: {

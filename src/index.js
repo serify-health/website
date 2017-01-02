@@ -57,7 +57,7 @@ exports.handler = (event, context, callback, debug) => {
 	var environment = 'v1'; //functionVersion.match(/LATEST/) ? 'test' : 'prod';
 
 	if(!context.identity || !context.identity.cognitoIdentityId) {
-		var logResponse = {
+		let logResponse = {
 			statusCode: 400,
 			error: 'No identity defined',
 			detail: {
@@ -74,7 +74,7 @@ exports.handler = (event, context, callback, debug) => {
 	var userId = context.identity.cognitoIdentityId;
 	try {
 		if(!resourcePath || !httpMethod) {
-			var logResponse = {
+			let logResponse = {
 				statusCode: 400,
 				error: 'The API resourcePath or httpMethod were not defined.',
 				detail: {
@@ -120,7 +120,9 @@ exports.handler = (event, context, callback, debug) => {
 					userId: userId
 				}
 			};
+			/* jshint -W041 */
 			if(x.statusCode == null) {
+			/* jshint +W041 */
 				if(!debug) { console.error(`StatusCode not defined: ${JSON.stringify(logResponse, null, 2)}`); }
 				return callback(null, {
 					statusCode: 500,

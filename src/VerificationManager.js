@@ -4,7 +4,7 @@ const fs = require('fs');
 
 function VerificationManager(docClient){
 	this.DocClient = docClient;
-};
+}
 
 function IsAdmin(userId) {
 	var adminUsers = {
@@ -20,7 +20,7 @@ function IsAdmin(userId) {
 		'us-east-1:2ab27d83-5b48-4d7b-a700-ed5461b9303f': true,
 		'us-east-1:0013876b-6562-4f7f-bb72-f4f0d2b0367a': true
 	};
-	return adminUsers[userId]
+	return adminUsers[userId];
 }
 VerificationManager.prototype.GetVerifications = function(body, environment, userId, callback) {
 	if(!IsAdmin(userId)) {
@@ -140,6 +140,6 @@ VerificationManager.prototype.SetVerificationResult = function(body, environment
 			detail: error
 		});
 	});
-}
+};
 
 module.exports = VerificationManager;
