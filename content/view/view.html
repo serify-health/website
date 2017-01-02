@@ -46,7 +46,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr ng-repeat="verification in verifications">
+								<tr ng-repeat="verification in verifications track by $index">
 									<td>
 										<input readonly ng-model="verification.Name" class="form-control" />
 									</td>
