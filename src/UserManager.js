@@ -54,7 +54,7 @@ UserManager.prototype.GetUser = function(body, environment, userId, callback) {
 			}
 			return {
 				UserId: userId,
-				Verifications: user.Verifications.filter(v => v.Status === 'Verifiied')
+				Verifications: (user.Verifications || []).filter(v => v.Status === 'Verifiied')
 			};
 		});
 	}
@@ -101,7 +101,7 @@ UserManager.prototype.SetVerifications = function(body, environment, userId, cal
 		var currentVerifications = user.Verifications || [];
 		var currentVerificationsHash = {};
 		currentVerifications.map(v => currentVerificationsHash[v.Id] = true);
-		var allVerifications = user.Verifications.concat(verifications.filter(v => !currentVerificationsHash[v.Id]));
+		var allVerifications = currentVerifications.concat(verifications.filter(v => !currentVerificationsHash[v.Id]));
 
 		return this.DocClient.update({
 			TableName: userTable,
