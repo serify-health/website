@@ -57,11 +57,14 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 				return Promise.reject({title: 'No data for hash', base64Hash: $routeParams.base64hash});
 			}
 			return userManager.GetUserDataPromise(data.UserId)
-			.then(function(userData){
+			.then(function(user){
 				$scope.$apply(function(){
+					var nonNullUser = user || {};
+					var userData = nonNullUser.userData || {};
 					$scope.linkname = data.Linkname || 'NULL';
-					$scope.username = data.Username || 'Anonymous';
-					$scope.verifications = (userData || {}).Verifications || [];
+					$scope.username = userData.username || data.Username || 'Anonymous';
+					$scope.profile = userData.profile;
+					$scope.verifications = nonNullUser.Verifications || [];
 				});
 			});
 		});

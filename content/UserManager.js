@@ -53,4 +53,18 @@ angular.module(GOLFPRO).service('userManager', [ 'apiService', 'loginStatusProvi
 			});
 		});
 	};
+	this.UpdateUserDataPromise = function(data) {
+		return apiService.getPromise('PUT', '/user/data', data)
+		.then(function(result) {
+			console.log(JSON.stringify({Title: 'User Update Result', Result: result.toString(), Detail: result}, null, 2));
+			return result;
+		})
+		.catch(function(failure) {
+			console.error(JSON.stringify({Title: 'Failed to update user.', Error: failure.stack || failure.toString(), Detail: failure}, null, 2));
+			return Promise.reject({
+				Error: 'Unable to update current user, please resumbit.',
+				Detail: failure
+			});
+		});
+	};
 }]);

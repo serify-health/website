@@ -19,16 +19,19 @@ var verificationManager = new VerificationManager(docClient);
 var routes = {
 	'/link': {
 		'GET': (body, environment, userId, callback) => linkManager.GetUserFromLink(body, environment, userId, callback),
-		'POST': (body, environment, userId, callback) => linkManager.CreateNewLink(body, environment, userId, callback),
+		'POST': (body, environment, userId, callback) => linkManager.CreateNewLink(body, environment, userId, callback)
 	},
 	'/links': {
-		'GET': (body, environment, userId, callback) => linkManager.GetAllUserLinks(body, environment, userId, callback),
+		'GET': (body, environment, userId, callback) => linkManager.GetAllUserLinks(body, environment, userId, callback)
 	},
 	'/user': {
-		'GET': (body, environment, userId, callback) => userManager.GetUser(body, environment, userId, callback),
+		'GET': (body, environment, userId, callback) => userManager.GetUser(body, environment, userId, callback)
 	},
 	'/user/verifications': {
-		'POST': (body, environment, userId, callback) => userManager.SetVerifications(body, environment, userId, callback),
+		'POST': (body, environment, userId, callback) => userManager.SetVerifications(body, environment, userId, callback)
+	},
+	'/user/data': {
+		'PUT': (body, environment, userId, callback) => userManager.SetUserData(body, environment, userId, callback)
 	},
 	'/verifications': {
 		'GET': (body, environment, userId, callback) => verificationManager.GetVerifications(body, environment, userId, callback),

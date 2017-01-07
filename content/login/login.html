@@ -33,6 +33,26 @@
 			</form>
 		</div>
 		<hr>
+		<div class="container" style="width:50%">
+			<form class="form-horizontal">
+				<div class="form-group">
+					<label for="username" class="col-sm-2 control-label">Username: </label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="username" ng-model="username" placeholder="Anonymous">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="userProfile" class="col-sm-2 control-label">Info: </label>
+					<div class="col-sm-10">
+						<textarea name="userProfile" cols="50" rows="5" ng-model="userProfile"></textarea>
+					</div>
+				</div>
+			</form>
+			<div class="pull-right">
+				<button ng-click="SaveProfileButtonClick()" class="btn btn-default">Save</button>
+			</div>
+		</div>
+		<hr>
 		<div>
 			<div class="container">
 				<div class="row clearfix">

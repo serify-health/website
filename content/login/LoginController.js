@@ -47,9 +47,11 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 		})
 		.then(function(){
 			var usernamemetadataPromise = userManager.GetUserDataPromise()
-			.then(function(userData){
+			.then(function(user){
 				$scope.$apply(function(){
-					$scope.verifications = (userData || {}).Verifications || [];
+					$scope.userProfile = (user.userData || {}).profile;
+					$scope.username = (user.userData || {}).username;
+					$scope.verifications = (user || {}).Verifications || [];
 				});
 			});
 			var usernameLinkCreationPromise = linkManager.GetNewLinkPromise(null, null)
@@ -92,5 +94,14 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 	};
 	$scope.AdminButtonClick = function() {
 		pageService.NavigateToPage('admin');
+	};
+	$scope.SaveProfileButtonClick = function() {
+		userManager.UpdateUserDataPromise({
+			profile: $scope.userProfile,
+			username: $scope.username
+		}).catch(function(failure) {
+			console.error("Failed to save user profile: " + failure);
+			guiManager.toast('Failed to save profile. Please try again.', 1000, 'top');
+		});
 	};
 }]);

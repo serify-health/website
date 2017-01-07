@@ -18,7 +18,8 @@ UserManager.prototype.GetUser = function(body, environment, userId, callback) {
 		ExpressionAttributeValues: {
 			':id': lookupUser
 		},
-		ProjectionExpression: 'UserId, Verifications'
+		//Before adding to this list, check out http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ReservedWords.html
+		ProjectionExpression: 'UserId, Verifications, userData'
 	}).promise().then(result => result.Items[0]);
 
 	if(lookupUser === userId) {
@@ -69,6 +70,36 @@ UserManager.prototype.GetUser = function(body, environment, userId, callback) {
 		return callback({
 			statusCode: 400,
 			error: `Unable to retrieve user: ${error.stack || error.toString()}`,
+			detail: error
+		});
+	});
+};
+
+UserManager.prototype.SetUserData = function(body, environment, userId, callback) {
+	var userTable = `users.health-verify.${environment}`;
+	return this.DocClient.update({
+		TableName: userTable,
+		Key: {
+			'UserId': userId
+		},
+		AttributeUpdates: {
+			'userData': {
+				Action: 'PUT',
+				Value: body
+			}
+		},
+		ReturnValues: 'NONE'
+	}).promise()
+	.then(result => {
+		return callback({
+			statusCode: 200,
+			body: result
+		});
+	})
+	.catch(error => {
+		return callback({
+			statusCode: 400,
+			error: `Unable to update profile: ${error.stack || error.toString()}`,
 			detail: error
 		});
 	});
