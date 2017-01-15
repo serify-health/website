@@ -22,27 +22,35 @@
 	</div>
 	<div ng-show="UserAuthenticated" class="ui" style="margin:0% 10% 0% 10%;width:80% !important">
 		<div style="text-align:center">
-			Ensure your anonymity, use this link which identifies your profile:
 			<form class="form-inline">
 				<!--<div class="form-group">
 					<button ng-click="GetUserLinkClick()" class="btn btn-default"><i class="fa fa-link" aria-hidden="true"></i> Get User Link</button>
 				</div>-->
-				<div class="form-group" style="margin-top:5px">
+				<!--<div class="form-group" style="margin-top:5px">
+					<label>Profile Link &nbsp;&nbsp;</label>
+					<div class="input-group-addon">@</div>
 					<input style="width:600px" type="text" class="form-control" ng-model="userLink" aria-describedby="basic-addon1" readonly>
+				</div>-->
+				<label class="sr-only" for="inlineFormInputGroup">Username</label>
+				<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+					<div class="input-group-addon"><i class="fa fa-link" aria-hidden="true"></i> Profile Link</div>
+					<input style="width:600px" type="text" class="form-control" ng-model="userLink" id="inlineFormInputGroup" placeholder="UsernameLink" readonly>
 				</div>
 			</form>
 		</div>
 		<hr>
+		Enter your information here to show with potential partners. The data you enter here will be visible on your public profile.
+		<br><br>
 		<div class="container" style="width:50%">
 			<form class="form-horizontal">
 				<div class="form-group">
-					<label for="username" class="col-sm-2 control-label">Username: </label>
+					<label for="username" class="col-sm-2 control-label">Name </label>
 					<div class="col-sm-10">
 						<input type="text" class="form-control" id="username" ng-model="username" placeholder="Anonymous">
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="userProfile" class="col-sm-2 control-label">Info: </label>
+					<label for="userProfile" class="col-sm-2 control-label">Info </label>
 					<div class="col-sm-10">
 						<textarea name="userProfile" cols="50" rows="5" ng-model="userProfile"></textarea>
 					</div>
