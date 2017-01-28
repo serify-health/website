@@ -89,7 +89,8 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
             }, function(error) {
                 switch (error.code) {
                     case 'UsernameExistsException':
-                        return signInUser(signinUsername, signinPassword);
+                        guiManager.toast('A user with that email address already exists.', 1000, 'center');
+                        break;
                     case 'NotAuthorizedException':
                         guiManager.toast('There was an issue logging in with that email and password, please try again.', 3000, 'center');
                         break;
