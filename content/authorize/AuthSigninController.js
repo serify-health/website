@@ -1,4 +1,4 @@
-angular.module(GOLFPRO).controller('signinController', [
+angular.module(GOLFPRO).controller('authSigninController', [
 	'$scope',
 	'$routeParams',
 	'loginStatusProvider',
@@ -15,96 +15,10 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
         return loginStatusProvider.confirmUsernamePromise($routeParams.pin, username, password)
         .then(function(){
             console.log('User logged in: ' + username);
-            // return userManager.UpdateUserPromise({
-            // 	info: {
-            // 		Name: username.slice(0, username.indexOf('@')),
-            // 		Email: username,
-            // 		ShortName: username.slice(0, Math.min(4, username.indexOf('@')))
-            // 	}
-            // });
         })
         .then(function(){ $scope.closeThisDialog(true); });
     }
     var forgotPasswordFlow = storageProvider.Get('forgotPassword');
-
-    $scope.ForgotPasswordButtonClick = function() {
-        if (!$scope.email || !$scope.email.match(/^[A-Z0-9][A-Z0-9._%+-]*@[A-Z0-9.-]+\.[A-Z]{2,}$/i)) {
-            guiManager.toast('Please enter a valid email address.', 1000, 'center');
-        }
-        else if(!$scope.password || $scope.password.length < 8) {
-            guiManager.toast('Enter a new password which must be at least 8 characters.', 1000, 'center');
-        }
-        else {
-            var username = $scope.email.toLowerCase();
-            var password = $scope.password;
-            storageProvider.Save('username', username);
-            storageProvider.Save('password', password);
-            storageProvider.Save('forgotPassword', true);
-            eventHandler.capture('ForgotPassword', {Title: 'Starting forgot password flow', User: username});
-            loginStatusProvider.startForgotPasswordPromise(username)
-            .then(function(){
-                guiManager.toast('Please check your email for a password reset link.', 2000, 'center');
-                $scope.closeThisDialog(false);
-            }, function(error){
-                switch (error.code) {
-                    case 'UserNotFoundException':
-                    case 'ResourceNotFoundException':
-                        guiManager.toast('No user with that email address exists.', 3000, 'center');
-                        break;
-                    case 'InvalidParameterException':
-                        guiManager.toast(error.message, 3000, 'center');
-                        break;
-                    case 'NetworkingError':
-                        guiManager.toast('Trouble connecting to peers, internet connection issue.', 2000, 'center');
-                        break;
-                    default:
-                        guiManager.toast('Could not find a user with that email address, please ensure your email is correct and try again.', 1000, 'center');
-                }
-                console.error(JSON.stringify({Title: 'Failed to start Forget Password Flow', Error: error.stack || error.toString(), Detail: error}, null, 2));
-                eventHandler.capture('LoginFailure', {Title: 'Failure to Start Forget Password using Username', User: username, Error: error.stack || error.toString(), Detail: error});
-            });
-        }
-    };
-    $scope.RegisterButtonClick = function() {
-        storageProvider.Delete('forgotPassword');
-        var signinUsername = ($scope.email || '').toLowerCase();
-        var signinPassword = $scope.password || '';
-        if (!$scope.email || !$scope.password) {
-                return guiManager.toast('Please enter your email address and password.', 1000, 'center');
-            }
-        if (!signinUsername.match(/^[A-Z0-9][A-Z0-9._%+-]*@[A-Z0-9.-]+\.[A-Z]{2,}$/i)) {
-            guiManager.toast('Please enter a valid email address.', 1000, 'center');
-        }
-        else if(signinPassword.length < 8) {
-            guiManager.toast('Password must be at least 8 characters.', 1000, 'center');
-        }
-        else {
-            eventHandler.capture('RegisterUser', {Title: 'Starting new user flow', User: signinUsername});
-            loginStatusProvider.signupPromise(signinUsername, signinPassword)
-            .then(function() {
-                storageProvider.Save('username', signinUsername);
-                storageProvider.Save('password', signinPassword);
-                $scope.closeThisDialog(false);
-                guiManager.toast('Please check your email for a verification link.', 2000, 'center');
-            }, function(error) {
-                switch (error.code) {
-                    case 'UsernameExistsException':
-                        return signInUser(signinUsername, signinPassword);
-                    case 'NotAuthorizedException':
-                        guiManager.toast('There was an issue logging in with that email and password, please try again.', 3000, 'center');
-                        break;
-                    case 'NetworkingError':
-                        guiManager.toast('Trouble connecting to peers, internet connection issue.', 2000, 'center');
-                        break;
-                    default:
-                        guiManager.toast('Failed to register.', 3000, 'center');
-                        break;
-                }
-                console.error(JSON.stringify({Title: 'Failed signing user up', Error: error.stack || error.toString(), Detail: error}, null, 2));
-                eventHandler.capture('LoginFailure', {Title: 'Failure signing user up', User: signInUser, Error: error.stack || error.toString(), Detail: error});
-            });
-        }
-    };
 
     function signInUser(username, password) {
         return loginStatusProvider.usernameSigninPromise(username, password)
@@ -164,7 +78,7 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
             console.error(JSON.stringify({Title: 'Failed to Resend Verification Code', Error: error.stack || error.toString(), Detail: error}, null, 2));
         });
     }
-    $scope.SignInButtonClick = function() {
+    $scope.VerifyButtonClick = function() {
         var username = ($scope.email || '').toLowerCase();
         var password = $scope.password || '';
         if(username.length === 0 || password.length === 0) {

@@ -13,7 +13,8 @@ angular.module(GOLFPRO).controller('loginController', [
 	'ngDialog',
 	'utilities',
 	'linkManager',
-function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pageService, userManager, ngDialog, utilities, linkManager) {
+	'logoutService',
+function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pageService, userManager, ngDialog, utilities, linkManager, logoutService) {
 	/******** SignInButton Block ********/
 	$scope.IsAdmin = false;
 	$scope.UserAuthenticated = false;
@@ -66,6 +67,7 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 
 	$scope.SignInButtonClick = function() {
 		if($scope.UserAuthenticated) {
+			logoutService.Logout();
 			loginStatusProvider.logoutPromise()
 			.then(function() {
 				$scope.$apply(function(){ $scope.UserAuthenticated = false; });

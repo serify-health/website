@@ -121,8 +121,8 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 		ngDialog.open({
 			closeByNavigation: true,
 			width: 320,
-			template: 'login/signup.html',
-			controller: 'signinController',
+			template: 'authorize/signup.html',
+			controller: 'authSigninController',
 			className: 'ngdialog-theme-default'
 		}).closePromise.then(function(dialogResult){
 			console.log(JSON.stringify(dialogResult, null, 2));
@@ -139,6 +139,9 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 					});
 				});
 			}
+		})
+		.then(function(){
+			pageService.NavigateToPage('/');
 		});
 	}
 	else {
