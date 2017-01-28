@@ -22,5 +22,5 @@ var API_LOG_URL = 'https://mmc1f8pyxj.execute-api.us-east-1.amazonaws.com/prod/l
 /* LAMBDA_FUNCTION */
 var LAMBDA_FUNCTION = 'arn:aws:lambda:us-east-1:273193817078:function:health-verify-index';
 /* WEBSITE_VIEW_URL */
-var WEBSITE_VIEW_URL = 'http://health-verify-service.s3-website-us-east-1.amazonaws.com/v1/index.html#/view/';
+var WEBSITE_VIEW_URL = 'https://serifyhealth.com/#/view/';
 /*******************/
