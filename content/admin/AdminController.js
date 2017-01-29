@@ -14,7 +14,8 @@ angular.module(GOLFPRO).controller('adminController', [
 	'utilities',
 	'linkManager',
 	'logoutService',
-function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pageService, userManager, verificationManager, ngDialog, utilities, linkManager, logoutService) {
+	'adminService',
+function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pageService, userManager, verificationManager, ngDialog, utilities, linkManager, logoutService, adminService) {
 	$scope.verificationRequests = [];
 	/******** SignInButton Block ********/
 	$scope.UserAuthenticated = false;
@@ -25,9 +26,15 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 			$scope.$apply(function() {
 				$scope.UserAuthenticated = true;
 			});
-			// adminManager.GetCounts().then
-			$scope.userCount = '?';
-			$scope.requestCount = '?'
+			adminService.GetCountsPromise().then(function(summary){
+				$scope.$apply(function(){
+					$scope.userCount = summary.userCount;
+					$scope.requestCount = summary.requestCount;
+				});
+			}, function(){
+				$scope.userCount = '?';
+				$scope.requestCount = '?';
+			});
 			verificationManager.GetVerifications()
 			.then(function(verificationRequests) {
 				$scope.$apply(function() {

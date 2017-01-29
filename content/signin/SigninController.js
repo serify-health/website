@@ -123,7 +123,8 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
                     guiManager.toast('Please reset your password by emailing the team using the feedback button.', 3000, 'center');
                     break;
                 case 'UserNotConfirmedException':
-                    return resendVerificationCode(username, password);
+                    guiManager.toast('Please check your email for a verification link.', 200, 'center');
+                    break;
                 case 'NetworkingError':
                     guiManager.toast('Trouble connecting to peers, internet connection issue.', 2000, 'center');
                     break;

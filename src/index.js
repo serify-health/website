@@ -13,8 +13,12 @@ var LinkManager = require('./LinkManager');
 var linkManager = new LinkManager(docClient);
 var EventManager = require('./EventManager');
 var eventManager = new EventManager(docClient);
+var AdminManager = require('./AdminManager');
+var adminManager = new AdminManager();
 var VerificationManager = require('./VerificationManager');
-var verificationManager = new VerificationManager(docClient);
+var verificationManager = new VerificationManager(docClient, adminManager);
+var SummaryManager = require('./SummaryManager');
+var summaryManager = new SummaryManager(docClient, adminManager);
 
 var routes = {
 	'/link': {
@@ -39,6 +43,9 @@ var routes = {
 	},
 	'/event': {
 		'POST': (body, environment, userId, callback) => eventManager.CreateEvent(body, environment, userId, callback)
+	},
+	'/summary': {
+		'GET':  (body, environment, userId, callback) => summaryManager.GetSummary(body, environment, userId, callback)
 	}
 };
 
