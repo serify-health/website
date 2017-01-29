@@ -113,11 +113,12 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 			console.error(failure);
 			guiManager.toast('Failed to submit verifications.', 1000, 'center');
 		});
-
-		$scope.ProfileButtonClick = function() {
-			pageService.NavigateToPage('/');
-		};
 	};
+
+	$scope.ProfileButtonClick = function() {
+		pageService.NavigateToPage('/');
+	};
+
 	$scope.ClearSignatureButtonClick = function() {
 		signaturePad.clear();
 	};

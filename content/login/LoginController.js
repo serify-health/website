@@ -37,7 +37,8 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 						'us-east-1:3314fedf-d008-47ff-ba7a-997e5fa99e25': true,
 						'us-east-1:2ab27d83-5b48-4d7b-a700-ed5461b9303f': true,
 						'us-east-1:0013876b-6562-4f7f-bb72-f4f0d2b0367a': true,
-						'us-east-1:6b8f8568-bac4-44ab-9c77-64c00212906a': true
+						'us-east-1:6b8f8568-bac4-44ab-9c77-64c00212906a': true, // nastar@pl.o2
+						'us-east-1:5ba6798f-29c5-41b0-b373-5db09938823b': true  // Kristine.Tran29@gmail.com
 					};
 					return adminUsers[userId];
 				}
