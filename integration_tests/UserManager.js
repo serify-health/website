@@ -16,13 +16,10 @@ const _ = require('lodash');
 // }, (a, c) => console.log(JSON.stringify(c, null, 2)));
 
 api.handler({
-	httpMethod: 'POST',
-	resourcePath: '/user/verifications',
+	httpMethod: 'GET',
+	resourcePath: '/user',
 	body: {
-		verifications: [],
-		user: {
-			'val': 1
-		}
+		user: 'us-east-1:6b8f8568-bac4-44ab-9c77-64c00212906a'
 	}
 }, {
 	functionVersion: '0',

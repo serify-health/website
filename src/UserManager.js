@@ -53,9 +53,13 @@ UserManager.prototype.GetUser = function(body, environment, userId, callback) {
 			if(!user) {
 				return Promise.reject('User does not exist.');
 			}
+			var verifications = (user.Verifications || []).filter(v => v.Status.match(/Verified/i));
 			return {
-				UserId: userId,
-				Verifications: (user.Verifications || []).filter(v => v.Status === 'Verifiied')
+				userId: lookupUser,
+				UserId: lookupUser,
+				userData: user.userData,
+				Verifications: verifications,
+				verifications: verifications
 			};
 		});
 	}

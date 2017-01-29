@@ -25,6 +25,9 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 			$scope.$apply(function() {
 				$scope.UserAuthenticated = true;
 			});
+			// adminManager.GetCounts().then
+			$scope.userCount = '?';
+			$scope.requestCount = '?'
 			verificationManager.GetVerifications()
 			.then(function(verificationRequests) {
 				$scope.$apply(function() {
