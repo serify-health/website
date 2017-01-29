@@ -77,9 +77,9 @@
 										<input type="text" placeholder='Date' ng-model="verification.Date" class="form-control">
 									</td>
 									<td tabindex="-1" style="text-align:center">
-										<i ng-if="verification.Status === 'Verified'" class="fa fa-check-square-o fa-2x" aria-hidden="true"></i>
-										<i ng-if="verification.Status === 'Failed'" class="fa fa-times-circle-o fa-2x" aria-hidden="true"></i>
-										<i ng-if="verification.Status === 'Unknown'" class="fa fa-question-circle-o fa-2x" aria-hidden="true"></i>
+										<i style="padding-top: 5px;" ng-if="verification.Status === 'Verified'" class="fa fa-check-square-o fa-2x" aria-hidden="true"></i>
+										<i style="padding-top: 5px;" ng-if="verification.Status === 'Failed'" class="fa fa-times-circle-o fa-2x" aria-hidden="true"></i>
+										<div style="padding-top: 10px;" ng-if="verification.Status === 'Unknown'">Request Submitted</div>
 									</td>
 								</tr>
 							</tbody>
