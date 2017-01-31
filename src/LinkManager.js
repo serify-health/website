@@ -1,7 +1,7 @@
 'use strict';
 
 const fs = require('fs');
-
+const uuid = require('uuid');
 function LinkManager(docClient, s3client){
 	this.DocClient = docClient;
 }
@@ -61,7 +61,7 @@ LinkManager.prototype.CreateNewLink = function(body, environment, userId, callba
 	var linkname = body.linkname;
 	var username = body.username;
 	var hash = `${linkname}:${username}:${userId}`;
-	var base64hash = new Buffer(hash).toString('base64');
+	var base64hash = new Buffer(uuid.v4().replace(/-/g, ''), 'hex').toString('base64');
 	return this.DocClient.put({
 		TableName: `links.health-verify.${environment}`,
 		Item: {

@@ -12,7 +12,8 @@
   "dependencies": {
     "jsonwebtoken": "^7.1.9",
     "lodash": "^4.17.2",
-    "openapi-factory": "^2.0"
+    "openapi-factory": "^2.0",
+    "uuid": "^3.0.1"
   },
   "devDependencies": {
     "aws-architect": "^3.1",
