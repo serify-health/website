@@ -60,7 +60,7 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
                     default:
                         guiManager.toast('Could not find a user with that email address, please ensure your email is correct and try again.', 1000, 'center');
                 }
-                console.error(JSON.stringify({Title: 'Failed to start Forget Password Flow', Error: error.stack || error.toString(), Detail: error}, null, 2));
+                console.error(JSON.stringify({Title: 'Failed to start Forget Password Flow', User: username, Error: error.stack || error.toString(), Detail: error}, null, 2));
                 eventHandler.capture('LoginFailure', {Title: 'Failure to Start Forget Password using Username', User: username, Error: error.stack || error.toString(), Detail: error});
             });
         }
@@ -102,7 +102,7 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
                         break;
                 }
                 console.error(JSON.stringify({Title: 'Failed signing user up', Error: error.stack || error.toString(), Detail: error}, null, 2));
-                eventHandler.capture('LoginFailure', {Title: 'Failure signing user up', User: signInUser, Error: error.stack || error.toString(), Detail: error});
+                eventHandler.capture('LoginFailure', {Title: 'Failure signing user up', User: signinUsername, Error: error.stack || error.toString(), Detail: error});
             });
         }
     };
@@ -163,7 +163,7 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
                 default:
                     guiManager.toast('Could not find a user with that email address, please ensure your email is correct and try again.', 1000, 'center');
             }
-            console.error(JSON.stringify({Title: 'Failed to Resend Verification Code', Error: error.stack || error.toString(), Detail: error}, null, 2));
+            console.error(JSON.stringify({Title: 'Failed to Resend Verification Code', User: username, Error: error.stack || error.toString(), Detail: error}, null, 2));
         });
     }
     $scope.SignInButtonClick = function() {

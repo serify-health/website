@@ -60,8 +60,8 @@ LinkManager.prototype.GetAllUserLinks = function(body, environment, userId, call
 LinkManager.prototype.CreateNewLink = function(body, environment, userId, callback) {
 	var linkname = body.linkname;
 	var username = body.username;
-	var hash = `${linkname}:${username}:${userId}`;
-	var base64hash = new Buffer(uuid.v4().replace(/-/g, ''), 'hex').toString('base64');
+	var hash = userId.split(':')[1].replace(/-/g, '');
+	var base64hash = new Buffer(hash, 'hex').toString('base64').replace(/\//g, '-');
 	return this.DocClient.put({
 		TableName: `links.health-verify.${environment}`,
 		Item: {
