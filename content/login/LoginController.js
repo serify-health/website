@@ -105,6 +105,8 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 		userManager.UpdateUserDataPromise({
 			profile: $scope.userProfile,
 			username: $scope.username
+		}).then(function(){
+			guiManager.toast('Profile updated.', 1000, 'top');
 		}).catch(function(failure) {
 			console.error("Failed to save user profile: " + failure);
 			guiManager.toast('Failed to save profile. Please try again.', 1000, 'top');
