@@ -225,4 +225,14 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
         }
         else { return signInUser(username, password); }
     };
+
+    $scope.ResendVerificationCodeButtonClick = function() {
+        var username = ($scope.email || '').toLowerCase();
+        var password = $scope.password || '';
+        if(username.length === 0 || password.length === 0) {
+            return guiManager.toast('Please enter your username and password.', 1000, 'center');
+        }
+        storageProvider.Delete('forgotPassword');
+        return resendVerificationCode(username, password);
+    };
 }]);
