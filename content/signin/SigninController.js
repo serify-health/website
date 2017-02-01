@@ -204,7 +204,8 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
             .catch(function(error){
                 switch (error.code) {
                     case 'ExpiredCodeException':
-                        return resendVerificationCode(username, password);
+                        guiManager.toast('Please verify your account by navigating to your email and clicking on the link in there.', 1000, 'center');
+                        break;
                     case 'NotAuthorizedException':
                         guiManager.toast('There was an issue logging in with that email and password, please try again.', 3000, 'center');
                         break;

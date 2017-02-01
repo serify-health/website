@@ -4,7 +4,7 @@ angular.module(GOLFPRO).provider('pageService', [function(){
 	var service = {
 		GetCurrentPage: function() { return currentPage; },
 		AllowNavigateBackPage : function(path) {
-			return currentPage != '/' && currentPage != '/home' && currentPage === path;
+			return currentPage != '/' && currentPage != '/home' && currentPage != '/main' && currentPage === path;
 		},
 		/* jshint -W093 */
 		SetCurrentPage: function(newPage) { return currentPage = newPage; },

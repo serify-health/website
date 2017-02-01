@@ -145,6 +145,6 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 		});
 	}
 	else {
-		throw 'BAD BAD BAD'; //they got to this page without the login and there is no pin, and no password reset
+		pageService.NavigateToPage('/');
 	}
 }]);

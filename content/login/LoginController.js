@@ -1,6 +1,7 @@
 angular.module(GOLFPRO).config(['$routeProvider', function($routeProvider) {
 	$routeProvider.when('/', { templateUrl: 'login/login.html', controller: 'loginController' });
 	$routeProvider.when('/main', {redirectTo:'/'});
+	$routeProvider.when('/home', {redirectTo:'/'});
 }]);
 angular.module(GOLFPRO).controller('loginController', [
 	'$scope',
