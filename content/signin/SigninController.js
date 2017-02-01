@@ -164,6 +164,7 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
                     guiManager.toast('Could not find a user with that email address, please ensure your email is correct and try again.', 1000, 'center');
             }
             console.error(JSON.stringify({Title: 'Failed to Resend Verification Code', User: username, Error: error.stack || error.toString(), Detail: error}, null, 2));
+            eventHandler.capture('LoginFailure', {Title: 'Failure to Resend Verification code', User: username, Error: error.stack || error.toString(), Detail: error});
         });
     }
     $scope.SignInButtonClick = function() {
@@ -191,6 +192,7 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
                         guiManager.toast('Ensure your email and password are correct, and request a new password reset link.', 1000, 'center');
                 }
                 console.error(JSON.stringify({Title: 'Failed to verify new password', Error: error.stack || error.toString(), Detail: error}, null, 2));
+                eventHandler.capture('LoginFailure', {Title: 'Failure to verify new password', User: username, Error: error.stack || error.toString(), Detail: error});
             });
         }
         else if($routeParams.pin) {
