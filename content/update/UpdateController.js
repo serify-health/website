@@ -56,7 +56,7 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 		$scope.verifications.push({
 			Id: utilities.getGuid(),
 			Name: '',
-			Date: new Date().toLocaleDateString(),
+			Date: new Date().getMonth() + 1 + '/' + new Date().getFullYear(),
 			Status: 'Unknown'
 		});
 	};
