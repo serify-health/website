@@ -80,12 +80,6 @@ VerificationManager.prototype.SetVerificationResult = function(body, environment
 	var verifications = body.verifications;
 	var result = body.result;
 	var userTable = `users.health-verify.${environment}`;
-	if(result !== 'APPROVE') {
-		return callback({
-			statusCode: 400,
-			error: `Unable to update using a non-approval method.`
-		});
-	}
 	return this.DocClient.query({
 		TableName: userTable,
 		Limit: 1,
@@ -101,7 +95,7 @@ VerificationManager.prototype.SetVerificationResult = function(body, environment
 		verifications.map(v => updatedVerificationIndex[v.Id] = v);
 		var updatedVerifications = user.Verifications.map(verification => {
 			if(updatedVerificationIndex[verification.Id]) {
-				verification.Status = 'Verified';
+				verification.Status = result === 'APPROVE' ? 'Verified' : 'Rejected';
 			}
 			return verification;
 		});
@@ -131,7 +125,7 @@ VerificationManager.prototype.SetVerificationResult = function(body, environment
 			AttributeUpdates: {
 				'Status': {
 					Action: 'PUT',
-					Value: 'VERIFIED'
+					Value: result === 'APPROVE' ? 'VERIFIED' : 'REJECTED'
 				}
 			},
 			ReturnValues: 'NONE'

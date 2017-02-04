@@ -60,6 +60,7 @@
 								<th class="text-center">Verifications</th>
 								<th class="text-center">Signature</th>
 								<th class="text-center">Approve</th>
+								<th class="text-center">Reject</th>
 							</thead>
 							<tbody style="height: 40px">
 								<tr ng-repeat="verificationRequest in verificationRequests | filter:{'status':'NEW'} | orderBy : 'time'">
@@ -91,6 +92,9 @@
 									</td>
 									<td style="width: 60px;">
 										<button tabindex="-1" type="button" class="btn btn-default btn-sm" ng-click="VerificationRequestApproveClick(verificationRequest)">Approve</button>
+									</td>
+									<td style="width: 60px;">
+										<button tabindex="-1" type="button" class="btn btn-default btn-sm" ng-click="VerificationRequestRejectClick(verificationRequest)">Reject</button>
 									</td>
 								</tr>
 							</tbody>

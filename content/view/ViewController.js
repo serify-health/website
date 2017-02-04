@@ -66,7 +66,11 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 					$scope.linkname = data.Linkname || 'NULL';
 					$scope.username = userData.username || data.Username || 'Anonymous';
 					$scope.profile = userData.profile;
-					$scope.verifications = nonNullUser.Verifications || [];
+					var verifications = nonNullUser.Verifications || [];
+					verifications.map(function(verification) {
+						verification.Inverse = verification.Name !== 'HPV' && verification.Name !== 'PrEP';
+					});
+					$scope.verifications = verifications;
 				});
 			});
 		});

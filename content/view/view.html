@@ -46,7 +46,7 @@
 								<tr>
 									<th class="text-center">Test</th>
 									<th class="text-center">Date</th>
-									<th class="text-center">Verified</th>
+									<th class="text-center">Serify Status</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -58,8 +58,9 @@
 										<input readonly ng-model="verification.Date" class="form-control" />
 									</td>
 									<td tabindex="-1" style="text-align:center">
-										<i style="padding-top: 5px;" ng-if="verification.Status === 'Verified'" class="fa fa-check-square-o fa-2x" aria-hidden="true"></i>
-										<i style="padding-top: 5px;" ng-if="verification.Status === 'Failed'" class="fa fa-times-circle-o fa-2x" aria-hidden="true"></i>
+										<i style="color: limeGreen;padding-top: 5px;" ng-if="verification.Status === 'Verified' && verification.Inverse" class="fa fa-minus fa-2x" aria-hidden="true"></i>
+										<i style="color: limeGreen;padding-top: 5px;" ng-if="verification.Status === 'Verified' && !verification.Inverse" class="fa fa-check-square-o fa-2x" aria-hidden="true"></i>
+										<i style="color: red;padding-top: 5px;" ng-if="verification.Status === 'Rejected'" class="fa fa-times-circle-o fa-2x" aria-hidden="true"></i>
 										<div style="padding-top: 10px;" ng-if="verification.Status === 'Unknown'">Request Submitted</div>
 									</td>
 								</tr>

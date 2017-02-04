@@ -19,7 +19,7 @@ api.handler({
 	httpMethod: 'GET',
 	resourcePath: '/user',
 	body: {
-		user: 'us-east-1:6b8f8568-bac4-44ab-9c77-64c00212906a'
+		user: 'us-east-1:b5c9e3b0-a191-4c83-9b7b-413a8dd6bfea'
 	}
 }, {
 	functionVersion: '0',

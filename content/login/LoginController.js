@@ -64,7 +64,11 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 				$scope.$apply(function(){
 					$scope.userProfile = (user.userData || {}).profile;
 					$scope.username = (user.userData || {}).username;
-					$scope.verifications = (user || {}).Verifications || [];
+					var verifications = (user || {}).Verifications || [];
+					verifications.map(function(verification) {
+						verification.Inverse = verification.Name !== 'HPV' && verification.Name !== 'PrEP';
+					});
+					$scope.verifications = verifications;
 				});
 			});
 			var usernameLinkCreationPromise = linkManager.GetNewLinkPromise(null, null)

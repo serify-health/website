@@ -21,7 +21,8 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 	$scope.links = [];
 	function SetupUser() {
 		return loginStatusProvider.validateAuthenticationPromise()
-		.then(function() {
+		.then(function(auth) {
+			console.log((auth || {}).UserId);
 			$scope.$apply(function() {
 				$scope.UserAuthenticated = true;
 			});
@@ -119,6 +120,25 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 		})
 		.catch(function(error) {
 			guiManager.toast('Failed to approve verification.', 1000, 'center');
+		});
+	};
+	$scope.VerificationRequestRejectClick = function(verificationRequest) {
+		var verifications = verificationRequest.verifications.map(function(v){
+			return {
+				Id: v.id
+			};
+		});
+		verificationManager.RejectVerifications(verifications, verificationRequest.userId, verificationRequest.time)
+		.then(function() {
+			$scope.$apply(function() {
+				var foundVerificationRequest = $scope.verificationRequests.find(function(r) {
+					return r.userId === verificationRequest.userId && r.time === verificationRequest.time;
+				});
+				foundVerificationRequest.status = 'REJECTED';
+			});
+		})
+		.catch(function(error) {
+			guiManager.toast('Failed to reject verification.', 1000, 'center');
 		});
 	};
 	$scope.ProfileButtonClick = function() {
