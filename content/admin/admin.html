@@ -20,6 +20,7 @@
 			</div>
 		</nav>
 	</div>
+	<div ng-show="alert" style="text-align: center" uib-alert ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert()" dismiss-on-timeout="5000">{{alert.msg}}</div>
 	<div ng-show="UserAuthenticated" class="ui" style="margin:0% 10% 0% 10%;width:80% !important">
 		<div>
 			<div class="container">

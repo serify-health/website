@@ -5,7 +5,6 @@ angular.module(GOLFPRO).controller('viewController', [
 	'$scope',
 	'$routeParams',
 	'loginStatusProvider',
-	'guiManager',
 	'eventHandler',
 	'pageService',
 	'userManager',
@@ -13,7 +12,7 @@ angular.module(GOLFPRO).controller('viewController', [
 	'utilities',
 	'linkManager',
 	'logoutService',
-function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pageService, userManager, ngDialog, utilities, linkManager, logoutService) {
+function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, userManager, ngDialog, utilities, linkManager, logoutService) {
 	/******** SignInButton Block ********/
 	$scope.UserAuthenticated = false;
 	function SetupUser() {
@@ -25,6 +24,9 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 		})
 		.catch(function(error) {
 			console.log('Failed to log user in: ' + error);
+			$scope.$apply(function(){
+				$scope.alert = { type: 'danger', msg: 'Failed to log in.' };
+			});
 		});
 	}
 

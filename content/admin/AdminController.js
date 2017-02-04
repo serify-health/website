@@ -5,7 +5,6 @@ angular.module(GOLFPRO).controller('adminController', [
 	'$scope',
 	'$routeParams',
 	'loginStatusProvider',
-	'guiManager',
 	'eventHandler',
 	'pageService',
 	'verificationManager',
@@ -14,7 +13,8 @@ angular.module(GOLFPRO).controller('adminController', [
 	'linkManager',
 	'logoutService',
 	'adminService',
-function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pageService, verificationManager, ngDialog, utilities, linkManager, logoutService, adminService) {
+function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, verificationManager, ngDialog, utilities, linkManager, logoutService, adminService) {
+	$scope.closeAlert = function(){ $scope.alert = null; };
 	$scope.verificationRequests = [];
 	/******** SignInButton Block ********/
 	$scope.UserAuthenticated = false;
@@ -71,7 +71,9 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 				$scope.$apply(function(){ $scope.UserAuthenticated = false; });
 			}, function(failure) {
 				console.log(failure);
-				guiManager.toast('Failed to log out.', 1000, 'center');
+				$scope.$apply(function(){
+					$scope.alert = { type: 'danger', msg: 'Failed to log out' };
+				});
 			});
 			return;
 		}
@@ -81,7 +83,7 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 			template: 'login/signup.html',
 			controller: 'signinController',
 			className: 'ngdialog-theme-default'
-		}).closePromise.then(function(dialogResult){
+		}).closePromise.then(function(){
 			return SetupUser();
 		});
 	};
@@ -96,7 +98,7 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 			template: 'login/signup.html',
 			controller: 'signinController',
 			className: 'ngdialog-theme-default'
-		}).closePromise.then(function(dialogResult){
+		}).closePromise.then(function(){
 			return SetupUser();
 		});
 	});
@@ -119,7 +121,9 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 			});
 		})
 		.catch(function(error) {
-			guiManager.toast('Failed to approve verification.', 1000, 'center');
+			$scope.$apply(function(){
+				$scope.alert = { type: 'danger', msg: 'Failed to approve verification.' };
+			});
 		});
 	};
 	$scope.VerificationRequestRejectClick = function(verificationRequest) {
@@ -138,7 +142,9 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 			});
 		})
 		.catch(function(error) {
-			guiManager.toast('Failed to reject verification.', 1000, 'center');
+			$scope.$apply(function(){
+				$scope.alert = { type: 'danger', msg: 'Failed to reject verification.' };
+			});
 		});
 	};
 	$scope.ProfileButtonClick = function() {

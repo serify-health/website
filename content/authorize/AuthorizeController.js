@@ -5,15 +5,14 @@ angular.module(GOLFPRO).controller('authorizeController', [
 	'$scope',
 	'$routeParams',
 	'loginStatusProvider',
-	'guiManager',
 	'eventHandler',
 	'pageService',
 	'userManager',
 	'ngDialog',
 	'storageProviderService',
 	'utilities',
-function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pageService, userManager, ngDialog, storageProviderService, utilities) {
-	$scope.UserAuthenticated = false;
+function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, userManager, ngDialog, storageProviderService, utilities) {
+	$scope.closeAlert = function(){ $scope.alert = null; };
 	var storageProvider = storageProviderService.GetStorageProvider('credentials');
 	
 	var username = storageProvider.Get('username');
@@ -28,21 +27,31 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 			switch (error.code) {
 				case 'UserNotFoundException':
 				case 'ResourceNotFoundException':
-					guiManager.toast('No user with that email address exists.', 3000, 'center');
+					$scope.$apply(function(){
+						$scope.alert = { type: 'danger', msg: 'No user with that email address exists.'};
+					});
 					break;
 				case 'PasswordResetRequiredException':
-					guiManager.toast('Please reset your password.', 3000, 'center');
+					$scope.$apply(function(){
+						$scope.alert = { type: 'danger', msg: 'Please reset your password.'};
+					});
 					break;
 				case 'UserNotConfirmedException':
 					return resendVerificationCode(username, password);
 				case 'NetworkingError':
-					guiManager.toast('Trouble connecting to peers, internet connection issue.', 2000, 'center');
+					$scope.$apply(function(){
+						$scope.alert = { type: 'danger', msg: 'Trouble connecting to peers, internet connection issue.'};
+					});
 					break;
 				case 'InvalidParameterException':
-					guiManager.toast('Please check your username and password and sign in again.', 2000, 'center');
+					$scope.$apply(function(){
+						$scope.alert = { type: 'danger', msg: 'Please check your username and password and sign in again.'};
+					});
 					break;
 				default:
-					guiManager.toast('Failed to sign in with user.', 3000, 'center');
+					$scope.$apply(function(){
+						$scope.alert = { type: 'danger', msg: 'Failed to sign in with user.'};
+					});
 			}
 			console.error(JSON.stringify({Title: 'Failed signing in user', Error: error.stack || error.toString(), Detail: error}, null, 2));
 			eventHandler.capture('LoginFailure', {Title: 'Failure to SignIn using Username', User: username, Error: error.stack || error.toString(), Detail: error});
@@ -52,19 +61,27 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 	function resendVerificationCode() {
 		return loginStatusProvider.resendAuthorizationCodePromise(username, password)
 		.then(function(){
-			guiManager.toast('Please check your email for a verification link.', 2000, 'center');
+			$scope.$apply(function(){
+				$scope.alert = { type: 'success', msg: 'Please check your email for a verification link.'};
+			});
 			$scope.closeThisDialog(false);
 		}, function(error){
 			switch (error.code) {
 				case 'UserNotFoundException':
 				case 'ResourceNotFoundException':
-					guiManager.toast('No user with that email address exists.', 3000, 'center');
+				$scope.$apply(function(){
+					$scope.alert = { type: 'danger', msg: 'No user with that email address exists.'};
+				});
 					break;
 				case 'NetworkingError':
-					guiManager.toast('Trouble connecting to peers, internet connection issue.', 2000, 'center');
+					$scope.$apply(function(){
+						$scope.alert = { type: 'danger', msg: 'Trouble connecting to peers, internet connection issue.'};
+					});
 					break;
 				default:
-					guiManager.toast('Could not find a user with that email address, please ensure your email is correct and try again.', 1000, 'center');
+					$scope.$apply(function(){
+						$scope.alert = { type: 'danger', msg: 'Could not find a user with that email address, please ensure your email is correct and try again.'};
+					});
 			}
 			console.error(JSON.stringify({Title: 'Failed to Resend Verification Code', Error: error.stack || error.toString(), Detail: error}, null, 2));
 		});
@@ -78,13 +95,19 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 		}, function(error){
 			switch (error.code) {
 				case 'ExpiredCodeException':
-					guiManager.toast('Please request a new password using the reset link.', 3000, 'center');
+					$scope.$apply(function(){
+						$scope.alert = { type: 'danger', msg: 'Please request a new password using the reset link.'};
+					});
 					break;
 				case 'NetworkingError':
-					guiManager.toast('Trouble connecting to peers, internet connection issue.', 2000, 'center');
+					$scope.$apply(function(){
+						$scope.alert = { type: 'danger', msg: 'Trouble connecting to peers, internet connection issue.'};
+					});
 					break;
 				default:
-					guiManager.toast('Ensure your email and password are correct, and request a new password reset link.', 1000, 'center');
+					$scope.$apply(function(){
+						$scope.alert = { type: 'danger', msg: 'Ensure your email and password are correct, and request a new password reset link.'};
+					});
 			}
 			console.error(JSON.stringify({Title: 'Failed to verify new password', Error: error.stack || error.toString(), Detail: error}, null, 2));
 		});
@@ -99,15 +122,21 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 				case 'ExpiredCodeException':
 					return resendVerificationCode(username, password);
 				case 'NotAuthorizedException':
-					guiManager.toast('There was an issue logging in with that email and password, please try again.', 3000, 'center');
+					$scope.$apply(function(){
+						$scope.alert = { type: 'danger', msg: 'There was an issue logging in with that email and password, please try again.'};
+					});
 					break;
 				case 'NetworkingError':
-					guiManager.toast('Trouble connecting to peers, internet connection issue.', 2000, 'center');
+					$scope.$apply(function(){
+						$scope.alert = { type: 'danger', msg: 'Trouble connecting to peers, internet connection issue.'};
+					});
 					break;
 				case 'InvalidParameterException':
 					return signInUser(username, password);
 				default:
-					guiManager.toast('Failed to register.', 3000, 'center');
+					$scope.$apply(function(){
+						$scope.alert = { type: 'danger', msg: 'Failed to register.'};
+					});
 					break;
 			}
 			console.error(JSON.stringify({Title: 'Failed to verify pin', Error: error.stack || error.toString(), Detail: error}, null, 2));
@@ -131,7 +160,6 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 			if(dialogResult.value) {
 				return loginStatusProvider.validateAuthenticationPromise()
 				.then(function() {
-					$scope.UserAuthenticated = true;
 					return userManager.GetUserIdPromise().then(function(id){
 						$scope.$apply(function(){
 							$scope.UserId = id;

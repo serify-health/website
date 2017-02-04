@@ -3,9 +3,9 @@ angular.module(GOLFPRO).config(['$routeProvider', function($routeProvider) {
 }]);
 angular.module(GOLFPRO).controller('updateController', [
 	'$scope',
+	'$anchorScroll',
 	'$routeParams',
 	'loginStatusProvider',
-	'guiManager',
 	'eventHandler',
 	'pageService',
 	'userManager',
@@ -13,8 +13,9 @@ angular.module(GOLFPRO).controller('updateController', [
 	'utilities',
 	'linkManager',
 	'logoutService',
-function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pageService, userManager, ngDialog, utilities, linkManager, logoutService) {
+function($scope, $anchorScroll, $routeParams, loginStatusProvider, eventHandler, pageService, userManager, ngDialog, utilities, linkManager, logoutService) {
 	/******** SignInButton Block ********/
+	$scope.closeAlert = function(){ $scope.alert = null; };
 	$scope.UserAuthenticated = false;
 	$scope.links = [];
 	function SetupUser() {
@@ -34,7 +35,9 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 				$scope.$apply(function(){ $scope.UserAuthenticated = false; });
 			}, function(failure) {
 				console.log(failure);
-				guiManager.toast('Failed to log out.', 1000, 'center');
+				$scope.$apply(function(){
+					$scope.alert = { type: 'danger', msg: 'Failed to log out.' };
+				});
 			});
 			return;
 		}
@@ -44,7 +47,7 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 			template: 'login/signup.html',
 			controller: 'signinController',
 			className: 'ngdialog-theme-default'
-		}).closePromise.then(function(dialogResult){
+		}).closePromise.then(function(){
 			return SetupUser();
 		});
 	};
@@ -67,33 +70,41 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 	var canvas = document.querySelector("canvas");
 	var signaturePad = new SignaturePad(canvas);
 
+	var alertElement = angular.element(document.querySelector('#alert'));
 	$scope.SubmitVerificationsButtonClick = function() {
 		if($scope.verifications.length < 1) {
-			guiManager.toast('Add a test to verify.');
+			$scope.alert = { type: 'danger', msg: 'Add a test to verify.' };
+			$anchorScroll();
 			return;
 		}
 		if(signaturePad.isEmpty()) {
-			guiManager.toast('Signature on the release form is requiired.');
+			$scope.alert = { type: 'danger', msg: 'Signature on the release form is requiired.' };
+			$anchorScroll();
 			return;
 		}
 		if(!$scope.UserAuthenticated) {
-			guiManager.toast('Create account to get your test results verified.');
+			$scope.alert = { type: 'danger', msg: 'Create account to get your test results verified.' };
+			$anchorScroll();
 			return;
 		}
 		if(!$scope.name) {
-			guiManager.toast('Please enter your full name.');
+			$scope.alert = { type: 'danger', msg: 'Please enter your full name.' };
+			$anchorScroll();
 			return;
 		}
 		if(!$scope.dob) {
-			guiManager.toast('Please enter your date of birth.');
+			$scope.alert = { type: 'danger', msg: 'Please enter your date of birth.' };
+			$anchorScroll();
 			return;
 		}
 		if(!$scope.clinicName) {
-			guiManager.toast('Please enter the clinic name where the tests where performed.');
+			$scope.alert = { type: 'danger', msg: 'Please enter the clinic name where the tests where performed.' };
+			$anchorScroll();
 			return;
 		}
 		if(!$scope.clinicInfo) {
-			guiManager.toast('Please enter the contact details for the clinic.');
+			$scope.alert = { type: 'danger', msg: 'Please enter the contact details for the clinic.' };
+			$anchorScroll();
 			return;
 		}
 
@@ -106,11 +117,16 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 		};
 		var verificationPromise = userManager.VerificationRequest($scope.verifications, userDetails)
 		.then(function(){
-			guiManager.toast('Verifications Submitted.', 1000, 'center');
+			$scope.$apply(function(){
+				$scope.alert = { type: 'success', msg: 'Verifications Submitted.' };
+			});
 			pageService.NavigateToPage('/');
 		}, function(failure){
 			console.error(failure);
-			guiManager.toast('Failed to submit verifications.', 1000, 'center');
+			$scope.$apply(function(){
+				$scope.alert = { type: 'danger', msg: 'Failed to submit verifications.' };
+				$anchorScroll();
+			});
 		});
 	};
 

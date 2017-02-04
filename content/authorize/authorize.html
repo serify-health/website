@@ -14,8 +14,9 @@
 			</div>
 		</nav>
 	</div>
+	<div ng-show="alert" style="text-align: center" uib-alert ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert()" dismiss-on-timeout="5000">{{alert.msg}}</div>
 	<div class="ui" style="margin:0% 10% 0% 10%;width:80% !important; text-align:center">
-		<h1 class="entry-title">Your email has been confirmed. Please use responsibly.</h1>
+		<h1 class="entry-title">Verifying user... Please use responsibly.</h1>
 		<h4><a href="/">Serify home page</a></h4>
 	</div>
 </div>

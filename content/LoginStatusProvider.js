@@ -193,7 +193,7 @@ angular.module(GOLFPRO).provider('loginStatusProvider', [function() {
 					Value : AWS.config.credentials.identityId
 				});
 				cognitoUser.updateAttributes([attribute], function(err, result) {
-					if (err) { console.log('Issue updating attribute:' + err) }
+					if (err) { console.log('Issue updating attribute:' + err); }
 				});
 			});
 			return returnPromise;

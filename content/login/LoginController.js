@@ -7,7 +7,6 @@ angular.module(GOLFPRO).controller('loginController', [
 	'$scope',
 	'$routeParams',
 	'loginStatusProvider',
-	'guiManager',
 	'eventHandler',
 	'pageService',
 	'userManager',
@@ -15,7 +14,8 @@ angular.module(GOLFPRO).controller('loginController', [
 	'utilities',
 	'linkManager',
 	'logoutService',
-function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pageService, userManager, ngDialog, utilities, linkManager, logoutService) {
+function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, userManager, ngDialog, utilities, linkManager, logoutService) {
+	$scope.closeAlert = function(){ $scope.alert = null; };
 	/******** SignInButton Block ********/
 	$scope.IsAdmin = false;
 	$scope.UserAuthenticated = false;
@@ -89,7 +89,9 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 				$scope.$apply(function(){ $scope.UserAuthenticated = false; });
 			}, function(failure) {
 				console.log(failure);
-				guiManager.toast('Failed to log out.', 1000, 'center');
+				$scope.$apply(function(){
+					$scope.alert = { type: 'danger', msg: 'Failed to log out.' };
+				});
 			});
 			return;
 		}
@@ -99,7 +101,7 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 			template: 'login/signup.html',
 			controller: 'signinController',
 			className: 'ngdialog-theme-default'
-		}).closePromise.then(function(dialogResult){
+		}).closePromise.then(function(){
 			return SetupUser();
 		});
 	};
@@ -118,10 +120,14 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 			profile: $scope.userProfile,
 			username: $scope.username
 		}).then(function(){
-			guiManager.toast('Profile updated', 1000, 'top');
+			$scope.$apply(function(){
+				$scope.alert = { type: 'success', msg: 'Profile updated' };
+			});
 		}).catch(function(failure) {
 			console.error("Failed to save user profile: " + failure);
-			guiManager.toast('Failed to save profile. Please try again.', 1000, 'top');
+			$scope.$apply(function(){
+				$scope.alert = { type: 'danger', msg: 'Failed to save profile. Please try again.' };
+			});
 		});
 	};
 }]);

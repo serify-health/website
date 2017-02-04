@@ -1,7 +1,7 @@
 <div class="dialog-contents" style="height:330px">
-	<form style="height:300px;overflow-y:hidden;">
+	<form style="height:330px;overflow-y:hidden;">
 		<div>
-			<div style="margin: 30% 0%;max-width:100%;" />
+			<div style="margin: 20% 0% 0% 0%;max-width:100%;" />
 			<div class="form-inline" style="text-align: center">
 				<div class="form-group" style="margin-bottom: 5px">
 					<label class="sr-only" for="email">email</label>
@@ -21,5 +21,6 @@
 				</div>
 			</div>
 		</div>
+		<div ng-show="alert" style="margin-top:20px; text-align: center" uib-alert ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert()" dismiss-on-timeout="5000">{{alert.msg}}</div>
 	</form>
 </div>

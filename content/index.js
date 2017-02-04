@@ -1,6 +1,6 @@
 var isMobile = false;
 
-var module = angular.module(GOLFPRO, ['ngRoute', 'ngAnimate', 'ngTouch', 'ngSanitize', 'ngDialog']);
+var module = angular.module(GOLFPRO, ['ngRoute', 'ngAnimate', 'ngTouch', 'ngSanitize', 'ngDialog', 'ui.bootstrap']);
 module.provider('utilities', [function() {
 	var service = {
 		getGuid: function() {

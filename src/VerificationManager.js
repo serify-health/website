@@ -37,7 +37,7 @@ VerificationManager.prototype.GetVerifications = function(body, environment, use
 			.then(() => {
 				return this.userManager.GetUserAdmin(request.UserId, environment)
 				.then(data => {
-					userMapping[request.UserId] = data.identity
+					userMapping[request.UserId] = data.identity;
 				});
 			});
 		});
