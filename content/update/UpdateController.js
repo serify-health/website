@@ -65,7 +65,6 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 	};
 
 	var canvas = document.querySelector("canvas");
-	var signatureSet = false;
 	var signaturePad = new SignaturePad(canvas);
 
 	$scope.SubmitVerificationsButtonClick = function() {

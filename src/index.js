@@ -51,6 +51,7 @@ var routes = {
 
 
 exports.handler = (event, context, callback, debug) => {
+	console.log(JSON.stringify({LogType: 'Request', Event: event, Context: context}, null, 2));
 	var request = {
 		Event: event,
 		Context: context

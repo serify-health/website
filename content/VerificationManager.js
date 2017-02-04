@@ -1,7 +1,6 @@
 angular.module(GOLFPRO).service('verificationManager', [ 'apiService', 'loginStatusProvider', function(apiService, loginStatusProvider) {
 	this.GetVerifications = function() {
-		return apiService.getPromise('GET', '/verifications', {
-		})
+		return apiService.getPromise('GET', '/verifications', {})
 		.catch(function(failure) {
 			console.error(JSON.stringify({Title: 'Failed to get verifications', Error: failure.stack || failure.toString(), Detail: failure}, null, 2));
 			return Promise.reject({

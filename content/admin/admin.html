@@ -51,6 +51,7 @@
 					<div class="col-md-10 column">
 						<table class="table table-bordered table-hover">
 							<thead>
+								<th class="text-center">Date Submitted</th>
 								<th class="text-center">Name</th>
 								<th class="text-center">DOB</th>
 								<th class="text-center">Clinic</th>
@@ -60,7 +61,10 @@
 								<th class="text-center">Approve</th>
 							</thead>
 							<tbody style="height: 40px">
-								<tr ng-repeat="verificationRequest in verificationRequests | filter:{'status':'NEW'}">
+								<tr ng-repeat="verificationRequest in verificationRequests | filter:{'status':'NEW'} | orderBy : 'time'">
+									<td>
+										{{ verificationRequest.time | date : 'yyyy-MM-dd'}}
+									</td>
 									<td>
 										{{ verificationRequest.name }}
 									</td>
