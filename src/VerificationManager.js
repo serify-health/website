@@ -2,9 +2,10 @@
 
 const fs = require('fs');
 
-function VerificationManager(docClient, adminManager){
+function VerificationManager(docClient, adminManager, userManager){
 	this.DocClient = docClient;
 	this.adminManager = adminManager;
+	this.userManager = userManager;
 }
 
 VerificationManager.prototype.GetVerifications = function(body, environment, userId, callback) {
@@ -15,7 +16,7 @@ VerificationManager.prototype.GetVerifications = function(body, environment, use
 		});
 	}
 
-	return this.DocClient.query({
+	var requestPromise = this.DocClient.query({
 		TableName: `verificationRequests.health-verify.${environment}`,
 		IndexName: 'StatusLookup',
 		ScanIndexForward: true,
@@ -26,11 +27,35 @@ VerificationManager.prototype.GetVerifications = function(body, environment, use
 		ExpressionAttributeValues: {
 			':statusType': 'NEW'
 		}
-	}).promise().then(result => result.Items)
+	}).promise().then(result => result.Items);
+	var userMappingPromise = requestPromise
+	.then(requests => {
+		var userMapping = {};
+		var currentPromise = Promise.resolve();
+		requests.map(request => {
+			currentPromise = currentPromise
+			.then(() => {
+				return this.userManager.GetUserAdmin(request.UserId, environment)
+				.then(data => {
+					userMapping[request.UserId] = data.identity
+				});
+			});
+		});
+		return currentPromise.then(() => userMapping);
+	});
+
+	Promise.all([requestPromise, userMappingPromise])
 	.then(result => {
+		var requests = result[0];
+		var userMapping = result[1];
+		var newResults = [];
+		requests.map(request => {
+			request.userIdentity = userMapping[request.UserId];
+			newResults.push(request);
+		});
 		return callback({
 			statusCode: 200,
-			body: result
+			body: newResults
 		});
 	})
 	.catch(error => {

@@ -53,6 +53,7 @@
 							<thead>
 								<th class="text-center">Date Submitted</th>
 								<th class="text-center">Name</th>
+								<th class="text-center">Email</th>
 								<th class="text-center">DOB</th>
 								<th class="text-center">Clinic</th>
 								<th class="text-center">Address</th>
@@ -63,10 +64,13 @@
 							<tbody style="height: 40px">
 								<tr ng-repeat="verificationRequest in verificationRequests | filter:{'status':'NEW'} | orderBy : 'time'">
 									<td>
-										{{ verificationRequest.time | date : 'yyyy-MM-dd'}}
+										{{ verificationRequest.time | date : 'MMM d'}}
 									</td>
 									<td>
 										{{ verificationRequest.name }}
+									</td>
+									<td>
+										{{ verificationRequest.email }}
 									</td>
 									<td>
 										{{ verificationRequest.dob }}

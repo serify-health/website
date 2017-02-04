@@ -79,6 +79,60 @@ UserManager.prototype.GetUser = function(body, environment, userId, callback) {
 	});
 };
 
+UserManager.prototype.GetUserAdmin = function(lookupUser, environment) {
+	var table = `users.health-verify.${environment}`;
+	return this.DocClient.query({
+		TableName: table,
+		Limit: 1,
+		ScanIndexForward: false,
+		KeyConditionExpression: 'UserId = :id',
+		ExpressionAttributeValues: {
+			':id': lookupUser
+		}
+	}).promise().then(result => result.Items[0])
+	.then(user => {
+		if(!user) {
+			return Promise.reject('User does not exist.');
+		}
+		return {
+			userId: lookupUser,
+			userData: user.userData,
+			identity: user.identity || {},
+			verifications: user.verifications
+		};
+	});
+};
+
+UserManager.prototype.SetUserIdentifier = function(body, environment, userId, callback) {
+	var userTable = `users.health-verify.${environment}`;
+	return this.DocClient.update({
+		TableName: userTable,
+		Key: {
+			'UserId': userId
+		},
+		AttributeUpdates: {
+			'identity': {
+				Action: 'PUT',
+				Value: body
+			}
+		},
+		ReturnValues: 'NONE'
+	}).promise()
+	.then(result => {
+		return callback({
+			statusCode: 200,
+			body: result
+		});
+	})
+	.catch(error => {
+		return callback({
+			statusCode: 400,
+			error: `Unable to update profile: ${error.stack || error.toString()}`,
+			detail: error
+		});
+	});
+};
+
 UserManager.prototype.SetUserData = function(body, environment, userId, callback) {
 	var userTable = `users.health-verify.${environment}`;
 	return this.DocClient.update({

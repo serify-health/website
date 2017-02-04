@@ -16,7 +16,7 @@ var eventManager = new EventManager(docClient);
 var AdminManager = require('./AdminManager');
 var adminManager = new AdminManager();
 var VerificationManager = require('./VerificationManager');
-var verificationManager = new VerificationManager(docClient, adminManager);
+var verificationManager = new VerificationManager(docClient, adminManager, userManager);
 var SummaryManager = require('./SummaryManager');
 var summaryManager = new SummaryManager(docClient, adminManager);
 
@@ -29,7 +29,8 @@ var routes = {
 		'GET': (body, environment, userId, callback) => linkManager.GetAllUserLinks(body, environment, userId, callback)
 	},
 	'/user': {
-		'GET': (body, environment, userId, callback) => userManager.GetUser(body, environment, userId, callback)
+		'GET': (body, environment, userId, callback) => userManager.GetUser(body, environment, userId, callback),
+		'PUT': (body, environment, userId, callback) => userManager.SetUserIdentifier(body, environment, userId, callback)
 	},
 	'/user/verifications': {
 		'POST': (body, environment, userId, callback) => userManager.SetVerifications(body, environment, userId, callback)

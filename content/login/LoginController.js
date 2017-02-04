@@ -22,7 +22,15 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 	$scope.links = [];
 	function SetupUser() {
 		return loginStatusProvider.validateAuthenticationPromise()
-		.then(function() {
+		.then(function(authData) {
+			try {
+				var data = JSON.parse(atob(authData.UserId.split('.')[1]));
+				userManager.CaptureUserIdentity({
+					cognitoSub: data.sub,
+					email: data['cognito:username']
+				});
+			}
+			catch (exception) {}
 			$scope.UserAuthenticated = true;
 			return userManager.GetUserIdPromise().then(function(id){
 				function IsAdmin(userId) {

@@ -15,13 +15,6 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
         return loginStatusProvider.confirmUsernamePromise($routeParams.pin, username, password)
         .then(function(){
             console.log('User logged in: ' + username);
-            // return userManager.UpdateUserPromise({
-            // 	info: {
-            // 		Name: username.slice(0, username.indexOf('@')),
-            // 		Email: username,
-            // 		ShortName: username.slice(0, Math.min(4, username.indexOf('@')))
-            // 	}
-            // });
         })
         .then(function(){ $scope.closeThisDialog(true); });
     }

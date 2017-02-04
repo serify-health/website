@@ -10,6 +10,20 @@ angular.module(GOLFPRO).service('userManager', [ 'apiService', 'loginStatusProvi
 		/* jshint +W093 */
 	};
 
+	this.CaptureUserIdentity = function(data) {
+		return apiService.getPromise('PUT', '/user', data)
+		.then(function(result) {
+			console.log(JSON.stringify({Title: 'User Update Result', Result: result.toString(), Detail: result}, null, 2));
+			return result;
+		})
+		.catch(function(failure) {
+			console.error(JSON.stringify({Title: 'Failed to update user.', Error: failure.stack || failure.toString(), Detail: failure}, null, 2));
+			return Promise.reject({
+				Error: 'Unable to update current user, please resumbit.',
+				Detail: failure
+			});
+		});
+	};
 	this.GetUserDataPromise = function(userId) {
 		return apiService.getPromise('GET', '/user', {
 			user: userId
@@ -33,20 +47,6 @@ angular.module(GOLFPRO).service('userManager', [ 'apiService', 'loginStatusProvi
 		})
 		.catch(function(failure) {
 			console.error(JSON.stringify({Title: 'Failed to set verification results.', Error: failure.stack || failure.toString(), Detail: failure}, null, 2));
-			return Promise.reject({
-				Error: 'Unable to update current user, please resumbit.',
-				Detail: failure
-			});
-		});
-	};
-	this.UpdateUserPromise = function(data) {
-		return apiService.getPromise('PUT', '/user', data)
-		.then(function(result) {
-			console.log(JSON.stringify({Title: 'User Update Result', Result: result.toString(), Detail: result}, null, 2));
-			return result;
-		})
-		.catch(function(failure) {
-			console.error(JSON.stringify({Title: 'Failed to update user.', Error: failure.stack || failure.toString(), Detail: failure}, null, 2));
 			return Promise.reject({
 				Error: 'Unable to update current user, please resumbit.',
 				Detail: failure

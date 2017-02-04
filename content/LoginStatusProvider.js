@@ -149,8 +149,8 @@ angular.module(GOLFPRO).provider('loginStatusProvider', [function() {
 		});
 	};
 	var validateAuthenticationPromise = function() {
+		var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(POOL_DATA).getCurrentUser();
 		var getCognitoUserPoolAuthenticationPromise = new Promise(function(s, f) {
-			var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(POOL_DATA).getCurrentUser();
 			if (cognitoUser === null) { return s(null); }
 
 			cognitoUser.getSession(function(error, session) {
@@ -188,6 +188,13 @@ angular.module(GOLFPRO).provider('loginStatusProvider', [function() {
 			});
 			returnPromise.then(function() {
 				if(ga) { ga('set', 'userId', AWS.config.credentials.identityId); }
+				var attribute = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute({
+					Name : 'custom:CognitoUserId',
+					Value : AWS.config.credentials.identityId
+				});
+				cognitoUser.updateAttributes([attribute], function(err, result) {
+					if (err) { console.log('Issue updating attribute:' + err) }
+				});
 			});
 			return returnPromise;
 		});

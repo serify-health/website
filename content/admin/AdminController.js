@@ -8,14 +8,13 @@ angular.module(GOLFPRO).controller('adminController', [
 	'guiManager',
 	'eventHandler',
 	'pageService',
-	'userManager',
 	'verificationManager',
 	'ngDialog',
 	'utilities',
 	'linkManager',
 	'logoutService',
 	'adminService',
-function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pageService, userManager, verificationManager, ngDialog, utilities, linkManager, logoutService, adminService) {
+function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pageService, verificationManager, ngDialog, utilities, linkManager, logoutService, adminService) {
 	$scope.verificationRequests = [];
 	/******** SignInButton Block ********/
 	$scope.UserAuthenticated = false;
@@ -44,6 +43,7 @@ function($scope, $routeParams, loginStatusProvider, guiManager, eventHandler, pa
 							userId: r.UserId,
 							time: r.Time,
 							name: (r.Info || r.info).user.name,
+							email: (r.userIdentity || {}).email,
 							dob: (r.Info || r.info).user.dob,
 							clinic: (r.Info || r.info).user.clinicName,
 							address: (r.Info || r.info).user.clinicInfo,
