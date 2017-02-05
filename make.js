@@ -20,22 +20,11 @@ commander.version(version);
 var packageMetadataFile = path.join(__dirname, 'package.json');
 var packageMetadata = require(packageMetadataFile);
 
-var apiOptions = {
-	sourceDirectory: path.join(__dirname, 'src'),
-	description: 'This is the description of the lambda function',
-	regions: ['us-east-1'],
-	runtime: 'nodejs4.3',
-	memorySize: 128,
-	publish: true,
-	timeout: 3,
-	securityGroupIds: [],
-	subnetIds: []
-};
 var contentOptions = {
 	bucket: 'health-verify-service',
 	contentDirectory: path.join(__dirname, 'content')
 };
-var awsArchitect = new AwsArchitect(packageMetadata, apiOptions, contentOptions);
+var awsArchitect = new AwsArchitect(packageMetadata, null, contentOptions);
 
 commander
 	.command('build')
@@ -66,71 +55,8 @@ commander
 	.description('Deploy to AWS.')
 	.action(() => {
 		var production = 'v1';
-		var databaseSchema = [
-			{
-				TableName: 'users',
-				AttributeDefinitions: [{ AttributeName: 'UserId', AttributeType: 'S' }],
-				KeySchema: [{ AttributeName: 'UserId', KeyType: 'HASH' }],
-				ProvisionedThroughput: { ReadCapacityUnits: 1, WriteCapacityUnits: 1 }
-			},
-			{
-				TableName: 'verificationRequests',
-				AttributeDefinitions: [
-					{ AttributeName: 'UserId', AttributeType: 'S' },
-					{ AttributeName: 'Time', AttributeType: 'N' },
-					{ AttributeName: 'Status', AttributeType: 'S' },
-				],
-				KeySchema: [{ AttributeName: 'UserId', KeyType: 'HASH' }, { AttributeName: 'Time', KeyType: 'RANGE' }],
-				GlobalSecondaryIndexes: [
-					{
-						IndexName: 'StatusLookup',
-						KeySchema: [{ AttributeName: 'Status', KeyType: 'HASH' }],
-						Projection: { ProjectionType: 'ALL' },
-						ProvisionedThroughput: { ReadCapacityUnits: 1, WriteCapacityUnits: 1 }
-					}
-				],
-				ProvisionedThroughput: { ReadCapacityUnits: 1, WriteCapacityUnits: 1 }
-			},
-			{
-				TableName: 'links',
-				AttributeDefinitions: [
-					{ AttributeName: 'UserId', AttributeType: 'S' },
-					{ AttributeName: 'Base64Hash', AttributeType: 'S' }
-				],
-				KeySchema: [{ AttributeName: 'UserId', KeyType: 'HASH' }, { AttributeName: 'Base64Hash', KeyType: 'RANGE' }],
-				GlobalSecondaryIndexes: [
-					{
-						IndexName: 'HashLookup',
-						KeySchema: [{ AttributeName: 'Base64Hash', KeyType: 'HASH' }],
-						Projection: { ProjectionType: 'ALL' },
-						ProvisionedThroughput: { ReadCapacityUnits: 1, WriteCapacityUnits: 1 }
-					}
-				],
-				ProvisionedThroughput: { ReadCapacityUnits: 1, WriteCapacityUnits: 1 }
-			},
-			{
-				TableName: 'events',
-				AttributeDefinitions: [
-					{ AttributeName: 'UserId', AttributeType: 'S' },
-					{ AttributeName: 'Time', AttributeType: 'N' }
-					// { AttributeName: 'EventType', AttributeType: 'S' },
-					//{ AttributeName: 'DeviceInformation', AttributeType: 'S' },
-				],
-				KeySchema: [{ AttributeName: 'UserId', KeyType: 'HASH' }, { AttributeName: 'Time', KeyType: 'RANGE' }],
-				// GlobalSecondaryIndexes: [
-				// 	{
-				// 		IndexName: 'EventTypeLookup',
-				// 		KeySchema: [{ AttributeName: 'EventType', KeyType: 'HASH' }, { AttributeName: 'Time', KeyType: 'RANGE' }],
-				// 		Projection: { ProjectionType: 'ALL' },
-				// 		ProvisionedThroughput: { ReadCapacityUnits: 1, WriteCapacityUnits: 1 }
-				// 	}
-				// ],
-				ProvisionedThroughput: { ReadCapacityUnits: 1, WriteCapacityUnits: 1 }
-			}
-		];
-		var publishPromise = awsArchitect.PublishAndDeployPromise(production, databaseSchema);
 		var websitePromise = awsArchitect.PublishWebsite(production);
-		Promise.all([publishPromise, websitePromise]).then((result) => console.log(`${JSON.stringify(result, null, 2)}`))
+		Promise.all([websitePromise]).then((result) => console.log(`${JSON.stringify(result, null, 2)}`))
 		.catch((failure) => console.log(`Failed to upload website ${failure} - ${JSON.stringify(failure, null, 2)}`));
 	});
 
