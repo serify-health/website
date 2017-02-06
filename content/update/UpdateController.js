@@ -26,6 +26,7 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, eventHandler,
 			pageService.NavigateToPage('/');
 		});
 	}
+	$scope.tests = TESTS;
 
 	$scope.SignInButtonClick = function() {
 		if($scope.UserAuthenticated) {

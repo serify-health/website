@@ -9,19 +9,18 @@
     "deploy": "node make.js deploy",
     "test": "mocha tests/**/*.js -R spec"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
-    "aws-architect": "^3.3",
+    "aws-architect": "^3.3.201",
     "aws-sdk": "^2.2.32",
     "chai": "^3.2.0",
+    "ci-build-tools": "~1.0",
     "commander": "^2.5.0",
     "esprima": "^2.7.2",
     "glob": "^5.0.0",
     "jshint": "^2.9.4",
     "mocha": "^2.5.3",
-    "sinon": "^1.17.1",
-    "ci-build-tools": "~1.0"
+    "sinon": "^1.17.1"
   },
   "repository": {
     "type": "git",

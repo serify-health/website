@@ -38,13 +38,7 @@
 								<tr ng-repeat="verification in verifications">
 									<td>
 										<select class="form-control" ng-model="verification.Name">
-											<option value="HIV">HIV</option>
-											<option value="Gonorrhea">Gonorrhea</option>
-											<option value="Chlamydia">Chlamydia</option>
-											<option value="Herpes">Herpes</option>
-											<option value="Syphilis">Syphilis</option>
-											<option value="HPV">HPV Vaccine</option>
-											<option value="PrEP">Pre-exposure prophylaxis</option>
+											<option ng-repeat="option in tests" value="{{option.id}}">{{option.name}}</option>
 										</select>
 									</td>
 									<td>

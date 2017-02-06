@@ -67,6 +67,7 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
 					var verifications = (user || {}).Verifications || [];
 					verifications.map(function(verification) {
 						verification.Inverse = verification.Name !== 'HPV' && verification.Name !== 'PrEP';
+						verification.Name = TESTS.find(function(t){ return t.id === verification.Name; }).name;
 					});
 					$scope.verifications = verifications;
 				});
