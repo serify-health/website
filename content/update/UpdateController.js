@@ -27,7 +27,15 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, eventHandler,
 		});
 	}
 	$scope.tests = TESTS;
-
+	var currentYear = new Date().getFullYear();
+	$scope.years = Array.apply(null, {length:100}).map(Number.call, Number).map(function(i) { return currentYear - i; });
+	$scope.months = Array.apply(null, {length:12}).map(Number.call, Number).map(function(i) { return i + 1; });
+	$scope.days = Array.apply(null, {length:31}).map(Number.call, Number).map(function(i) { return i + 1; });
+	$scope.selectedDobYear = currentYear;
+	$scope.selectedDobMonth = new Date().getMonth() + 1;
+	$scope.selectedDobDay = new Date().getDate();
+	$scope.verificationMonths = $scope.months;
+	$scope.verificationYears = [0, 1, 2, 3, 4, 5].map(function(i) { return currentYear - i; });
 	$scope.SignInButtonClick = function() {
 		if($scope.UserAuthenticated) {
 			logoutService.Logout();
@@ -60,7 +68,8 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, eventHandler,
 		$scope.verifications.push({
 			Id: utilities.getGuid(),
 			Name: '',
-			Date: new Date().getMonth() + 1 + '/' + new Date().getFullYear(),
+			Year: new Date().getFullYear(),
+			Month: new Date().getMonth() + 1,
 			Status: 'Unknown'
 		});
 	};
@@ -93,11 +102,6 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, eventHandler,
 			$anchorScroll();
 			return;
 		}
-		if(!$scope.dob) {
-			$scope.alert = { type: 'danger', msg: 'Please enter your date of birth.' };
-			$anchorScroll();
-			return;
-		}
 		if(!$scope.clinicName) {
 			$scope.alert = { type: 'danger', msg: 'Please enter the clinic name where the tests where performed.' };
 			$anchorScroll();
@@ -110,13 +114,17 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, eventHandler,
 		}
 
 		var userDetails = {
-			dob: $scope.dob,
+			dob: new Date($scope.selectedDobYear, $scope.selectedDobMonth, $scope.selectedDobDay).toISOString(),
 			name: $scope.name,
 			clinicInfo: $scope.clinicInfo,
 			clinicName: $scope.clinicName,
 			signature: signaturePad.toDataURL()
 		};
-		var verificationPromise = userManager.VerificationRequest($scope.verifications, userDetails)
+		var verifications = $scope.verifications.map(function(v) {
+			v.Date = v.Month + '/' + v.Year;
+			return v;
+		});
+		var verificationPromise = userManager.VerificationRequest(verifications, userDetails)
 		.then(function(){
 			$scope.$apply(function(){
 				$scope.alert = { type: 'success', msg: 'Verifications Submitted.' };
