@@ -1,5 +1,5 @@
 <div class="loginScreen">
-	<div class="custom-navbar">
+	<!-- <div class="custom-navbar">
 		<nav class="navbar navbar-default" role="navigation">
 			<div class="container-fluid">
 				<div class="">
@@ -19,7 +19,51 @@
 				</div>
 			</div>
 		</nav>
-	</div>
+	</div> -->
+
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<!-- <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button> -->
+				<a class="navbar-brand" href="#" style="padding-top: 8px;">
+					<img alt="Serify nav icon" src="image/Serify nav icon.png" style="height: 34px; width: auto;">
+				</a>
+				<!-- <a class="navbar-brand" href="#">Serify</a> -->
+				<ul class="visible-xs" style="list-style: none;">
+					<li class="pull-right"><button id="signInButton" type="button" class="btn btn-warning navbar-btn navbar-right" ng-click="SignInButtonClick()">{{UserAuthenticated ? 'Sign out' : 'Sign in'}}</button></li>
+					<li class="pull-right" ng-show="UserAuthenticated"><button id="profileButton" type="button" class="btn btn-warning navbar-btn" ng-click="ProfileButtonClick()">Profile</button></li>
+				</ul>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav navbar-right">
+					<!-- <li><a href="#">Link</a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Action</a></li>
+							<li><a href="#">Another action</a></li>
+							<li><a href="#">Something else here</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="#">Separated link</a></li>
+						</ul>
+					</li> -->
+					<li><button type="button" id="signInButton" class="btn btn-warning navbar-btn" ng-click="SignInButtonClick()">{{UserAuthenticated ? 'Sign out' : 'Sign in'}}</button></li>
+					<li ng-show="UserAuthenticated"><button id="profileButton" type="button" class="btn btn-warning navbar-btn" ng-click="ProfileButtonClick()">Profile</button></li>
+				</ul>
+			</div><!-- /.navbar-collapse -->
+		</div><!-- /.container-fluid -->
+	</nav>
+
+
+
 	<div id="alert" ng-show="alert" style="text-align: center" uib-alert ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert()" dismiss-on-timeout="5000">{{alert.msg}}</div>
 	<div ng-show="UserAuthenticated" class="ui" style="margin:0% 5%;width:90% !important">
 		<div>
@@ -41,7 +85,7 @@
 											<option ng-repeat="option in tests" value="{{option.id}}">{{option.name}}</option>
 										</select>
 									</td>
-									<td>
+									<td class="text-center">
 										<select ng-model="verification.Month" ng-options="x for x in verificationMonths"></select>/
 										<select ng-model="verification.Year" ng-options="x for x in verificationYears"></select>
 									</td>
@@ -56,7 +100,7 @@
 				<button ng-click="AddRowButtonClick()" class="btn btn-default"><i class="fa fa-plus-square" aria-hidden="true"></i> Add additional test to verify</button>
 			</div>
 			<hr>
-			<div style="text-align:center">
+			<div style="text-align: center">
 				<h4>Medical Test Release Form</h4>
 			</div>
 			<div>
