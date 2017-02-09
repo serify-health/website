@@ -1,5 +1,6 @@
 	* {
 		-webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+		box-sizing: border-box;
 	}
 	/*
 	@keyframes leaveAnimation {
@@ -98,6 +99,11 @@
 		}
 	}*/
 
+  /*.diagram div h5, h5 {
+    padding: 1rem;
+    font-weight: 300;
+  }*/
+
 	h1 {
 		font-size:24px;
 		font-weight:normal;
@@ -109,7 +115,7 @@
 	}
 
 	/*Custom Nav Bar*/
-	.custom-navbar {
+	/*.custom-navbar {
 		height:8%;
 	}
 	.custom-navbar .navbar {
@@ -130,10 +136,10 @@
 	.custom-navbar .nav > li > a, .custom-navbar .navbar-nav > li > a {
 		padding: 5px 10px !important;
 	}
-/*	Tablet?	
+  // Tablet?
 	.navbar-nav.navbar-right:last-child {
 		margin-right: -15px !important;
-	}*/
+	}
 	.custom-navbar .navbar-right {
 		float: right!important;
 	}
@@ -174,4 +180,175 @@
 		padding:0px;
 		text-align:center;
 		color: #000000;
+	}*/
+
+	/*select {
+display: inline-block;
+vertical-align: middle;
+text-align: center;
+/*margin: 0 auto;*/
+/*}*/
+
+	/* Nav Bar */
+	/*#signInButton {
+    margin-right: 15px;
+  }*/
+
+	.header {
+    text-align: center;
+    background: linear-gradient(rgba(0, 204, 255, 0.7), rgba(0, 204, 255, 0.7)), url("image/Login background.jpg") no-repeat center;
+    background-size: cover;
+    width: 100%;
+    height: auto;
+    margin: -20px 0 5rem 0;
+		max-height: 400px;
+  }
+
+	#headerTitle {
+		font-weight: 400;
+		/*margin:0px;*/
+		overflow: visible;
+		/*padding:0px;*/
+		text-align: center;
+		color: white;
+	}
+
+	#headerDescription {
+		font-weight: 300;
+		text-align: center;
+		padding-top: 1rem;
+		color: rgba(255, 255, 255, 0.8)
+	}
+
+	#headerIcon {
+		width: 100px;
+		height: auto;
+		margin-bottom: 20px;
+	}
+
+	#howText {
+		font-size: 4rem;
+		font-weight: 200;
+		text-align: center;
+		margin-bottom: 40px;
+	}
+
+	.bottom {
+		display: block;
+		clear: both;
+		max-height: 200px;
+	}
+
+	#bottomText {
+    font-weight: 300;
+    margin: 35px auto;
+    text-align: center;
+  }
+
+  #createButton {
+    font-size: 2rem;
+    display:block;
+    padding: 10px 40px;
+    margin: auto;
+    text-align: center;
+    font-weight: 800;
+  }
+
+	#profileButton {
+		margin-right: 10px;
+	}
+
+	@media (min-width: 768px) {
+		.header {
+			max-height: 450px;
+			padding: 75px;
+			height: auto;
+	  }
+
+		#headerTitle {
+			font-size: 8rem;
+		}
+
+		#headerDescription {
+			font-size: 2rem;
+		}
+
+		.diagram {
+			text-align: center;
+		}
+
+		.diagram div {
+			max-width: 200px;
+			width: 20%;
+			/*min-height: 80px;*/
+	    text-align: center;
+			vertical-align: middle;
+			margin: auto;
+	    border-radius: 10px;
+	    padding: 5px;
+	    border: 2px;
+	    border-style: solid;
+	    border-color: #60C0DC;
+	  }
+
+		.diagram div h5 {
+			text-align: center;
+			vertical-align: middle;
+			margin: 10% 2rem;
+			font-size: 1.5rem;
+		}
+
+		.diagram div, .diagram i {
+			display: inline-block;
+		}
+
+		.arrow {
+			color: #00CED1;
+			display: block;
+			text-align: center;
+			padding: 0 10px 0 0;
+
+			-webkit-transform: rotate(-90deg);
+	    -moz-transform: rotate(-90deg);
+	    -o-transform: rotate(-90deg);
+	    -ms-transform: rotate(-90deg);
+	    transform: rotate(-90deg);
+		}
+	}
+
+	@media (max-width: 767px) {
+		.header {
+	    padding: 12.5%;
+	  }
+
+		#headerTitle {
+			font-size: 6rem;
+		}
+
+		#headerDescription {
+			font-size: 1.5rem;
+		}
+
+		.diagram div {
+	    text-align: center;
+			margin: auto;
+	    border-radius: 10px;
+	    padding: 5px;
+	    width: 75%;
+	    border: 2px;
+	    border-style: solid;
+	    border-color: #60C0DC;
+	  }
+
+		.arrow {
+			color: #00CED1;
+			display: block;
+			text-align: center;
+			margin: 5px auto;
+		}
+
+		/* Nav Bar */
+		#signInButton {
+	    margin-right: 15px;
+	  }
 	}
