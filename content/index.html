@@ -10,6 +10,12 @@
 			* Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
 				* Enable inline JS: add 'unsafe-inline' to default-src
 		-->
+
+		<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
 		<meta http-equiv="Content-Security-Policy"
 			content="
 				default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval';
@@ -23,7 +29,7 @@
 		<meta name="format-detection" content="telephone=no">
 		<meta name="msapplication-tap-highlight" content="no">
 		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-		<title>Health Verify</title>
+		<title>Serify</title>
 
 		<link rel="icon" type="image/ico" href="./favicon.ico" >
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -32,7 +38,7 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.6.4/css/ngDialog-theme-plain.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.6.4/css/ngDialog-theme-default.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.min.css">
-		
+
 		<link rel="stylesheet" href="index.css">
 		<link rel="stylesheet" href="spinner.css">
 	</head>
@@ -63,7 +69,7 @@
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.6.4/js/ngDialog.min.js"></script>
-		
+
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.7.7/aws-sdk.min.js"></script>
 
