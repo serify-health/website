@@ -72,7 +72,26 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
 					verifications.map(function(verification) {
 						verification.Inverse = verification.Name !== 'HPV' && verification.Name !== 'PrEP';
 					});
-					$scope.verifications = verifications;
+					var uniqueVerificationsMap = {};
+					verifications.map(function(v){
+						if(!uniqueVerificationsMap[v.Name]) {
+							uniqueVerificationsMap[v.Name] = v;
+						}
+						else {
+							var d = uniqueVerificationsMap[v.Name].Date;
+							var formatMap = {
+								'0': null,
+								'1': 'MM/YYYY',
+								'2': 'MM/DD/YYYY'
+							};
+							var currentDate = moment(d, formatMap[d.split('/').length - 1]);
+							var possibleDate = moment(v.Date, formatMap[v.Date.split('/').length - 1]);
+							if (possibleDate > currentDate) {
+								uniqueVerificationsMap[v.Name] = v;
+							}
+						}
+					});
+					$scope.verifications = Object.keys(uniqueVerificationsMap).map(function(v){ return uniqueVerificationsMap[v]; });
 				});
 			});
 		});

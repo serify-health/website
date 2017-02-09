@@ -28,7 +28,7 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, eventHandler,
 	}
 	$scope.tests = TESTS;
 	var currentYear = new Date().getFullYear();
-	$scope.years = Array.apply(null, {length:100}).map(Number.call, Number).map(function(i) { return currentYear - i; });
+	$scope.years = Array.apply(null, {length:100}).map(Number.call, Number).map(function(i) { return currentYear - i - 13; });
 	$scope.months = Array.apply(null, {length:12}).map(Number.call, Number).map(function(i) { return i + 1; });
 	$scope.days = Array.apply(null, {length:31}).map(Number.call, Number).map(function(i) { return i + 1; });
 	$scope.selectedDobYear = currentYear;
@@ -89,6 +89,11 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, eventHandler,
 		}
 		if(signaturePad.isEmpty()) {
 			$scope.alert = { type: 'danger', msg: 'Signature on the release form is requiired.' };
+			$anchorScroll();
+			return;
+		}
+		if(moment().add(-13, 'years') < moment($scope.selectedDobYear + '-' + $scope.selectedDobMonth + '-' + $scope.selectedDobDay, 'YYYY-MM-DD')) {
+			$scope.alert = { type: 'danger', msg: 'The minimum age for Serify is 13, please see our information page for details.' };
 			$anchorScroll();
 			return;
 		}
