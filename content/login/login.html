@@ -1,156 +1,147 @@
 <div class="loginScreen">
-	<!-- <div class="custom-navbar">
-		<nav class="navbar navbar-default" role="navigation">
-			<div class="container-fluid">
-				<div class="">
-					<ul class="nav navbar-nav navbar-left">
-						<li>
-							<div style="font-size:20px"><i class="fa fa-check-square-o" aria-hidden="true"></i> Serify</div>
-						</li>
-					</ul>
-					<ul class="nav navbar-nav navbar-right">
-						<li ng-show="IsAdmin">
-							<button type="button" class="btn btn-default btn-sm" ng-click="AdminButtonClick()">Admin</button>
-						</li>
-						<li>
-							<button type="button" class="btn btn-default btn-sm" ng-click="SignInButtonClick()">{{UserAuthenticated ? 'Sign out' : 'Sign in'}}</button>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-	</div> -->
-
-		<nav class="navbar navbar-default">
-	    <div class="container-fluid">
-	      <!-- Brand and toggle get grouped for better mobile display -->
-	      <div class="navbar-header custom-navbar">
-	        <!-- <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-	          <span class="sr-only">Toggle navigation</span>
-	          <span class="icon-bar"></span>
-	          <span class="icon-bar"></span>
-	          <span class="icon-bar"></span>
-	        </button> -->
-					<a class="navbar-brand" href="#" style="padding-top: 8px;">
-		        <img alt="Serify nav icon" src="image/Serify nav icon.png" style="height: 34px; width: auto;">
-		      </a>
-	        <!-- <a class="navbar-brand" href="#">Serify</a> -->
-	        <ul class="visible-xs" style="list-style: none;">
-	        <li class="pull-right"><button id="signInButton" type="button" class="btn btn-warning navbar-btn navbar-right" ng-click="SignInButtonClick()">{{UserAuthenticated ? 'Sign out' : 'Sign in'}}</button></li>
-	      </ul>
-	      </div>
-
-	      <!-- Collect the nav links, forms, and other content for toggling -->
-	      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-	        <ul class="nav navbar-nav navbar-right">
-	          <!-- <li><a href="#">Link</a></li>
-	          <li class="dropdown">
-	            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-	            <ul class="dropdown-menu">
-	              <li><a href="#">Action</a></li>
-	              <li><a href="#">Another action</a></li>
-	              <li><a href="#">Something else here</a></li>
-	              <li role="separator" class="divider"></li>
-	              <li><a href="#">Separated link</a></li>
-	            </ul>
-	          </li> -->
-	          <li><button id="signInButton" type="button" class="btn btn-warning navbar-btn" ng-click="SignInButtonClick()">{{UserAuthenticated ? 'Sign out' : 'Sign in'}}</button></li>
-	        </ul>
-	      </div><!-- /.navbar-collapse -->
-	    </div><!-- /.container-fluid -->
-	  </nav>
-
-	<div ng-show="alert" style="text-align: center" uib-alert ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert()" dismiss-on-timeout="5000">{{alert.msg}}</div>
-	<div ng-show="UserAuthenticated" class="ui" style="margin:0% 10% 0% 10%;width:80% !important">
-		<div style="text-align:center">
-			<form class="form-inline">
-				<label class="sr-only" for="inlineFormInputGroup">Username</label>
-				<div class="input-group mb-2 mr-sm-2 mb-sm-0">
-					<div class="input-group-addon"><i style="max-width:100px" class="fa fa-link" aria-hidden="true"></i> Profile Link</div>
-					<input style="max-width:400px" type="text" class="form-control" ng-model="userLink" id="inlineFormInputGroup" placeholder="UsernameLink" readonly>
-				</div><br><br>
-				This is a link to your profile. You can share this link with any potential partners. Only verified results will be displayed.<br>
-				The data you enter here will be visible on your public profile.
-			</form>
-		</div>
-		<hr>
-		<div class="container">
-			<form class="form-horizontal">
-				<div class="form-group">
-					<label for="username" class="col-sm-2 control-label">Name </label>
-					<div class="col-sm-10">
-						<input style="max-width:200px" type="text" class="form-control" id="username" ng-model="username" placeholder="Anonymous">
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="userProfile" class="col-sm-2 control-label">Info </label>
-					<div class="col-sm-10">
-						<textarea name="userProfile" cols="50" rows="5" ng-model="userProfile"></textarea>
-					</div>
-				</div>
-			</form>
-			<div class="pull-right">
-				<button ng-click="SaveProfileButtonClick()" class="btn btn-default">Save</button>
-			</div>
-		</div>
-		<hr>
-		<div>
-			<div style="width:80%;padding:0%;border:0%;margin:0% 10%">
-				<div class="row clearfix">
-					<div class="column">
-						<table class="table table-bordered table-hover">
-							<thead>
-								<tr>
-									<th class="text-center">Test</th>
-									<th class="text-center">Date</th>
-									<th class="text-center">Serify Status</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr ng-repeat="verification in verifications track by $index">
-									<td>
-										<div style="text-align: center; padding-top:10px;"> {{ verification.Name }} </div>
-									</td>
-									<td>
-										<div style="text-align: center"> {{ verification.Date }} </div>
-									</td>
-									<td tabindex="-1" style="text-align:center">
-										<i style="color: limeGreen;padding-top: 5px;" ng-if="verification.Status === 'Verified' && verification.Inverse" class="fa fa-minus fa-2x" aria-hidden="true"></i>
-										<i style="color: limeGreen;padding-top: 5px;" ng-if="verification.Status === 'Verified' && !verification.Inverse" class="fa fa-check-square-o fa-2x" aria-hidden="true"></i>
-										<i style="color: red;padding-top: 5px;" ng-if="verification.Status === 'Rejected'" class="fa fa-times-circle-o fa-2x" aria-hidden="true"></i>
-										<div style="padding-top: 10px;" ng-if="verification.Status === 'Unknown'">Request Submitted</div>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-				<button ng-click="AddVerificationsButtonClick()" class="btn btn-default">Add Additional Tests</button>
-			</div>
-		</div>
-	</div>
-
-	<div ng-show="!UserAuthenticated" class="ui">
-		<div class="header">
-			<img id="headerIcon" src="image/Serify icon.png" alt="Serify icon">
-    	<h1 id="headerTitle">Serify</h1>
-    	<p id="headerDescription">An easy way to verify and share your negative STD test results.</p>
-  	</div>
-		<h1 id="howText">How does it work?</h1>
-		<div class="diagram">
-			<div><h5>Get tested at your preferred clinic.</h5></div>
-			<i class="fa fa-arrow-down fa-2x arrow" aria-hidden="true"></i>
-			<div><h5>Tell Serify about your tests.</h5></div>
-			<i class="fa fa-arrow-down fa-2x arrow" aria-hidden="true"></i>
-			<div><h5>Serify verifies your negative results.</h5></div>
-			<i class="fa fa-arrow-down fa-2x arrow" aria-hidden="true"></i>
-			<div><h5>Share your Serified profile with partners.</h5></div>
-		</div>
-		<div class="bottom">
-			<hr>
-			<p id="bottomText">This is the Serify Beta. All test result verifications are currently free. <br>To get started, create an account below.</p>
-			<button id="createButton" type="button" class="btn btn-warning btn-sm" ng-click="SignInButtonClick()">Create an account</button>
-			<hr>
-		</div>
-	</div>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header custom-navbar">
+                <!-- <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+				          <span class="sr-only">Toggle navigation</span>
+				          <span class="icon-bar"></span>
+				          <span class="icon-bar"></span>
+				          <span class="icon-bar"></span>
+				        </button> -->
+                <a class="navbar-brand navBarIcon" href="#">
+                    <img alt="Serify nav icon" src="image/serify_nav_icon.png" style="height: 34px; width: auto;">
+                </a>
+                <!-- <a class="navbar-brand" href="#">Serify</a> -->
+                <ul class="visible-xs" style="list-style: none;">
+                    <li class="pull-right">
+                        <button id="signInButton" type="button" class="btn btn-warning navbar-btn navbar-right" ng-click="SignInButtonClick()">{{UserAuthenticated ? 'Sign out' : 'Sign in'}}</button>
+                    </li>
+                </ul>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <!-- <li><a href="#">Link</a></li>
+					          <li class="dropdown">
+					            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+					            <ul class="dropdown-menu">
+					              <li><a href="#">Action</a></li>
+					              <li><a href="#">Another action</a></li>
+					              <li><a href="#">Something else here</a></li>
+					              <li role="separator" class="divider"></li>
+					              <li><a href="#">Separated link</a></li>
+					            </ul>
+					          </li> -->
+                    <li>
+                        <button id="signInButton" type="button" class="btn btn-warning navbar-btn" ng-click="SignInButtonClick()">{{UserAuthenticated ? 'Sign out' : 'Sign in'}}</button>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+    <div ng-show="alert" style="text-align: center" uib-alert ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert()" dismiss-on-timeout="5000">{{alert.msg}}</div>
+    <div ng-show="UserAuthenticated" class="ui" style="margin:0% 10% 0% 10%;width:80% !important">
+        <div style="text-align:center">
+            <form class="form-inline">
+                <label class="sr-only" for="inlineFormInputGroup">Username</label>
+                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                    <div class="input-group-addon"><i style="max-width:100px" class="fa fa-link" aria-hidden="true"></i> Profile Link</div>
+                    <input style="max-width:400px" type="text" class="form-control" ng-model="userLink" id="inlineFormInputGroup" placeholder="UsernameLink" readonly>
+                </div>
+                <br>
+                <br> This is a link to your profile. You can share this link with any potential partners. Only verified results will be displayed.
+                <br> The data you enter here will be visible on your public profile.
+            </form>
+        </div>
+        <hr>
+        <div class="container">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="username" class="col-sm-2 control-label">Name </label>
+                    <div class="col-sm-10">
+                        <input style="max-width:200px" type="text" class="form-control" id="username" ng-model="username" placeholder="Anonymous">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="userProfile" class="col-sm-2 control-label">Info </label>
+                    <div class="col-sm-10">
+                        <textarea name="userProfile" cols="50" rows="5" ng-model="userProfile"></textarea>
+                    </div>
+                </div>
+            </form>
+            <div class="pull-right">
+                <button ng-click="SaveProfileButtonClick()" class="btn btn-default">Save</button>
+            </div>
+        </div>
+        <hr>
+        <div>
+            <div style="width:80%;padding:0%;border:0%;margin:0% 10%">
+                <div class="row clearfix">
+                    <div class="column">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Test</th>
+                                    <th class="text-center">Date</th>
+                                    <th class="text-center">Serify Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="verification in verifications track by $index">
+                                    <td>
+                                        <div style="text-align: center; padding-top:10px;"> {{ verification.Name }} </div>
+                                    </td>
+                                    <td>
+                                        <div style="text-align: center"> {{ verification.Date }} </div>
+                                    </td>
+                                    <td tabindex="-1" style="text-align:center">
+                                        <i style="color: limeGreen;padding-top: 5px;" ng-if="verification.Status === 'Verified' && verification.Inverse" class="fa fa-minus fa-2x" aria-hidden="true"></i>
+                                        <i style="color: limeGreen;padding-top: 5px;" ng-if="verification.Status === 'Verified' && !verification.Inverse" class="fa fa-check-square-o fa-2x" aria-hidden="true"></i>
+                                        <i style="color: red;padding-top: 5px;" ng-if="verification.Status === 'Rejected'" class="fa fa-times-circle-o fa-2x" aria-hidden="true"></i>
+                                        <div style="padding-top: 10px;" ng-if="verification.Status === 'Unknown'">Request Submitted</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <button ng-click="AddVerificationsButtonClick()" class="btn btn-default">Add Additional Tests</button>
+            </div>
+        </div>
+    </div>
+    <div ng-show="!UserAuthenticated" class="ui">
+        <div class="header">
+            <img id="headerIcon" src="image/serify_icon.png" alt="Serify icon">
+            <h1 id="headerTitle">Serify</h1>
+            <p id="headerDescription">An easy way to verify and share your negative STD test results.</p>
+        </div>
+        <h1 id="howText">How does it work?</h1>
+        <div class="diagram">
+            <div>
+                <h5>Get tested at your preferred clinic.</h5>
+            </div>
+            <i class="fa fa-arrow-down fa-2x arrow" aria-hidden="true"></i>
+            <div>
+                <h5>Tell Serify about your tests.</h5>
+            </div>
+            <i class="fa fa-arrow-down fa-2x arrow" aria-hidden="true"></i>
+            <div>
+                <h5>Serify verifies your negative results.</h5>
+            </div>
+            <i class="fa fa-arrow-down fa-2x arrow" aria-hidden="true"></i>
+            <div>
+                <h5>Share your Serified profile with partners.</h5>
+            </div>
+        </div>
+        <div class="bottom">
+            <hr>
+            <p id="bottomText">This is the Serify Beta. All test result verifications are currently free.
+                <br>To get started, create an account below.</p>
+            <button id="createButton" type="button" class="btn btn-warning btn-sm" ng-click="SignInButtonClick()">Create an account</button>
+            <hr>
+        </div>
+    </div>
 </div>
