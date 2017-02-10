@@ -43,13 +43,13 @@
         <!-- /.container-fluid -->
     </nav>
     <div ng-show="alert" style="text-align: center" uib-alert ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert()" dismiss-on-timeout="5000">{{alert.msg}}</div>
-    <div ng-show="UserAuthenticated" class="ui" style="margin:0% 10% 0% 10%;width:80% !important">
-        <div style="text-align:center">
+    <div ng-show="UserAuthenticated" class="ui">
+        <div style="text-align:center;">
             <form class="form-inline">
                 <label class="sr-only" for="inlineFormInputGroup">Username</label>
                 <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                     <div class="input-group-addon"><i style="max-width:100px" class="fa fa-link" aria-hidden="true"></i> Profile Link</div>
-                    <input style="max-width:400px" type="text" class="form-control" ng-model="userLink" id="inlineFormInputGroup" placeholder="UsernameLink" readonly>
+                    <input type="text" class="form-control" ng-model="userLink" id="inlineFormInputGroup" placeholder="UsernameLink" readonly>
                 </div>
                 <br>
                 <br> This is a link to your profile. You can share this link with any potential partners. Only verified results will be displayed.
@@ -58,28 +58,28 @@
         </div>
         <hr>
         <div class="container">
-            <form class="form-horizontal">
+            <form class="form-horizontal" style="width: 100%;">
                 <div class="form-group">
-                    <label for="username" class="col-sm-2 control-label">Name </label>
-                    <div class="col-sm-10">
-                        <input style="max-width:200px" type="text" class="form-control" id="username" ng-model="username" placeholder="Anonymous">
+                    <label for="username" class="col-sm-1 col-md-3 control-label">Name </label>
+                    <div class="col-sm-11 col-md-6">
+                        <input id="nameTextBox" type="text" class="form-control" id="username" ng-model="username" placeholder="Anonymous">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="userProfile" class="col-sm-2 control-label">Info </label>
-                    <div class="col-sm-10">
-                        <textarea name="userProfile" cols="50" rows="5" ng-model="userProfile"></textarea>
+                    <label for="userProfile" class="col-sm-1 col-md-3 control-label">Info </label>
+                    <div class="col-sm-11 col-md-6">
+                        <textarea id="infoTextBox" name="userProfile" cols="50" rows="5" ng-model="userProfile"></textarea>
                     </div>
                 </div>
             </form>
-            <div class="pull-right">
+            <div style="text-align:center">
                 <button ng-click="SaveProfileButtonClick()" class="btn btn-default">Save</button>
             </div>
         </div>
         <hr>
         <div>
-            <div style="width:80%;padding:0%;border:0%;margin:0% 10%">
-                <div class="row clearfix">
+            <div style="width:100%;padding:0 0 50px 0;border:0%;margin:auto;">
+                <div class="row clearfix" style="width: 100%; margin: auto;">
                     <div class="column">
                         <table class="table table-bordered table-hover">
                             <thead>
@@ -112,7 +112,7 @@
             </div>
         </div>
     </div>
-    <div ng-show="!UserAuthenticated" class="ui">
+    <div ng-show="!UserAuthenticated">
         <div class="header">
             <img id="headerIcon" src="image/serify_icon.png" alt="Serify icon">
             <h1 id="headerTitle">Serify</h1>

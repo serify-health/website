@@ -77,6 +77,16 @@ body {
 	background-color: #FFFFFF;
 }
 
+.ui {
+	margin: auto;
+	width: 70%;
+}
+
+.container {
+	max-width: 100%;
+	padding: 0;
+}
+
 h1 {
 	font-size: 24px;
 	font-weight: normal;
@@ -86,6 +96,8 @@ h1 {
 	text-align: center;
 	color: #00CED1;
 }
+
+/*  <-------- LOGIN -------->  */
 
 .header {
 	text-align: center;
@@ -124,6 +136,23 @@ h1 {
 	margin-bottom: 40px;
 }
 
+.diagram div {
+	text-align: center;
+	margin: auto;
+	border-radius: 10px;
+	padding: 5px;
+	border: 2px;
+	border-style: solid;
+	border-color: #60C0DC;
+}
+
+.arrow {
+	color: #00CED1;
+	display: block;
+	text-align: center;
+	margin: 5px auto;
+}
+
 .bottom {
 	display: block;
 	clear: both;
@@ -145,13 +174,39 @@ h1 {
 	font-weight: 800;
 }
 
-#profileButton {
-	margin-right: 10px;
-}
+/*  <-------- NAVIGATION BAR -------->  */
 
 .navBarIcon {
 	padding-top: 8px;
 }
+
+/*  <-------- UPDATE -------->  */
+
+#profileButton {
+	margin-right: 10px;
+}
+
+#nameTextBox {
+	width: 250px;
+	max-width: 100%;
+	border-radius: 4px;
+	border-color: rgb(204, 204, 204);
+}
+
+#infoTextBox {
+	width: 100%;
+	max-width: 100%;
+	margin: auto;
+	border-radius: 4px;
+	border-color: rgb(204, 204, 204);
+}
+
+#signCanvas {
+	border:1px solid rgb(204, 204, 204);
+	border-radius: 4px;
+}
+
+/*  <-------- MEDIA QUERY -------->  */
 
 @media (min-width: 768px) {
 	.header {
@@ -171,15 +226,7 @@ h1 {
 	.diagram div {
 		max-width: 200px;
 		width: 20%;
-		/*min-height: 80px;*/
-		text-align: center;
 		vertical-align: middle;
-		margin: auto;
-		border-radius: 10px;
-		padding: 5px;
-		border: 2px;
-		border-style: solid;
-		border-color: #60C0DC;
 	}
 	.diagram div h5 {
 		text-align: center;
@@ -191,9 +238,6 @@ h1 {
 		display: inline-block;
 	}
 	.arrow {
-		color: #00CED1;
-		display: block;
-		text-align: center;
 		padding: 0 10px 0 0;
 		-webkit-transform: rotate(-90deg);
 		-moz-transform: rotate(-90deg);
@@ -201,9 +245,18 @@ h1 {
 		-ms-transform: rotate(-90deg);
 		transform: rotate(-90deg);
 	}
+	#medicalReleaseTable {
+		max-width: 750px;
+		margin-left: auto;
+		margin-right: auto;
+	}
 }
 
 @media (max-width: 767px) {
+	.ui {
+		margin: auto;
+		width: 90%;
+	}
 	.header {
 		padding: 12.5%;
 	}
@@ -214,20 +267,14 @@ h1 {
 		font-size: 1.5rem;
 	}
 	.diagram div {
-		text-align: center;
-		margin: auto;
-		border-radius: 10px;
-		padding: 5px;
 		width: 75%;
-		border: 2px;
-		border-style: solid;
-		border-color: #60C0DC;
 	}
-	.arrow {
-		color: #00CED1;
-		display: block;
-		text-align: center;
-		margin: 5px auto;
+	#nameTextBox {
+		width: 100%;
+		margin: 0;
+	}
+	#infoTextBox {
+		width: 100%;
 	}
 	/* Nav Bar */
 	#signInButton {

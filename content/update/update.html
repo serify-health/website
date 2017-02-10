@@ -36,10 +36,10 @@
 												<li><a href="#">Separated link</a></li>
 											</ul>
 										</li> -->
-                    <li>
+                    <li class="pull-right">
                         <button type="button" id="signInButton" class="btn btn-warning navbar-btn" ng-click="SignInButtonClick()">{{UserAuthenticated ? 'Sign out' : 'Sign in'}}</button>
                     </li>
-                    <li ng-show="UserAuthenticated">
+                    <li class="pull-right" ng-show="UserAuthenticated">
                         <button id="profileButton" type="button" class="btn btn-warning navbar-btn" ng-click="ProfileButtonClick()">Profile</button>
                     </li>
                 </ul>
@@ -49,11 +49,11 @@
         <!-- /.container-fluid -->
     </nav>
     <div id="alert" ng-show="alert" style="text-align: center" uib-alert ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert()" dismiss-on-timeout="5000">{{alert.msg}}</div>
-    <div ng-show="UserAuthenticated" class="ui" style="margin:0% 5%;width:90% !important">
+    <div ng-show="UserAuthenticated" class="ui">
         <div>
-            <div class="container">
-                <div class="row clearfix">
-                    <div class="col-md-10 column">
+            <div class="container" style="width:100%;padding:0;border:0%;margin:auto;">
+                <div class="row clearfix" style="width: 100%; margin: auto;">
+                    <div class="column">
                         <table class="table table-bordered table-hover">
                             <thead>
                                 <tr>
@@ -89,7 +89,7 @@
                 <h4>Medical Test Release Form</h4>
             </div>
             <div>
-                <table class="table table-bordered table-hover">
+                <table id="medicalReleaseTable"class="table table-bordered table-hover">
                     <tbody>
                         <tr>
                             <td class="text-center">Name</td>
@@ -120,7 +120,7 @@
                     </tbody>
                 </table>
                 <div>
-                    By signing my name in the box below, I authorize Serify to send this release form to my clinic and request and receive the test results and dates selected above. I agree that the release form itself will also bear my signature and today’s date, along with the information I have entered above. I understand that Serify will only request the selected negative STD or HIV test results, the selected vaccine administrations, and the selected HIV post-exposure prophylaxis (PrEP) prescriptions within the months I have specified above.
+                    By signing my name in the box below, I authorize Serify to send this release form to my clinic and request and receive the test results and dates selected above. I agree that the release form itself will also bear my signature and today's date, along with the information I have entered above. I understand that Serify will only request the selected negative STD or HIV test results, the selected vaccine administrations, and the selected HIV post-exposure prophylaxis (PrEP) prescriptions within the months I have specified above.
                     <br>
                     <br> I also understand that Serify does not request positive STD or HIV test results or any other health information about me, and I will not hold Serify liable for receiving any health information which it did not request. I further understand that once Serify has made my desired verifications, it will first upload the verifications to my Serify profile and then delete any and all communications with, or records from, my testing site that contain my personally identifying health information. By clicking the submit button below, I attest that I am the person whose biographical details, testing information, and signature has been entered on this page.
                 </div>
@@ -129,17 +129,13 @@
                     <center>
                         <table>
                             <thead>
-                                <th>
-                                    <center>Signature</center>
-                                </th>
-                                <th></th>
-                            </thead>
+                            		<h5>Signature</h5>
                             <tbody>
                                 <td>
-                                    <canvas style="border:1px solid #000000;"></canvas>
+                                    <canvas id="signCanvas"></canvas>
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-default btn-sm" ng-click="ClearSignatureButtonClick()"><i class="fa fa-refresh" aria-hidden="true"></i>
+                                    <button type="button" class="btn btn-default btn-sm" ng-click="ClearSignatureButtonClick()" style="margin-left: 5px;"><i class="fa fa-refresh" aria-hidden="true"></i>
                                     </button>
                                 </td>
                             </tbody>
@@ -147,7 +143,7 @@
                     </center>
                 </div>
             </div>
-            <div style="text-align:right">
+            <div style="text-align:center; margin-top: 15px;">
                 <button class="btn btn-default" ng-click="SubmitVerificationsButtonClick()">Submit</button>
             </div>
         </div>
