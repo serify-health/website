@@ -1,131 +1,160 @@
 <div class="loginScreen">
-	<div class="custom-navbar">
-		<nav class="navbar navbar-default" role="navigation">
-			<div class="container-fluid">
-				<div class="">
-					<ul class="nav navbar-nav navbar-left">
-						<li>
-							<div style="font-size:20px"><i class="fa fa-check-square-o" aria-hidden="true"></i> Serify</div>
-						</li>
-					</ul>
-					<ul class="nav navbar-nav navbar-right">
-						<li ng-show="UserAuthenticated">
-							<button type="button" class="btn btn-default btn-sm" ng-click="ProfileButtonClick()">Profile</button>
-						</li>
-						<li>
-							<button type="button" class="btn btn-default btn-sm" ng-click="SignInButtonClick()">{{UserAuthenticated ? 'Sign out' : 'Sign in'}}</button>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-	</div>
-	<div id="alert" ng-show="alert" style="text-align: center" uib-alert ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert()" dismiss-on-timeout="5000">{{alert.msg}}</div>
-	<div ng-show="UserAuthenticated" class="ui" style="margin:0% 5%;width:90% !important">
-		<div>
-			<div class="container">
-				<div class="row clearfix">
-					<div class="col-md-10 column">
-						<table class="table table-bordered table-hover">
-							<thead>
-								<tr>
-									<th class="text-center">Test</th>
-									<th class="text-center">Date</th>
-									<th class="text-center">Remove</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr ng-repeat="verification in verifications">
-									<td>
-										<select class="form-control" ng-model="verification.Name">
-											<option ng-repeat="option in tests" value="{{option.id}}">{{option.name}}</option>
-										</select>
-									</td>
-									<td>
-										<select ng-model="verification.Month" ng-options="x for x in verificationMonths"></select>/
-										<select ng-model="verification.Year" ng-options="x for x in verificationYears"></select>
-									</td>
-									<td tabindex="-1" class="text-center">
-										<button tabindex="-1" type="button" class="btn btn-default btn-sm" ng-click="RemoveVerification(verification.Id)"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-				<button ng-click="AddRowButtonClick()" class="btn btn-default"><i class="fa fa-plus-square" aria-hidden="true"></i> Add additional test to verify</button>
-			</div>
-			<hr>
-			<div style="text-align:center">
-				<h4>Medical Test Release Form</h4>
-			</div>
-			<div>
-				<table class="table table-bordered table-hover">
-					<tbody>
-						<tr>
-							<td class="text-center">Name</td>
-							<td class="text-center">
-								<input type="text" placeholder='Full Name (as it would appear on your records)' ng-model="name" class="form-control">
-							</td>
-						</tr>
-						<tr>
-							<td class="text-center">Date of Birth</td>
-							<td class="text-center">
-								<select ng-model="selectedDobYear" ng-options="x for x in years"></select>
-								<select ng-model="selectedDobMonth" ng-options="x for x in months"></select>
-								<select ng-model="selectedDobDay" ng-options="x for x in days"></select>
-							</td>
-						</tr>
-						<tr>
-							<td class="text-center">Name of Clinic</td>
-							<td class="text-center">
-								<input type="text" placeholder='clinic' ng-model="clinicName" class="form-control">
-							</td>
-						</tr>
-						<tr>
-							<td class="text-center">Address</td>
-							<td class="text-center">
-								<input type="text" placeholder='contact information' ng-model="clinicInfo" class="form-control">
-							</td>
-						</tr>
-					</tbody>
-				</table>
-				<div>
-					By signing my name in the box below, I authorize Serify to send this release form to my clinic and request and receive the test results and dates selected above. I agree that the release form itself will also bear my signature and today’s date, along with the information I have entered above. I understand that Serify will only request the selected negative STD or HIV test results, the selected vaccine administrations, and the selected HIV post-exposure prophylaxis (PrEP) prescriptions within the months I have specified above.<br>
-					<br>
-					I also understand that Serify does not request positive STD or HIV test results or any other health information about me, and I will not hold Serify liable for receiving any health information which it did not request. I further understand that once Serify has made my desired verifications, it will first upload the verifications to my Serify profile and then delete any and all communications with, or records from, my testing site that contain my personally identifying health information. By clicking the submit button below, I attest that I am the person whose biographical details, testing information, and signature has been entered on this page.
-				</div>
-				<br>
-				<div>
-					<center>
-						<table>
-							<thead>
-								<th><center>Signature</center></th>
-								<th></th>
-							</thead>
-							<tbody>
-								<td>
-									<canvas style="border:1px solid #000000;"></canvas>
-								</td>
-								<td>
-									<button type="button" class="btn btn-default btn-sm" ng-click="ClearSignatureButtonClick()" ><i class="fa fa-refresh" aria-hidden="true"></i></button>
-								</td>
-							</tbody>
-						</table>
-					</center>
-				</div>
-			</div>
-			<div style="text-align:right">
-				<button class="btn btn-default" ng-click="SubmitVerificationsButtonClick()">Submit</button>
-			</div>
-		</div>
-		<hr>
-	</div>
-	<div ng-show="!UserAuthenticated" class="ui" style="margin:0% 10% 0% 10%;width:80% !important">
-		<div style="text-align: center">
-			Share your negative status. <br>
-			<button type="button" class="btn btn-default btn-sm" ng-click="SignInButtonClick()">Create an account</button>
-		</div>
-		<hr>
-	</div>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <!-- <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+									<span class="sr-only">Toggle navigation</span>
+									<span class="icon-bar"></span>
+									<span class="icon-bar"></span>
+									<span class="icon-bar"></span>
+								</button> -->
+                <a class="navbar-brand navBarIcon" href="#">
+                    <img alt="Serify nav icon" src="image/serify_nav_icon.png" style="height: 34px; width: auto;">
+                </a>
+                <!-- <a class="navbar-brand" href="#">Serify</a> -->
+                <ul class="visible-xs" style="list-style: none;">
+                    <li class="pull-right">
+                        <button id="signInButton" type="button" class="btn btn-warning navbar-btn navbar-right" ng-click="SignInButtonClick()">{{UserAuthenticated ? 'Sign out' : 'Sign in'}}</button>
+                    </li>
+                    <li class="pull-right" ng-show="UserAuthenticated">
+                        <button id="profileButton" type="button" class="btn btn-warning navbar-btn" ng-click="ProfileButtonClick()">Profile</button>
+                    </li>
+                </ul>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <!-- <li><a href="#">Link</a></li>
+										<li class="dropdown">
+											<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+											<ul class="dropdown-menu">
+												<li><a href="#">Action</a></li>
+												<li><a href="#">Another action</a></li>
+												<li><a href="#">Something else here</a></li>
+												<li role="separator" class="divider"></li>
+												<li><a href="#">Separated link</a></li>
+											</ul>
+										</li> -->
+                    <li class="pull-right">
+                        <button type="button" id="signInButton" class="btn btn-warning navbar-btn" ng-click="SignInButtonClick()">{{UserAuthenticated ? 'Sign out' : 'Sign in'}}</button>
+                    </li>
+                    <li class="pull-right" ng-show="UserAuthenticated">
+                        <button id="profileButton" type="button" class="btn btn-warning navbar-btn" ng-click="ProfileButtonClick()">Profile</button>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+    <div id="alert" ng-show="alert" style="text-align: center" uib-alert ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert()" dismiss-on-timeout="5000">{{alert.msg}}</div>
+    <div ng-show="UserAuthenticated" class="ui">
+        <div>
+            <div class="container" style="width:100%;padding:0;border:0%;margin:auto;">
+                <div class="row clearfix" style="width: 100%; margin: auto;">
+                    <div class="column">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Test</th>
+                                    <th class="text-center">Date</th>
+                                    <th class="text-center">Remove</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="verification in verifications">
+                                    <td>
+                                        <select class="form-control" ng-model="verification.Name">
+                                            <option ng-repeat="option in tests" value="{{option.id}}">{{option.name}}</option>
+                                        </select>
+                                    </td>
+                                    <td class="text-center">
+                                        <select ng-model="verification.Month" ng-options="x for x in verificationMonths"></select>/
+                                        <select ng-model="verification.Year" ng-options="x for x in verificationYears"></select>
+                                    </td>
+                                    <td tabindex="-1" class="text-center">
+                                        <button tabindex="-1" type="button" class="btn btn-default btn-sm" ng-click="RemoveVerification(verification.Id)"><i class="fa fa-minus-circle" aria-hidden="true"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <button ng-click="AddRowButtonClick()" class="btn btn-default"><i class="fa fa-plus-square" aria-hidden="true"></i> Add additional test to verify</button>
+            </div>
+            <hr>
+            <div style="text-align: center">
+                <h4>Medical Test Release Form</h4>
+            </div>
+            <div>
+                <table id="medicalReleaseTable"class="table table-bordered table-hover">
+                    <tbody>
+                        <tr>
+                            <td class="text-center">Name</td>
+                            <td class="text-center">
+                                <input type="text" placeholder='Full Name (as it would appear on your records)' ng-model="name" class="form-control">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">Date of Birth</td>
+                            <td class="text-center">
+                                <select ng-model="selectedDobYear" ng-options="x for x in years"></select>
+                                <select ng-model="selectedDobMonth" ng-options="x for x in months"></select>
+                                <select ng-model="selectedDobDay" ng-options="x for x in days"></select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">Name of Clinic</td>
+                            <td class="text-center">
+                                <input type="text" placeholder='clinic' ng-model="clinicName" class="form-control">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">Address</td>
+                            <td class="text-center">
+                                <input type="text" placeholder='contact information' ng-model="clinicInfo" class="form-control">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div>
+                    By signing my name in the box below, I authorize Serify to send this release form to my clinic and request and receive the test results and dates selected above. I agree that the release form itself will also bear my signature and today's date, along with the information I have entered above. I understand that Serify will only request the selected negative STD or HIV test results, the selected vaccine administrations, and the selected HIV post-exposure prophylaxis (PrEP) prescriptions within the months I have specified above.
+                    <br>
+                    <br> I also understand that Serify does not request positive STD or HIV test results or any other health information about me, and I will not hold Serify liable for receiving any health information which it did not request. I further understand that once Serify has made my desired verifications, it will first upload the verifications to my Serify profile and then delete any and all communications with, or records from, my testing site that contain my personally identifying health information. By clicking the submit button below, I attest that I am the person whose biographical details, testing information, and signature has been entered on this page.
+                </div>
+                <br>
+                <div>
+                    <center>
+                        <table>
+                            <thead>
+                            		<h5>Signature</h5>
+                            <tbody>
+                                <td>
+                                    <canvas id="signCanvas"></canvas>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-default btn-sm" ng-click="ClearSignatureButtonClick()" style="margin-left: 5px;"><i class="fa fa-refresh" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                            </tbody>
+                        </table>
+                    </center>
+                </div>
+            </div>
+            <div style="text-align:center; margin-top: 15px;">
+                <button class="btn btn-default" ng-click="SubmitVerificationsButtonClick()">Submit</button>
+            </div>
+        </div>
+        <hr>
+    </div>
+    <div ng-show="!UserAuthenticated" class="ui" style="margin:0% 10% 0% 10%;width:80% !important">
+        <div style="text-align: center">
+            Share your negative status.
+            <br>
+            <button type="button" class="btn btn-default btn-sm" ng-click="SignInButtonClick()">Create an account</button>
+        </div>
+        <hr>
+    </div>
 </div>

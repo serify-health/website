@@ -1,177 +1,283 @@
-	* {
-		-webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
-	}
-	/*
-	@keyframes leaveAnimation {
-		from { opacity:1; }
-		to { opacity:0; }
-	}
+* {
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	/* make transparent link selection, adjust last value opacity 0 to 1.0 */
+	box-sizing: border-box;
+}
 
-	@keyframes enterAnimation {
-		to { opacity:0; }
-		from { opacity:1; }
-	}
-	.ng-leave {
-	  animation: 0.5s my_animation;
-	}*/
+.ng-leave {
+	transition: 0.4s linear all;
+	-webkit-transition: 0.4s linear all;
+	/* Safari */
+	opacity: 1;
+}
 
-	.ng-leave {
-		transition:0.4s linear all;
-		-webkit-transition: 0.4s linear all; /* Safari */
-		opacity: 1;
-	}
+.ng-leave-active {
+	opacity: 0;
+}
 
-	.ng-leave-active {
-		opacity: 0;
-	}
+.ng-enter {
+	transition: 0.4s linear all;
+	-webkit-transition: 0.4s linear all;	/* Safari */
+	opacity: 0;
+}
 
-	.ng-enter {
-		transition:0.4s linear all;
-		-webkit-transition: 0.4s linear all; /* Safari */
-		opacity: 0;
-	}
+.ng-enter-active {
+	opacity: 1;
+}
 
-	.ng-enter-active {
-		opacity: 1;
+body {
+	-webkit-touch-callout: none;	/* prevent callout to copy image, etc when tap to hold */
+	-webkit-text-size-adjust: none;	/* prevent webkit from resizing text to fit */
+	-webkit-user-select: none;	/* prevent copy paste, to allow, change 'none' to 'text' */
+	margin: 0px 0px 0px 0px;
+	font-size: 12px;
+	padding: 0px;
+	width: 100%;
+	position: fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	background-color: #FFFFFF;
+}
+
+.loginScreen {
+	height: 100%;
+	width: 100%;
+	overflow-y: scroll;
+	position: fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	background-color: #FFFFFF;
+}
+
+.homeScreen {
+	height: 100%;
+	width: 100%;
+	overflow-y: scroll;
+	position: fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	background-color: #FFFFFF;
+}
+
+.app {
+	overflow-y: hidden;
+	height: 100%;
+	width: 100%;
+	position: fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	background-color: #FFFFFF;
+}
+
+.ui {
+	margin: auto;
+	width: 70%;
+}
+
+.container {
+	max-width: 100%;
+	padding: 0;
+}
+
+h1 {
+	font-size: 24px;
+	font-weight: normal;
+	margin: 0px;
+	overflow: visible;
+	padding: 0px;
+	text-align: center;
+	color: #00CED1;
+}
+
+/*  <-------- LOGIN -------->  */
+
+.header {
+	text-align: center;
+	background: linear-gradient(rgba(0, 204, 255, 0.7), rgba(0, 204, 255, 0.7)), url("image/login_background.png") no-repeat center;
+	background-size: cover;
+	width: 100%;
+	height: auto;
+	margin: -20px 0 5rem 0;
+	max-height: 400px;
+}
+
+#headerTitle {
+	font-weight: 400;
+	overflow: visible;
+	text-align: center;
+	color: white;
+}
+
+#headerDescription {
+	font-weight: 300;
+	text-align: center;
+	padding-top: 1rem;
+	color: rgba(255, 255, 255, 0.8)
+}
+
+#headerIcon {
+	width: 100px;
+	height: auto;
+	margin-bottom: 20px;
+}
+
+#howText {
+	font-size: 4rem;
+	font-weight: 200;
+	text-align: center;
+	margin-bottom: 40px;
+}
+
+.diagram div {
+	text-align: center;
+	margin: auto;
+	border-radius: 10px;
+	padding: 5px;
+	border: 2px;
+	border-style: solid;
+	border-color: #60C0DC;
+}
+
+.arrow {
+	color: #00CED1;
+	display: block;
+	text-align: center;
+	margin: 5px auto;
+}
+
+.bottom {
+	display: block;
+	clear: both;
+	max-height: 200px;
+}
+
+#bottomText {
+	font-weight: 300;
+	margin: 35px auto;
+	text-align: center;
+}
+
+#createButton {
+	font-size: 2rem;
+	display: block;
+	padding: 10px 40px;
+	margin: auto;
+	text-align: center;
+	font-weight: 800;
+}
+
+/*  <-------- NAVIGATION BAR -------->  */
+
+.navBarIcon {
+	padding-top: 8px;
+}
+
+/*  <-------- UPDATE -------->  */
+
+#profileButton {
+	margin-right: 10px;
+}
+
+#nameTextBox {
+	width: 250px;
+	max-width: 100%;
+	border-radius: 4px;
+	border-color: rgb(204, 204, 204);
+}
+
+#infoTextBox {
+	width: 100%;
+	max-width: 100%;
+	margin: auto;
+	border-radius: 4px;
+	border-color: rgb(204, 204, 204);
+}
+
+#signCanvas {
+	border:1px solid rgb(204, 204, 204);
+	border-radius: 4px;
+}
+
+/*  <-------- MEDIA QUERY -------->  */
+
+@media (min-width: 768px) {
+	.header {
+		max-height: 450px;
+		padding: 75px;
+		height: auto;
 	}
-	body {
-		-webkit-touch-callout: none;				/* prevent callout to copy image, etc when tap to hold */
-		-webkit-text-size-adjust: none;			 /* prevent webkit from resizing text to fit */
-		-webkit-user-select: none;				  /* prevent copy paste, to allow, change 'none' to 'text' */
-		margin: 0px 0px 0px 0px;
-		font-size:12px;
-		padding:0px;
-		width:100%;
-		position:fixed;
-		-webkit-background-size: cover;
-		-moz-background-size: cover;
-		-o-background-size: cover;
-		background-size: cover;
-		background-color: #FFFFFF;
+	#headerTitle {
+		font-size: 8rem;
 	}
-	.loginScreen {
-		height: 100%;
+	#headerDescription {
+		font-size: 2rem;
+	}
+	.diagram {
+		text-align: center;
+	}
+	.diagram div {
+		max-width: 200px;
+		width: 20%;
+		vertical-align: middle;
+	}
+	.diagram div h5 {
+		text-align: center;
+		vertical-align: middle;
+		margin: 10% 2rem;
+		font-size: 1.5rem;
+	}
+	.diagram div, .diagram i {
+		display: inline-block;
+	}
+	.arrow {
+		padding: 0 10px 0 0;
+		-webkit-transform: rotate(-90deg);
+		-moz-transform: rotate(-90deg);
+		-o-transform: rotate(-90deg);
+		-ms-transform: rotate(-90deg);
+		transform: rotate(-90deg);
+	}
+	#medicalReleaseTable {
+		max-width: 750px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+
+@media (max-width: 767px) {
+	.ui {
+		margin: auto;
+		width: 90%;
+	}
+	.header {
+		padding: 12.5%;
+	}
+	#headerTitle {
+		font-size: 6rem;
+	}
+	#headerDescription {
+		font-size: 1.5rem;
+	}
+	.diagram div {
+		width: 75%;
+	}
+	#nameTextBox {
 		width: 100%;
-		overflow-y: scroll;
-		position:fixed;
-		-webkit-background-size: cover;
-		-moz-background-size: cover;
-		-o-background-size: cover;
-		background-size: cover;
-		background-color: #FFFFFF;
+		margin: 0;
 	}
-	.homeScreen {
-		height: 100%;
+	#infoTextBox {
 		width: 100%;
-		overflow-y: scroll;
-		position:fixed;
-		-webkit-background-size: cover;
-		-moz-background-size: cover;
-		-o-background-size: cover;
-		background-size: cover;
-		background-color: #FFFFFF;
 	}
-	.app {
-		overflow-y:hidden;
-		height: 100%;
-		width: 100%;
-		position:fixed;
-		-webkit-background-size: cover;
-		-moz-background-size: cover;
-		-o-background-size: cover;
-		background-size: cover;
-		background-color: #FFFFFF;
+	/* Nav Bar */
+	#signInButton {
+		margin-right: 15px;
 	}
-	/*.ui {
-		height:92%;
-		overflow-y:scroll;
-		width: 100%;
-	}*/
-
-	/* Landscape layout (with min-width) */
-	/*@media screen and (min-aspect-ratio: 1/1) and (min-width:400px) {
-		.app {
-			background-position:left center;
-			padding:75px 0px 75px 170px;   padding-top + padding-bottom + text area = image height
-			margin:-90px 0px 0px -198px;  /* offset vertical: half of image height
-										  /* offset horizontal: half of image width and text area width
-		}
-	}*/
-
-	h1 {
-		font-size:24px;
-		font-weight:normal;
-		margin:0px;
-		overflow:visible;
-		padding:0px;
-		text-align:center;
-		color: #00CED1;
-	}
-
-	/*Custom Nav Bar*/
-	.custom-navbar {
-		height:8%;
-	}
-	.custom-navbar .navbar {
-		margin-bottom: 0px !important;
-		min-height: 20px !important;
-	}
-	.custom-navbar .navbar-default {
-		background-color: #0099CC;
-		border-color: #0099CC;
-	}
-	.custom-navbar .navbar-collapse.collapse {
-		display: block !important;
-	}
-	.custom-navbar .navbar-nav > li, .custom-navbar .navbar-nav {
-		margin: 0px !important;
-		float: left !important;
-	}
-	.custom-navbar .nav > li > a, .custom-navbar .navbar-nav > li > a {
-		padding: 5px 10px !important;
-	}
-/*	Tablet?	
-	.navbar-nav.navbar-right:last-child {
-		margin-right: -15px !important;
-	}*/
-	.custom-navbar .navbar-right {
-		float: right!important;
-	}
-	.custom-navbar .container-fluid {
-		padding-left: 0px !important;
-		padding-right: 0px !important;
-	}
-	.btn-default {
-		margin: 4px;
-		color: #0099CC !important;
-		background-color: #000000 !important;
-		border-color: #000000 !important;
-	}
-	.btn-default:active {
-		color: #0099CC !important;
-		background-color: #FFFFFF !important;
-		border-color: #FFFFFF !important;
-		outline-color: #FFFFFF !important;
-	}
-	.btn-inverted {
-		color: #0099CC !important;
-		background-color: #FFFFFF !important;
-		border-color: #FFFFFF !important;
-		outline-color: #FFFFFF !important;
-	}
-	.btn-inverted:active {
-		color: #0099CC !important;
-		background-color: #000000 !important;
-		border-color: #FFFFFF !important;
-		outline-color: #FFFFFF !important;
-	}
-	.custom-navbar h4 {
-		margin-top: 10px;
-		margin-left: 10px;
-		font-size:4.5vw;
-		font-weight:normal;
-		overflow:visible;
-		padding:0px;
-		text-align:center;
-		color: #000000;
-	}
+}
