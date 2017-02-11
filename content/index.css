@@ -25,6 +25,10 @@
 	opacity: 1;
 }
 
+html {	/* Making html 100% makes short webpages appear fullscreen. So animation would go smooth when transitioning from one page to another. */
+  height: 100%;
+}
+
 body {
 	-webkit-touch-callout: none;	/* prevent callout to copy image, etc when tap to hold */
 	-webkit-text-size-adjust: none;	/* prevent webkit from resizing text to fit */
@@ -38,6 +42,7 @@ body {
 	-o-background-size: cover;
 	background-size: cover;
 	background-color: #FFFFFF;
+	min-height: 100%;	/* Same as html 100% above */
 }
 
 .loginScreen {
