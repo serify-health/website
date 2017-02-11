@@ -33,7 +33,6 @@ body {
 	font-size: 12px;
 	padding: 0px;
 	width: 100%;
-	position: fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -44,8 +43,6 @@ body {
 .loginScreen {
 	height: 100%;
 	width: 100%;
-	overflow-y: scroll;
-	position: fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -56,8 +53,6 @@ body {
 .homeScreen {
 	height: 100%;
 	width: 100%;
-	overflow-y: scroll;
-	position: fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -66,10 +61,8 @@ body {
 }
 
 .app {
-	overflow-y: hidden;
 	height: 100%;
 	width: 100%;
-	position: fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -91,7 +84,6 @@ h1 {
 	font-size: 24px;
 	font-weight: normal;
 	margin: 0px;
-	overflow: visible;
 	padding: 0px;
 	text-align: center;
 	color: #00CED1;
@@ -111,7 +103,6 @@ h1 {
 
 #headerTitle {
 	font-weight: 400;
-	overflow: visible;
 	text-align: center;
 	color: white;
 }
