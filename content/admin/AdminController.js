@@ -119,7 +119,7 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, v
 				var foundVerificationRequest = $scope.verificationRequests.find(function(r) {
 					return r.userId === verificationRequest.userId && r.time === verificationRequest.time;
 				});
-				foundVerificationRequest.status = 'VERIFIED';
+				foundVerificationRequest.status = verificationRequest.verifications.some(function(v){ return v.status.match(/unknown/i) && !v.checked; }) ? 'NEW' : 'DONE';
 			});
 		})
 		.catch(function(error) {
@@ -140,7 +140,7 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, v
 				var foundVerificationRequest = $scope.verificationRequests.find(function(r) {
 					return r.userId === verificationRequest.userId && r.time === verificationRequest.time;
 				});
-				foundVerificationRequest.status = 'REJECTED';
+				foundVerificationRequest.status = verificationRequest.verifications.some(function(v){ return v.status.match(/unknown/i) && !v.checked; }) ? 'NEW' : 'DONE';
 			});
 		})
 		.catch(function(error) {
