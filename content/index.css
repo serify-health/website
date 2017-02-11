@@ -25,6 +25,10 @@
 	opacity: 1;
 }
 
+html {	/* Making html 100% makes short webpages appear fullscreen. So animation would go smooth when transitioning from one page to another. */
+  height: 100%;
+}
+
 body {
 	-webkit-touch-callout: none;	/* prevent callout to copy image, etc when tap to hold */
 	-webkit-text-size-adjust: none;	/* prevent webkit from resizing text to fit */
@@ -33,19 +37,17 @@ body {
 	font-size: 12px;
 	padding: 0px;
 	width: 100%;
-	position: fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
 	background-color: #FFFFFF;
+	min-height: 100%;	/* Same as html 100% above */
 }
 
 .loginScreen {
 	height: 100%;
 	width: 100%;
-	overflow-y: scroll;
-	position: fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -56,8 +58,6 @@ body {
 .homeScreen {
 	height: 100%;
 	width: 100%;
-	overflow-y: scroll;
-	position: fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -66,10 +66,8 @@ body {
 }
 
 .app {
-	overflow-y: hidden;
 	height: 100%;
 	width: 100%;
-	position: fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -91,7 +89,6 @@ h1 {
 	font-size: 24px;
 	font-weight: normal;
 	margin: 0px;
-	overflow: visible;
 	padding: 0px;
 	text-align: center;
 	color: #00CED1;
@@ -111,7 +108,6 @@ h1 {
 
 #headerTitle {
 	font-weight: 400;
-	overflow: visible;
 	text-align: center;
 	color: white;
 }
