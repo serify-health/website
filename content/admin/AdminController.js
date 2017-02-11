@@ -53,7 +53,9 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, v
 								return {
 									name: v.Name,
 									date: v.Date,
-									id: v.Id
+									id: v.Id,
+									status: v.Status,
+									checked: false
 								};
 							})
 						};
@@ -106,7 +108,7 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, v
 	/******** SignInButton Block ********/
 
 	$scope.VerificationRequestApproveClick = function(verificationRequest) {
-		var verifications = verificationRequest.verifications.map(function(v){
+		var verifications = verificationRequest.verifications.filter(function(v) { return v.checked; }).map(function(v){
 			return {
 				Id: v.id
 			};
@@ -127,7 +129,7 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, v
 		});
 	};
 	$scope.VerificationRequestRejectClick = function(verificationRequest) {
-		var verifications = verificationRequest.verifications.map(function(v){
+		var verifications = verificationRequest.verifications.filter(function(v) { return v.checked; }).map(function(v){
 			return {
 				Id: v.id
 			};
