@@ -12,10 +12,12 @@
                 <a class="navbar-brand navBarIcon" href="#">
                     <img alt="Serify nav icon" src="image/serify_nav_icon.png" style="height: 34px; width: auto;">
                 </a>
-                <!-- <a class="navbar-brand" href="#">Serify</a> -->
                 <ul class="visible-xs" style="list-style: none;">
                     <li class="pull-right">
                         <button id="signInButton" type="button" class="btn btn-warning navbar-btn navbar-right" ng-click="SignInButtonClick()">{{UserAuthenticated ? 'Sign out' : 'Sign in'}}</button>
+                    </li>
+                    <li ng-show="IsAdmin && UserAuthenticated" class="pull-right">
+                        <button id="profileButton" type="button" class="btn btn-warning navbar-btn" ng-click="AdminButtonClick()">Admin</button>
                     </li>
                 </ul>
             </div>
@@ -33,14 +35,15 @@
 					              <li><a href="#">Separated link</a></li>
 					            </ul>
 					          </li> -->
-                    <li>
+                    <li class="pull-right">
                         <button id="signInButton" type="button" class="btn btn-warning navbar-btn" ng-click="SignInButtonClick()">{{UserAuthenticated ? 'Sign out' : 'Sign in'}}</button>
+                    </li>
+                    <li ng-show="IsAdmin && UserAuthenticated" class="pull-right">
+                        <button id="profileButton" type="button" class="btn btn-warning navbar-btn" ng-click="AdminButtonClick()">Admin</button>
                     </li>
                 </ul>
             </div>
-            <!-- /.navbar-collapse -->
         </div>
-        <!-- /.container-fluid -->
     </nav>
     <div ng-show="alert" style="text-align: center" uib-alert ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert()" dismiss-on-timeout="5000">{{alert.msg}}</div>
     <div ng-show="UserAuthenticated" class="ui">
