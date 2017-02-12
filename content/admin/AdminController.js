@@ -120,6 +120,10 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, v
 					return r.userId === verificationRequest.userId && r.time === verificationRequest.time;
 				});
 				foundVerificationRequest.status = verificationRequest.verifications.some(function(v){ return v.status.match(/unknown/i) && !v.checked; }) ? 'NEW' : 'DONE';
+				foundVerificationRequest.verifications.filter(function(v) { return v.checked; }).map(function(v){
+					v.status = 'Verified';
+					v.checked = false;
+				});
 			});
 		})
 		.catch(function(error) {
@@ -141,6 +145,10 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, v
 					return r.userId === verificationRequest.userId && r.time === verificationRequest.time;
 				});
 				foundVerificationRequest.status = verificationRequest.verifications.some(function(v){ return v.status.match(/unknown/i) && !v.checked; }) ? 'NEW' : 'DONE';
+				foundVerificationRequest.verifications.filter(function(v) { return v.checked; }).map(function(v){
+					v.status = 'Rejected';
+					v.checked = false;
+				});
 			});
 		})
 		.catch(function(error) {
