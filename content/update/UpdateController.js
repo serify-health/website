@@ -28,18 +28,17 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, eventHandler,
 	}
 	$scope.tests = TESTS;
 	var currentYear = new Date().getFullYear();
-	$scope.years = Array.apply(null, {length:100}).map(Number.call, Number).map(function(i) { return currentYear - i; });
+	$scope.years = Array.apply(null, {length:100}).map(Number.call, Number).map(function(i) { return currentYear - i - 13; });
 	$scope.months = Array.apply(null, {length:12}).map(Number.call, Number).map(function(i) { return i + 1; });
 	$scope.days = Array.apply(null, {length:31}).map(Number.call, Number).map(function(i) { return i + 1; });
-	$scope.selectedDobYear = currentYear;
-	$scope.selectedDobMonth = new Date().getMonth() + 1;
-	$scope.selectedDobDay = new Date().getDate();
+	$scope.selectedDobYear = null;
+	$scope.selectedDobMonth = null;
+	$scope.selectedDobDay = null;
 	$scope.verificationMonths = $scope.months;
 	$scope.verificationYears = [0, 1, 2, 3, 4, 5].map(function(i) { return currentYear - i; });
 	$scope.SignInButtonClick = function() {
 		if($scope.UserAuthenticated) {
-			logoutService.Logout();
-			loginStatusProvider.logoutPromise()
+			Promise.all([logoutService.Logout(), loginStatusProvider.logoutPromise()])
 			.then(function() {
 				$scope.$apply(function(){ $scope.UserAuthenticated = false; });
 			}, function(failure) {
@@ -92,6 +91,17 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, eventHandler,
 			$anchorScroll();
 			return;
 		}
+		if(!$scope.selectedDobDay || !$scope.selectedDobMonth || !$scope.selectedDobDay)
+		{
+			$scope.alert = { type: 'danger', msg: 'DOB is required.' };
+			$anchorScroll();
+			return;
+		}
+		if(moment().add(-13, 'years') < moment($scope.selectedDobYear + '-' + $scope.selectedDobMonth + '-' + $scope.selectedDobDay, 'YYYY-MM-DD')) {
+			$scope.alert = { type: 'danger', msg: 'The minimum age for Serify is 13, please see our information page for details.' };
+			$anchorScroll();
+			return;
+		}
 		if(!$scope.UserAuthenticated) {
 			$scope.alert = { type: 'danger', msg: 'Create account to get your test results verified.' };
 			$anchorScroll();
@@ -120,7 +130,7 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, eventHandler,
 			clinicName: $scope.clinicName,
 			signature: signaturePad.toDataURL()
 		};
-		var verifications = $scope.verifications.map(function(v) {
+		var verifications = $scope.verifications.filter(function(v){ return v.Name; }).map(function(v) {
 			v.Date = v.Month + '/' + v.Year;
 			return v;
 		});
