@@ -12,8 +12,9 @@ angular.module(GOLFPRO).controller('adminController', [
 	'utilities',
 	'linkManager',
 	'logoutService',
+	'userManager',
 	'adminService',
-function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, verificationManager, ngDialog, utilities, linkManager, logoutService, adminService) {
+function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, verificationManager, ngDialog, utilities, linkManager, logoutService, userManager, adminService) {
 	$scope.closeAlert = function(){ $scope.alert = null; };
 	$scope.verificationRequests = [];
 	/******** SignInButton Block ********/
@@ -22,6 +23,13 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, v
 	function SetupUser() {
 		return loginStatusProvider.validateAuthenticationPromise()
 		.then(function(auth) {
+			userManager.GetUserIdPromise().then(function(id){
+				if(!adminService.IsAdmin(id)) {
+					pageService.NavigateToPage('/');
+					return;
+				}
+			});
+
 			console.log((auth || {}).UserId);
 			$scope.$apply(function() {
 				$scope.UserAuthenticated = true;
@@ -67,10 +75,8 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, v
 
 	$scope.SignInButtonClick = function() {
 		if($scope.UserAuthenticated) {
-			Promise.all([logoutService.Logout(), loginStatusProvider.logoutPromise()])
-			.then(function() {
-				$scope.$apply(function(){ $scope.UserAuthenticated = false; });
-			}, function(failure) {
+			logoutService.Logout()
+			.catch(function(failure) {
 				console.log(failure);
 				$scope.$apply(function(){
 					$scope.alert = { type: 'danger', msg: 'Failed to log out' };
