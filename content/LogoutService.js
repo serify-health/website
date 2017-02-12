@@ -14,6 +14,7 @@ function($window, loginStatusProvider, eventHandler, pageService, storageProvide
             storageProvider.Delete('username');
             storageProvider.Delete('password');
             $window.location.reload();
+            pageService.NavigateToPage('/');
         });
     };
 }]);
