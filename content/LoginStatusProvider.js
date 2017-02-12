@@ -215,7 +215,6 @@ angular.module(GOLFPRO).provider('loginStatusProvider', [function() {
 			}
 		})
 		.then(function(success) {
-			console.log(success);
 			if(AWS.config.credentials) {
 				console.log('Clearing the AWS Cached Id.');
 				AWS.config.credentials.clearCachedId();

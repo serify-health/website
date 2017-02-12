@@ -38,8 +38,7 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, eventHandler,
 	$scope.verificationYears = [0, 1, 2, 3, 4, 5].map(function(i) { return currentYear - i; });
 	$scope.SignInButtonClick = function() {
 		if($scope.UserAuthenticated) {
-			logoutService.Logout();
-			loginStatusProvider.logoutPromise()
+			Promise.all([logoutService.Logout(), loginStatusProvider.logoutPromise()])
 			.then(function() {
 				$scope.$apply(function(){ $scope.UserAuthenticated = false; });
 			}, function(failure) {

@@ -67,8 +67,7 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, v
 
 	$scope.SignInButtonClick = function() {
 		if($scope.UserAuthenticated) {
-			logoutService.Logout();
-			loginStatusProvider.logoutPromise()
+			Promise.all([logoutService.Logout(), loginStatusProvider.logoutPromise()])
 			.then(function() {
 				$scope.$apply(function(){ $scope.UserAuthenticated = false; });
 			}, function(failure) {
