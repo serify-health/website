@@ -67,10 +67,8 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, v
 
 	$scope.SignInButtonClick = function() {
 		if($scope.UserAuthenticated) {
-			Promise.all([logoutService.Logout(), loginStatusProvider.logoutPromise()])
-			.then(function() {
-				$scope.$apply(function(){ $scope.UserAuthenticated = false; });
-			}, function(failure) {
+			logoutService.Logout()
+			.catch(function(failure) {
 				console.log(failure);
 				$scope.$apply(function(){
 					$scope.alert = { type: 'danger', msg: 'Failed to log out' };
