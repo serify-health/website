@@ -29,6 +29,17 @@ html {	/* Making html 100% makes short webpages appear fullscreen. So animation 
   height: 100vh;	/* use vh instead of % otherwise animation would be slightly broken on iOS devices */
 }
 
+.fade {
+  transition: all linear 0.3s;
+	transition-delay: 0.3s;
+  opacity: 1;
+}
+
+.fade.ng-hide {
+	transition-delay: 0s;
+  opacity: 0;
+}
+
 body {
 	-webkit-touch-callout: none;	/* prevent callout to copy image, etc when tap to hold */
 	-webkit-text-size-adjust: none;	/* prevent webkit from resizing text to fit */
@@ -76,8 +87,13 @@ body {
 }
 
 .ui {
+	text-align: center;
 	margin: auto;
+	left: 0;
+	right: 0;
 	width: 70%;
+	height: 100%;
+	position: absolute;
 }
 
 .container {
@@ -250,7 +266,6 @@ h1 {
 
 @media (max-width: 767px) {
 	.ui {
-		margin: auto;
 		width: 90%;
 	}
 	.header {
