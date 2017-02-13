@@ -29,17 +29,6 @@ html {	/* Making html 100% makes short webpages appear fullscreen. So animation 
   height: 100vh;	/* use vh instead of % otherwise animation would be slightly broken on iOS devices */
 }
 
-.fade {
-  transition: all linear 0.3s;
-	transition-delay: 0.3s;
-  opacity: 1;
-}
-
-.fade.ng-hide {
-	transition-delay: 0s;
-  opacity: 0;
-}
-
 body {
 	-webkit-touch-callout: none;	/* prevent callout to copy image, etc when tap to hold */
 	-webkit-text-size-adjust: none;	/* prevent webkit from resizing text to fit */
@@ -58,16 +47,6 @@ body {
 
 .loginScreen {
 	height: 100%;
-	width: 100%;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
-	background-color: #FFFFFF;
-}
-
-.homeScreen {
-	height: 100vh;
 	width: 100%;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
@@ -109,7 +88,7 @@ h1 {
 	color: #00CED1;
 }
 
-/*  <-------- LOGIN -------->  */
+/********** LOGIN **********/
 
 .header {
 	text-align: center;
@@ -185,13 +164,24 @@ h1 {
 	font-weight: 800;
 }
 
-/*  <-------- NAVIGATION BAR -------->  */
+.fade {
+  transition: all linear 0.3s;
+	transition-delay: 0.3s;
+  opacity: 1;
+}
+
+.fade.ng-hide {
+	transition-delay: 0s;
+  opacity: 0;
+}
+
+/********** NAVIGATION BAR **********/
 
 .navBarIcon {
 	padding-top: 8px;
 }
 
-/*  <-------- UPDATE -------->  */
+/********** UPDATE**********/
 
 #profileButton {
 	margin-right: 10px;
@@ -217,7 +207,7 @@ h1 {
 	border-radius: 4px;
 }
 
-/*  <-------- MEDIA QUERY -------->  */
+/********** MEDIA QUERY **********/
 
 @media (min-width: 768px) {
 	.header {
