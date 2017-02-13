@@ -14,7 +14,7 @@ angular.module(GOLFPRO).controller('authorizeController', [
 function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, userManager, ngDialog, storageProviderService, utilities) {
 	$scope.closeAlert = function(){ $scope.alert = null; };
 	var storageProvider = storageProviderService.GetStorageProvider('credentials');
-	
+
 	var username = storageProvider.Get('username');
 	var password = storageProvider.Get('password');
 	var forgotPasswordFlow = storageProvider.Get('forgotPassword');

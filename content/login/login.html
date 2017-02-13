@@ -46,7 +46,7 @@
         </div>
     </nav>
     <div ng-show="alert" style="text-align: center" uib-alert ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert()" dismiss-on-timeout="5000">{{alert.msg}}</div>
-    <div ng-show="UserAuthenticated" class="ui">
+    <div ng-show="UserAuthenticated" class="ui fade">
         <div style="text-align:center;">
             <form class="form-inline">
                 <label class="sr-only" for="inlineFormInputGroup">Username</label>
@@ -115,7 +115,7 @@
             </div>
         </div>
     </div>
-    <div ng-show="!UserAuthenticated">
+    <div ng-show="!UserAuthenticated" class="fade">
         <div class="header">
             <img id="headerIcon" src="image/serify_icon.png" alt="Serify icon">
             <h1 id="headerTitle">Serify</h1>
