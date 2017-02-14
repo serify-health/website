@@ -88,6 +88,42 @@ h1 {
 	color: #00CED1;
 }
 
+/********** SIGNUP *********/
+
+#loginContainer {
+	width: 70%;
+	text-align: center;
+	margin: auto;
+}
+
+#spinner {
+	height: 25px;
+	width: auto;
+	position: absolute;
+	z-index: 10;
+	margin: 57.5% 134.5px 0 134.5px;
+}
+
+#forgotPasswordButton, #resendVerificationButton {
+	width: 100%;
+}
+
+#signupButton {
+	width: 47.5%;
+	height: 100%;
+	font-weight: 800;
+}
+
+#signinButton {
+	width: 47.5%;
+	height: 100%;
+	font-weight: 800;
+}
+
+#emailField, #passwordField {
+	width: 100%;
+}
+
 /********** LOGIN **********/
 
 .header {
@@ -171,6 +207,17 @@ h1 {
 }
 
 .fade.ng-hide {
+	transition-delay: 0s;
+  opacity: 0;
+}
+
+.fadeFast {
+	transition: all linear 0.1s;
+	transition-delay: 0.1s;
+  opacity: 1;
+}
+
+.fadeFast.ng-hide {
 	transition-delay: 0s;
   opacity: 0;
 }
@@ -279,5 +326,8 @@ h1 {
 	/* Nav Bar */
 	#signInButton {
 		margin-right: 15px;
+	}
+	#loginContainer {
+		width: 90%;
 	}
 }

@@ -28,6 +28,8 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
             $scope.alert = { type: 'danger', msg: 'Enter a new password which must be at least 8 characters.' };
         }
         else {
+					$scope.HideLoginButton = true;
+					$scope.closeAlert();
             var username = $scope.email.toLowerCase();
             var password = $scope.password;
             storageProvider.Save('username', username);
@@ -43,6 +45,7 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
                     $scope.closeThisDialog(true);
                 }, 5000);
             }, function(error){
+							$scope.HideLoginButton = false;
                 switch (error.code) {
                     case 'UserNotFoundException':
                     case 'ResourceNotFoundException':
@@ -84,6 +87,8 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
             $scope.alert = { type: 'danger', msg: 'Password must be at least 8 characters.'};
         }
         else {
+					$scope.HideLoginButton = true;
+					$scope.closeAlert();
             eventHandler.capture('RegisterUser', {Title: 'Starting new user flow', User: signinUsername});
             loginStatusProvider.signupPromise(signinUsername, signinPassword)
             .then(function() {
@@ -96,6 +101,7 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
                     $scope.closeThisDialog(true);
                 }, 5000);
             }, function(error) {
+							$scope.HideLoginButton = false;
                 switch (error.code) {
                     case 'UsernameExistsException':
                         $scope.$apply(function(){
@@ -125,12 +131,15 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
     };
 
     function signInUser(username, password) {
+			$scope.HideLoginButton = true;
+			$scope.closeAlert();
         return loginStatusProvider.usernameSigninPromise(username, password)
         .then(function() {
             storageProvider.Save('username', username);
             storageProvider.Save('password', password);
             $scope.closeThisDialog(true);
         }, function(error) {
+					$scope.HideLoginButton = false;
             switch (error.code) {
                 case 'UserNotFoundException':
                 case 'ResourceNotFoundException':
@@ -169,6 +178,8 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
     }
 
     function resendVerificationCode(username, password) {
+			$scope.HideLoginButton = true;
+			$scope.closeAlert();
         storageProvider.Save('username', username);
         storageProvider.Save('password', password);
         return loginStatusProvider.resendAuthorizationCodePromise(username, password)
@@ -180,6 +191,7 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
                 $scope.closeThisDialog(true);
             }, 5000);
         }, function(error){
+					$scope.HideLoginButton = false;
             switch (error.code) {
                 case 'InvalidParameterException':
                     if(error.message.match('User is already confirmed.')) {
