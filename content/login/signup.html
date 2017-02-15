@@ -1,5 +1,5 @@
 <div class="dialog-contents" style="height:330px">
-	<img id="spinner" ng-show="HideLoginButton==true" ng-src="image/spinner.gif" class="fadeFast">
+	<img id="spinner" ng-show="HideLoginButton" ng-src="image/spinner.gif" class="fadeFast">
 	<form style="height:330px;overflow-y:hidden;">
 		<div>
 			<div style="margin: 15% 0% 0% 0%;max-width:100%;" />
@@ -10,21 +10,16 @@
 				<div class="form-group" style="margin-bottom: 5px; width: 100%;">
 					<input id="passwordField" ng-model="password" type="password" class="form-control" id="password" name="password" placeholder="Password">
 				</div>
-				<div class="form-group" style="margin-bottom: 5px; width: 100%">
+				<div class="form-group" style="margin-bottom: 5px; width: 100%;">
 					<div style="text-align: center; position:relative; width: 100%; height: 49px; padding:5px 0px;">
-							<!-- <button type="submit" style="display: none;" ng-click="SignInButtonClick()"></button> -->
-							<button id="signupButton" class="btn btn-info pull-left fadeFast" ng-hide="HideLoginButton" ng-click="RegisterButtonClick()">Sign up</button>
-							<button id="signinButton" type="submit" class="btn btn-success pull-right fadeFast" ng-hide="HideLoginButton" ng-click="SignInButtonClick()">Sign in</button>
+						<button id="signupButton" class="btn btn-info pull-left fadeFast" ng-hide="HideLoginButton" ng-click="RegisterButtonClick()">Sign up</button>
+						<button id="signinButton" type="submit" class="btn btn-success pull-right fadeFast" ng-hide="HideLoginButton" ng-click="SignInButtonClick()">Sign in</button>
 					</div>
 					<div style="padding-top: 5px;">
-						<center>
-							<button id="forgotPasswordButton" class="btn btn-default ng-binding fadeFast" ng-hide="HideLoginButton" ng-click="ForgotPasswordButtonClick()">Forgot Password</button>
-						</center>
+						<button id="forgotPasswordButton" class="btn btn-default ng-binding fadeFast" ng-hide="HideLoginButton" ng-click="ForgotPasswordButtonClick()">Forgot Password</button>
 					</div>
 					<div style="padding-top: 5px;">
-						<center>
-							<button id="resendVerificationButton" class="btn btn-default ng-binding fadeFast" ng-hide="HideLoginButton" ng-click="ResendVerificationCodeButtonClick()">Resend Verification</button>
-						</center>
+						<button id="resendVerificationButton" class="btn btn-default ng-binding fadeFast" ng-hide="HideLoginButton" ng-click="ResendVerificationCodeButtonClick()">Resend Verification</button>
 					</div>
 				</div>
 			</div>
