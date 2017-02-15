@@ -120,7 +120,7 @@ h1 {
 	font-weight: 800;
 }
 
-#emailField, #passwordField {
+#email, #password {
 	width: 100%;
 }
 
