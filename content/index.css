@@ -124,6 +124,12 @@ h1 {
 	width: 100%;
 }
 
+#verifyButton {
+	width: 47.5%;
+	height: 100%;
+	font-weight: 800;
+}
+
 /********** LOGIN **********/
 
 .header {
