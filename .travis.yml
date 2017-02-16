@@ -1,0 +1,14 @@
+language: node_js
+node_js:
+- '6.9.5'
+before_script:
+- node make.js build
+before_deploy:
+- node make.js after_build
+branches:
+  only:
+  - master
+  - "/^release.*/"
+env:
+  global:
+  - secure: y5wSaovry2hY7s/3pDSGgcBXwH1KiD/EL6yc6ABeQxyFY7yp1Kd8plLauo0GkU9HpqhYcZs3e1GSlM19JSNLMYOvoY7yxH1+L8QOLCCdtLijj7DS1rm62GgQjTxIlQSHAqEpoXPBRDtbOYzUJRAXBoNBLiEXyIDwOsjvOR/6sn0z426vowGuuy/s327L+jztNMRW0+RFmDKkWCO19w8wAqVXa+/bfzpA2Cf6Mlp8n2Y4mbzPIicW3O2Joht0qrKC1+GBiP8X9uYY4k8DOdQa6la5J40GzMDbuoT+EoJeOYsH7aRH8a/Ao0k/PX/bIxJYD9ayhkEE0DmwkJjQKlLKcuY5PyWIUbfqao5kPnp3dLYn8hUBvL9FZPA0cFmRXL8meQwEVfnPg/3GFnzTTCdxdOWpcG698xCbKXHjTKUwlzeDAxUku3Mu0N22rK1gPaOgryxNellRT9KKqVMTYiRSRk79AAm+LFtZaphpIlQYR9qksLswCX+Otj+N4TX/4EU7SzuI2ZyFMsL3tLW2ApohMLevSAi+v2RYBy5BS6p575VetQrZH3n/x8WJ7xnVubQsGNJOEvTYV/4+hC6zUjG65yMG8aum41V3EJKiy1Lj9ST++yvN4efyoq9zXBnUal5tMCauzWyweZ1YDuCdxyRfKH/dY6tvFCCWu/DP1GfNVsg=

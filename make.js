@@ -12,8 +12,7 @@ var path = require('path');
 
 var AwsArchitect = require('aws-architect');
 var ci = require('ci-build-tools')(process.env.GIT_TAG_PUSHER);
-//var version = ci.GetVersion();
-var version = '0.0.1';
+var version = ci.GetVersion();
 var commander = require('commander');
 commander.version(version);
 
