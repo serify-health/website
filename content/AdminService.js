@@ -17,7 +17,7 @@ angular.module(GOLFPRO).service('adminService', [ 'apiService', 'loginStatusProv
 			'us-east-1:a6759634-6dda-4c50-9472-4bc3cbbdffda': true // jasonparad2@gmail.com
 		};
 		return adminUsers[userId];
-	}
+	};
 	this.GetCountsPromise = function(userId) {
 		return apiService.getPromise('GET', '/summary', {})
 		.catch(function(failure) {
