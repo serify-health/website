@@ -30,12 +30,17 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
 
         //Loginnig in on a new device.
         if(forgotPasswordFlow && $routeParams.pin) {
+			$scope.HideLoginButton = true;
+			$scope.closeAlert();
             storageProvider.Delete('forgotPassword');
             loginStatusProvider.confirmNewPasswordPromise($routeParams.pin, username, password)
             .then(function(){
                 $scope.closeThisDialog(true);
                 pageService.NavigateToPage('/');
             }, function(error){
+				$scope.$apply(function() {
+                    $scope.HideLoginButton = false;
+                });
                 switch (error.code) {
                     case 'ExpiredCodeException':
                         $scope.$apply(function(){
@@ -56,6 +61,8 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
             });
         }
         else if($routeParams.pin) {
+			$scope.HideLoginButton = true;
+			$scope.closeAlert();
             return verifySignin($routeParams.pin, username, password)
             .then(function(){
                 storageProvider.Save('username', username);
@@ -63,6 +70,9 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
                 pageService.NavigateToPage('/');
             })
             .catch(function(error){
+                $scope.$apply(function() {
+                    $scope.HideLoginButton = false;
+                });
                 switch (error.code) {
                     case 'ExpiredCodeException':
                         $scope.$apply(function(){
