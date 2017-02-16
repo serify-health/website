@@ -4,7 +4,7 @@ node_js:
 before_script:
 - node make.js build
 before_deploy:
-- node make.js after_build
+- node make.js deploy
 branches:
   only:
   - master
