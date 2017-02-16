@@ -1,22 +1,18 @@
 <div class="dialog-contents" style="height:330px">
+	<img id="spinner" ng-show="HideLoginButton" ng-src="image/spinner.gif" class="fadeFast">
 	<form style="height:330px;overflow-y:hidden;">
 		<div>
-			<div style="margin: 20% 0% 0% 0%;max-width:100%;" />
-			<div class="form-inline" style="text-align: center">
-				<div class="form-group" style="margin-bottom: 5px">
-					<label class="sr-only" for="email">email</label>
-					<input ng-model="email" name="username" type="username" class="form-control" id="email" placeholder="Email">
+			<div style="margin: 15% 0% 0% 0%;max-width:100%;" />
+			<div id="loginContainer" class="form-inline">
+				<div class="form-group" style="margin-bottom: 5px; width: 100%;">
+					<input id="email" ng-model="email" name="username" type="username" class="form-control" placeholder="Email">
 				</div>
-				<div class="form-group" style="margin-bottom: 5px">
-					<label class="sr-only" for="password">Password</label>
-					<input ng-model="password" type="password" class="form-control" id="password" name="password" placeholder="Password">
+				<div class="form-group" style="margin-bottom: 5px; width: 100%;">
+					<input id="password" ng-model="password" type="password" class="form-control" name="password" placeholder="Password">
 				</div>
-				<br />
-				<div class="form-group" style="margin-bottom: 5px">
-					<div>
-						<center>
-							<button type="submit" class="btn btn-inverted" ng-click="VerifyButtonClick()">Verify</button>
-						</center>
+				<div class="form-group" style="margin-bottom: 5px; width: 100%;">
+					<div style="text-align: center; position:relative; width: 100%; height: 49px; padding:5px 0px;">
+						<button id="verifyButton" type="submit" class="btn btn-success fadeFast" ng-hide="HideLoginButton" ng-click="VerifyButtonClick()">Verify</button>
 					</div>
 				</div>
 			</div>
