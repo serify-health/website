@@ -55,7 +55,9 @@ commander
 	.action(() => {
 		var production = 'v1';
 		var websitePromise = awsArchitect.PublishWebsite(production);
-		Promise.all([websitePromise]).then((result) => console.log(`${JSON.stringify(result, null, 2)}`))
+		Promise.all([websitePromise])
+		.then((result) => console.log(`${JSON.stringify(result, null, 2)}`))
+		.then(() => ci.PublishGitTag())
 		.catch((failure) => console.log(`Failed to upload website ${failure} - ${JSON.stringify(failure, null, 2)}`));
 	});
 
