@@ -175,4 +175,8 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
 	else {
 		pageService.NavigateToPage('/');
 	}
+
+	$scope.ProfileButtonClick = function() {
+		pageService.NavigateToPage('/');
+	};
 }]);

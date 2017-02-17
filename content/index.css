@@ -4,35 +4,47 @@
 	box-sizing: border-box;
 }
 
-.ng-leave {
-	transition: 0.4s linear all;
-	-webkit-transition: 0.4s linear all;
-	/* Safari */
+a:hover {
+	cursor:pointer;
+}
+
+/********** PAGE TRANSITION ANIMATION **********/
+
+.ng-enter, .ng-leave {
+	transition: all linear 0.15s;
+	transition-delay: 0.15s;
+	opacity: 1;
+	-webkit-transition: all linear 0.15s;
+}
+
+.ng-enter,
+.ng-leave.ng-leave-active {
+	opacity: 0;
+}
+
+.ng-leave,
+.ng-enter.ng-enter-active {
+	z-index: 1;
 	opacity: 1;
 }
 
-.ng-leave-active {
-	opacity: 0;
+.ng-leave {
+	z-index: -1;
 }
 
 .ng-enter {
-	transition: 0.4s linear all;
-	-webkit-transition: 0.4s linear all;	/* Safari */
-	opacity: 0;
-}
-
-.ng-enter-active {
-	opacity: 1;
+	transition-delay: 0.15s;
 }
 
 html {	/* Making html 100% makes short webpages appear fullscreen. So animation would go smooth when transitioning from one page to another. */
-  height: 100vh;	/* use vh instead of % otherwise animation would be slightly broken on iOS devices */
+	min-height: 100vh;	/* use vh instead of % otherwise animation would be slightly broken on iOS devices */
+	position: relative;
 }
 
 body {
 	-webkit-touch-callout: none;	/* prevent callout to copy image, etc when tap to hold */
 	-webkit-text-size-adjust: none;	/* prevent webkit from resizing text to fit */
-	-webkit-user-select: none;	/* prevent copy paste, to allow, change 'none' to 'text' */
+	-webkit-user-select: none;		/* prevent copy paste, to allow, change 'none' to 'text' */
 	margin: 0px 0px 0px 0px;
 	font-size: 12px;
 	padding: 0px;
@@ -71,7 +83,6 @@ body {
 	left: 0;
 	right: 0;
 	width: 70%;
-	position: absolute;
 }
 
 .container {
@@ -206,26 +217,43 @@ h1 {
 	font-weight: 800;
 }
 
-.fade {
-  transition: all linear 0.3s;
-	transition-delay: 0.3s;
-  opacity: 1;
-}
-
-.fade.ng-hide {
-	transition-delay: 0s;
-  opacity: 0;
-}
-
 .fadeFast {
 	transition: all linear 0.1s;
 	transition-delay: 0.1s;
-  opacity: 1;
+	opacity: 1;
 }
 
 .fadeFast.ng-hide {
 	transition-delay: 0s;
-  opacity: 0;
+	opacity: 0;
+}
+
+/********** Index Page Animations *********/
+.ng-fade.ng-enter, .ng-fade.ng-leave {
+	transition: all linear 0.3s;
+	transition-delay: 0.3s;
+	opacity: 1;
+	-webkit-transition: all linear 0.3s;
+}
+
+.ng-fade.ng-enter,
+.ng-fade.ng-leave.ng-leave-active {
+	opacity: 0;
+}
+
+.ng-fade.ng-leave,
+.ng-fade.ng-enter.ng-enter-active {
+	z-index: 1;
+	opacity: 1;
+}
+
+.ng-fade.ng-leave {
+	z-index: -1;
+}
+
+.ng-fade.ng-enter {
+	transition-delay: 0.3s;
+	position: absolute;
 }
 
 /********** NAVIGATION BAR **********/
