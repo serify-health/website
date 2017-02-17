@@ -154,4 +154,8 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, eventHandler,
 	$scope.ClearSignatureButtonClick = function() {
 		signaturePad.clear();
 	};
+
+	$scope.ProfileButtonClick = function() {
+		pageService.NavigateToPage('/');
+	};
 }]);

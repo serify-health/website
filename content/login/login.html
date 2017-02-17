@@ -143,7 +143,33 @@
             <p id="bottomText">This is the Serify Beta. All test result verifications are currently free.
                 <br>To get started, create an account below.</p>
             <button id="createButton" type="button" class="btn btn-warning btn-sm" ng-click="SignInButtonClick()">Create an account</button>
-            <hr>
         </div>
     </div>
 </div>
+
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-right" ng-show="!UserAuthenticated">
+            <a href="https://www.facebook.com/Serify-1820992791522117/"><i class="fa fa-facebook"></i></a>
+            <!-- <a href="https://twitter.com/serifyhealth"><i class="fa fa-twitter"></i></a> -->
+            <!-- uncomment this when the twitter page is ready -->
+        </div>
+        <div class="footer-left">
+            <p class="footer-links">
+                <a ng-click="PrivacyButtonClick()">Privacy Policy</a>
+                <!-- <a href="#">Home</a>
+                ·
+                <a href="#">Blog</a>
+                ·
+                <a href="#">Pricing</a>
+                ·
+                <a href="#">About</a>
+                ·
+                <a href="#">Faq</a>
+                ·
+                <a href="#">Contact</a> -->
+            </p>
+            <p>Serify &copy; 2017</p>
+        </div>
+    </div>
+</footer>
