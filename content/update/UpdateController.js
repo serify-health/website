@@ -155,7 +155,7 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, eventHandler,
 		signaturePad.clear();
 	};
 
-	$scope.ProfileButtonClick = function() {
-		pageService.NavigateToPage('/');
+	$scope.PrivacyButtonClick = function() {
+		pageService.NavigateToPage('policy');
 	};
 }]);
