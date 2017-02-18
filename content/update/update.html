@@ -9,7 +9,7 @@
 									<span class="icon-bar"></span>
 									<span class="icon-bar"></span>
 								</button> -->
-                <a class="navbar-brand navBarIcon" href="#">
+                <a class="navbar-brand navBarIcon" ng-click="ProfileButtonClick()">
                     <img alt="Serify nav icon" src="image/serify_nav_icon.png" style="height: 34px; width: auto;">
                 </a>
                 <ul class="visible-xs" style="list-style: none;">
@@ -140,11 +140,10 @@
                     </center>
                 </div>
             </div>
-            <div style="text-align:center; margin-top: 15px;">
+            <div style="text-align:center; margin-top: 15px; margin-bottom: 50px;">
                 <button class="btn btn-default" ng-click="SubmitVerificationsButtonClick()">Submit</button>
             </div>
         </div>
-        <hr>
     </div>
     <div ng-show="!UserAuthenticated" class="ui" style="margin:0% 10% 0% 10%;width:80% !important">
         <div style="text-align: center">
@@ -155,3 +154,30 @@
         <hr>
     </div>
 </div>
+
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-right" ng-show="!UserAuthenticated">
+            <a href="https://www.facebook.com/Serify-1820992791522117/"><i class="fa fa-facebook"></i></a>
+            <!-- <a href="https://twitter.com/serifyhealth"><i class="fa fa-twitter"></i></a> -->
+            <!-- uncomment this when the twitter page is ready -->
+        </div>
+        <div class="footer-left">
+            <p class="footer-links">
+                <a ng-click="PrivacyButtonClick()">Privacy Policy</a>
+                <!-- <a href="#">Home</a>
+                ·
+                <a href="#">Blog</a>
+                ·
+                <a href="#">Pricing</a>
+                ·
+                <a href="#">About</a>
+                ·
+                <a href="#">Faq</a>
+                ·
+                <a href="#">Contact</a> -->
+            </p>
+            <p>Serify &copy; 2017</p>
+        </div>
+    </div>
+</footer>

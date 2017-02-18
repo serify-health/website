@@ -9,7 +9,7 @@
 				          <span class="icon-bar"></span>
 				          <span class="icon-bar"></span>
 				        </button> -->
-                <a class="navbar-brand navBarIcon" href="#">
+                <a class="navbar-brand navBarIcon">
                     <img alt="Serify nav icon" src="image/serify_nav_icon.png" style="height: 34px; width: auto;">
                 </a>
                 <ul class="visible-xs" style="list-style: none;">
@@ -46,7 +46,7 @@
         </div>
     </nav>
     <div ng-show="alert" style="text-align: center" uib-alert ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert()" dismiss-on-timeout="5000">{{alert.msg}}</div>
-    <div ng-show="UserAuthenticated" class="ui fade">
+    <div ng-if="UserAuthenticated" class="ui ng-fade">
         <div style="text-align:center;">
             <form class="form-inline">
                 <div class="input-group col-xs-12 mb-2 mr-sm-2 mb-sm-0">
@@ -114,7 +114,7 @@
             </div>
         </div>
     </div>
-    <div ng-show="!UserAuthenticated" class="fade">
+    <div ng-if="!UserAuthenticated" class="ng-fade">
         <div class="header">
             <img id="headerIcon" src="image/serify_icon.png" alt="Serify icon">
             <h1 id="headerTitle">Serify</h1>
@@ -143,7 +143,33 @@
             <p id="bottomText">This is the Serify Beta. All test result verifications are currently free.
                 <br>To get started, create an account below.</p>
             <button id="createButton" type="button" class="btn btn-warning btn-sm" ng-click="SignInButtonClick()">Create an account</button>
-            <hr>
         </div>
     </div>
 </div>
+
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-right" ng-show="!UserAuthenticated">
+            <a href="https://www.facebook.com/Serify-1820992791522117/"><i class="fa fa-facebook"></i></a>
+            <!-- <a href="https://twitter.com/serifyhealth"><i class="fa fa-twitter"></i></a> -->
+            <!-- uncomment this when the twitter page is ready -->
+        </div>
+        <div class="footer-left">
+            <p class="footer-links">
+                <a ng-click="PrivacyButtonClick()">Privacy Policy</a>
+                <!-- <a href="#">Home</a>
+                ·
+                <a href="#">Blog</a>
+                ·
+                <a href="#">Pricing</a>
+                ·
+                <a href="#">About</a>
+                ·
+                <a href="#">Faq</a>
+                ·
+                <a href="#">Contact</a> -->
+            </p>
+            <p>Serify &copy; 2017</p>
+        </div>
+    </div>
+</footer>
