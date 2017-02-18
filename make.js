@@ -56,17 +56,7 @@ commander
 	.description('Deploy to AWS.')
 	.action(() => {
 		var production = 'v1';
-		if (ci.GetPullRequest()) {
-			//Pull Request
-			var websitePromise = awsArchitect.PublishWebsite(version);
-			Promise.all([websitePromise])
-			.then((result) => console.log(`${JSON.stringify(result, null, 2)}`))
-			.catch((failure) => {
-				console.log(`Failed to upload website ${failure} - ${JSON.stringify(failure, null, 2)}`)
-				process.exit(1);
-			});
-		}
-		else {
+		if (!ci.GetPullRequest()) {
 			var websitePromise = awsArchitect.PublishWebsite(production);
 			Promise.all([websitePromise])
 			.then((result) => console.log(`${JSON.stringify(result, null, 2)}`))
