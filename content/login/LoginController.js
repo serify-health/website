@@ -110,4 +110,7 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
 			});
 		});
 	};
+	$scope.PrivacyButtonClick = function() {
+		pageService.NavigateToPage('policy');
+	};
 }]);
