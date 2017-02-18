@@ -22,43 +22,7 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, eventHandler,
 	function SetupUser() {
 		return loginStatusProvider.validateAuthenticationPromise()
 		.then(function(authData) {
-			try {
-				var data = JSON.parse(atob(authData.UserId.split('.')[1]));
-				userManager.CaptureUserIdentity({
-					cognitoSub: data.sub,
-					email: data['cognito:username']
-				});
-			}
-			catch (exception) {}
-			$scope.UserAuthenticated = true;
-			return userManager.GetUserIdPromise().then(function(id){
-				$scope.$apply(function(){
-					$scope.UserId = id;
-					$scope.IsAdmin = adminService.IsAdmin(id);
-				});
-			});
-		})
-		.then(function(){
-			var usernamemetadataPromise = userManager.GetUserDataPromise()
-			.then(function(user){
-				$scope.$apply(function(){
-					$scope.userProfile = (user.userData || {}).profile;
-					$scope.username = (user.userData || {}).username;
-					var verifications = (user || {}).Verifications || [];
-					verifications.map(function(verification) {
-						verification.Inverse = verification.Name !== 'HPV' && verification.Name !== 'PrEP';
-						verification.Name = TESTS.find(function(t){ return t.id === verification.Name; }).name;
-					});
-					$scope.verifications = verifications;
-				});
-			});
-			var usernameLinkCreationPromise = linkManager.GetNewLinkPromise(null, null)
-			.then(function(link){
-				$scope.$apply(function(){
-					$scope.userLink = WEBSITE_VIEW_URL + link;
-				});
-			});
-			return Promise.all([usernamemetadataPromise, usernameLinkCreationPromise]);
+			$scope.$apply(function() { $scope.UserAuthenticated = true; });
 		}).catch(function(f){ console.log(f); });
 	}
 
