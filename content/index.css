@@ -413,13 +413,20 @@ h1 {
 		width: 90%;
 	}
 	.header {
-		padding: 12.5%;
+		padding: 5%;
+		max-height: 20%;
 	}
 	#headerTitle {
-		font-size: 6rem;
+		font-size: 5rem;
 	}
 	#headerDescription {
 		font-size: 1.5rem;
+		margin-bottom: 0;
+	}
+	#headerIcon {
+		width: 75px;
+		height: auto;
+		margin-bottom: 10px;
 	}
 	.diagram div {
 		width: 75%;
