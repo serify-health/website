@@ -33,7 +33,7 @@
 		<div>
 			<div class="container">
 				<div class="row clearfix">
-					<div class="col-md-10 column">
+					<div class="col-md-12 column">
 						<table class="table table-bordered table-hover">
 							<thead>
 								<th class="text-center">Total Number of Users</th>
@@ -57,7 +57,7 @@
 		<div>
 			<div class="container">
 				<div class="row clearfix">
-					<div class="col-md-10 column">
+					<div class="col-md-12 column">
 						<table class="table table-bordered table-hover">
 							<thead>
 								<th class="text-center">Date Submitted</th>
@@ -83,7 +83,9 @@
 										{{ verificationRequest.email }}
 									</td>
 									<td>
-										{{ verificationRequest.dob | date:'yyyy/MM/dd'}}
+										<div style="width: 75px;">
+											{{ verificationRequest.dob | date:'MMM dd, yyyy'}}
+										</div>
 									</td>
 									<td>
 										{{ verificationRequest.clinic }}
@@ -92,17 +94,17 @@
 										{{ verificationRequest.address }}
 									</td>
 									<td>
-										<div style="width: 160px;" ng-repeat="verification in verificationRequest.verifications | filter: { status: 'Unknown'}">
+										<div style="width: 160px; text-align: left;" ng-repeat="verification in verificationRequest.verifications | filter: { status: 'Unknown'}">
 											<input type="checkbox" ng-model="verification.checked" ></input> {{ verification.name }} - {{ verification.date }}
 										</div>
-										<div style="width: 160px;" ng-repeat="verification in verificationRequest.verifications | filter: { status: 'Verified'}">
+										<div style="width: 160px; text-align: left;" ng-repeat="verification in verificationRequest.verifications | filter: { status: 'Verified'}">
 											<i style="color: green" class="fa fa-check-square-o" aria-hidden="true"> {{ verification.name }} - {{ verification.date }}</i>
 										</div>
-										<div style="width: 160px;" ng-repeat="verification in verificationRequest.verifications | filter: { status: 'Rejected'}">
+										<div style="width: 160px; text-align: left;" ng-repeat="verification in verificationRequest.verifications | filter: { status: 'Rejected'}">
 											<i style="color: red" class="fa fa-check-square-o" aria-hidden="true"> {{ verification.name }} - {{ verification.date }}</i>
 										</div>
 									</td>
-									<td style="width: 200px; text-align: center">
+									<td style="width: 100px; text-align: center">
 										<img style="max-height: 40px" ng-src="{{verificationRequest.signature}}">
 									</td>
 									<td style="width: 60px;">
