@@ -71,6 +71,20 @@ module.run(['$rootScope', '$window', '$location', '$animate', 'eventHandler', 'p
 	$animate.enabled(true);
 }]);
 
+// This directive allows us to pass a function in on an enter key to do what we want.
+module.directive('ngEnter', function () {
+    return function (scope, element, attrs) {
+        element.bind("keydown keypress", function (event) {
+            if(event.which === 13) {
+                scope.$apply(function (){
+                    scope.$eval(attrs.ngEnter);
+                });
+                event.preventDefault();
+            }
+        });
+    };
+});
+
 var mainApp = document.getElementsByTagName('body');
 angular.element(mainApp).ready(function() {
 	angular.bootstrap(mainApp, [GOLFPRO], { strictDi: true });
