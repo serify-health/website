@@ -34,7 +34,7 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, eventHandler,
 	$scope.selectedDobYear = null;
 	$scope.selectedDobMonth = null;
 	$scope.selectedDobDay = null;
-	$scope.verificationMonths = $scope.months;
+	$scope.verificationMonths = Array.apply(null, {length:12}).map(Number.call, Number).map(function(i) { return i + 1; });
 	$scope.verificationYears = [0, 1, 2, 3, 4, 5].map(function(i) { return currentYear - i; });
 	$scope.SignInButtonClick = function() {
 		if($scope.UserAuthenticated) {
@@ -122,7 +122,7 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, eventHandler,
 		}
 
 		var userDetails = {
-			dob: new Date($scope.selectedDobYear, $scope.selectedDobMonth, $scope.selectedDobDay).toISOString(),
+			dob: moment($scope.selectedDobYear + '-' + $scope.selectedDobMonth + '-' + $scope.selectedDobDay, 'YYYY-MM-DD').format(),
 			name: $scope.name,
 			clinicInfo: $scope.clinicInfo,
 			clinicName: $scope.clinicName,
