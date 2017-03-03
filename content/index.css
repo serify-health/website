@@ -338,7 +338,7 @@ h1 {
 
 /********** UPDATE**********/
 
-#profileButton {
+#profileButton, #publicProfileButton, #adminButton {
 	margin-right: 10px;
 }
 
