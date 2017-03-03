@@ -60,7 +60,7 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
 					$scope.userLink = {
 						url: WEBSITE_VIEW_URL + link,
 						link: link
-					}
+					};
 				});
 			});
 			return Promise.all([usernamemetadataPromise, usernameLinkCreationPromise]);
