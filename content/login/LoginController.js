@@ -99,8 +99,7 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
 		pageService.NavigateToPage('admin');
 	};
 	$scope.PublicProfileButtonClick = function() {
-		let userLink = $scope.userLink.link;
-		pageService.NavigateToPage('view/'+userLink);
+		pageService.NavigateToPage('view/'+$scope.userLink.link);
 	};
 	$scope.SaveProfileButtonClick = function() {
 		userManager.UpdateUserDataPromise({
