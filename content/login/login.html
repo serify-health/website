@@ -76,7 +76,7 @@
                 <div class="form-group">
                     <label for="userProfile" class="col-sm-1 col-md-3 control-label">Info </label>
                     <div class="col-sm-11 col-md-6">
-                        <textarea id="infoTextBox" name="userProfile" cols="50" rows="5" ng-model="userProfile"></textarea>
+                        <textarea class="form-control" id="infoTextBox" name="userProfile" cols="50" rows="5" ng-model="userProfile"></textarea>
                     </div>
                 </div>
             </form>
@@ -161,21 +161,38 @@
             <!-- uncomment this when the twitter page is ready -->
         </div>
         <div class="footer-left">
-            <p class="footer-links">
-                <a ng-click="PrivacyButtonClick()">Privacy Policy</a>
-                <!-- <a href="#">Home</a>
-                ·
-                <a href="#">Blog</a>
-                ·
-                <a href="#">Pricing</a>
-                ·
-                <a href="#">About</a>
-                ·
-                <a href="#">Faq</a>
-                ·
-                <a href="#">Contact</a> -->
-            </p>
-            <p>Serify &copy; 2017</p>
+            <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#collapseContactForm" aria-expanded="false" aria-controls="collapseContactForm" style="margin-bottom: 10px;">
+                  Contact Us
+            </button>
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="collapse" id="collapseContactForm" style="max-width: 600px;">
+                  <div style="margin-bottom: 50px;">
+                    <form>
+                        <div class="form-group" ng-show="!UserAuthenticated">
+                        <label for="contactNameField">Name</label>
+                        <input type="text" class="form-control" id="contactNameField" placeholder="Name" ng-model="username">
+                      </div>
+                      <div class="form-group" ng-show="!UserAuthenticated">
+                        <label for="contactEmailField">Email</label>
+                        <input type="email" class="form-control" id="contactEmailField" placeholder="Email" ng-model="Email">
+                      </div>
+                      <div class="form-group">
+                        <label for="contactSubjectField">Subject</label>
+                        <input type="text" class="form-control" id="contactSubjectField" placeholder="Feature request? Bugs? Tell us everything!">
+                      </div>
+                      <div class="form-group">
+                        <label for="contactContentField">How can we help?</label>
+                        <textarea type="text" class="form-control" id="contactContentField" placeholder="What do you want to tell us?" style="max-width: 100%; height: 150px;"></textarea>
+                      </div>
+                      <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
+                  </div>
+                </div>
+                <p class="footer-links">
+                    <a ng-click="PrivacyButtonClick()">Privacy Policy</a>
+                </p>
+                <p>Serify &copy; 2017</p>
+            </div>
         </div>
     </div>
 </footer>
