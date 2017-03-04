@@ -57,7 +57,10 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
 			var usernameLinkCreationPromise = linkManager.GetNewLinkPromise(null, null)
 			.then(function(link){
 				$scope.$apply(function(){
-					$scope.userLink = WEBSITE_VIEW_URL + link;
+					$scope.userLink = {
+						url: WEBSITE_VIEW_URL + link,
+						link: link
+					};
 				});
 			});
 			return Promise.all([usernamemetadataPromise, usernameLinkCreationPromise]);
@@ -94,6 +97,9 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
 	};
 	$scope.AdminButtonClick = function() {
 		pageService.NavigateToPage('admin');
+	};
+	$scope.PublicProfileButtonClick = function() {
+		pageService.NavigateToPage('view/'+$scope.userLink.link);
 	};
 	$scope.SaveProfileButtonClick = function() {
 		userManager.UpdateUserDataPromise({

@@ -17,7 +17,10 @@
                         <button id="signInButton" type="button" class="btn btn-warning navbar-btn navbar-right" ng-click="SignInButtonClick()">{{UserAuthenticated ? 'Sign out' : 'Sign in'}}</button>
                     </li>
                     <li ng-show="IsAdmin && UserAuthenticated" class="pull-right">
-                        <button id="profileButton" type="button" class="btn btn-warning navbar-btn" ng-click="AdminButtonClick()">Admin</button>
+                        <button id="adminButton" type="button" class="btn btn-warning navbar-btn" ng-click="AdminButtonClick()">Admin</button>
+                    </li>
+                    <li ng-show="UserAuthenticated" class="pull-right">
+                        <button id="publicProfileButton" type="button" class="btn btn-info navbar-btn" ng-click="PublicProfileButtonClick()">Public Profile</button>
                     </li>
                 </ul>
             </div>
@@ -39,7 +42,10 @@
                         <button id="signInButton" type="button" class="btn btn-warning navbar-btn" ng-click="SignInButtonClick()">{{UserAuthenticated ? 'Sign out' : 'Sign in'}}</button>
                     </li>
                     <li ng-show="IsAdmin && UserAuthenticated" class="pull-right">
-                        <button id="profileButton" type="button" class="btn btn-warning navbar-btn" ng-click="AdminButtonClick()">Admin</button>
+                        <button id="adminButton" type="button" class="btn btn-warning navbar-btn" ng-click="AdminButtonClick()">Admin</button>
+                    </li>
+                    <li ng-show="UserAuthenticated" class="pull-right">
+                        <button id="publicProfileButton" type="button" class="btn btn-info navbar-btn" ng-click="PublicProfileButtonClick()">Public Profile</button>
                     </li>
                 </ul>
             </div>
@@ -51,7 +57,7 @@
             <form class="form-inline">
                 <div class="input-group col-xs-12 mb-2 mr-sm-2 mb-sm-0">
                     <div class="input-group-addon"><i style="max-width:100px" class="fa fa-link" aria-hidden="true"></i> Profile Link</div>
-                    <input type="text" class="form-control" ng-model="userLink" id="inlineFormInputGroup" placeholder="UsernameLink" readonly>
+                    <input type="text" class="form-control" ng-model="userLink.url" id="inlineFormInputGroup" placeholder="UsernameLink" readonly>
                 </div>
                 <br>
                 <br> This is a link to your profile. You can share this link with any potential partners. Only verified results will be displayed.

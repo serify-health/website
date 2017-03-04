@@ -106,4 +106,7 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
 	$scope.ProfileButtonClick = function() {
 		pageService.NavigateToPage('/');
 	};
+	$scope.NavIconClick = function() {
+		pageService.NavigateToPage('/');
+	};
 }]);
