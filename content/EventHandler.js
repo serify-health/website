@@ -42,10 +42,11 @@ angular.module(GOLFPRO).provider('eventHandler', ['apiServiceProvider', 'pageSer
 							UserGuid: userGuid
 						}
 					};
-					if(window.document.location.hostname === 'localhost') {
+					var host = window.document.location.hostname;
+					if (host.match(/serify/)) { return $http(compositeLogObject); }
+					else {
 						console.log(JSON.stringify(compositeLogObject, null, 2));
 					}
-					return $http(compositeLogObject);
 				})
 				.catch(function(error) {
 					console.error(JSON.stringify({Title: 'Event captured failed', Error: error.stack || error.toString(), Detail: error}, null, 2));
