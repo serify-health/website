@@ -76,7 +76,7 @@
                 <div class="form-group">
                     <label for="userProfile" class="col-sm-1 col-md-3 control-label">Info </label>
                     <div class="col-sm-11 col-md-6">
-                        <textarea id="infoTextBox" name="userProfile" cols="50" rows="5" ng-model="userProfile"></textarea>
+                        <textarea class="form-control" id="infoTextBox" name="userProfile" cols="50" rows="5" ng-model="userProfile"></textarea>
                     </div>
                 </div>
             </form>
@@ -152,7 +152,6 @@
         </div>
     </div>
 </div>
-
 <footer class="footer">
     <div class="footer-container">
         <div class="footer-right" ng-show="!UserAuthenticated">
@@ -161,19 +160,45 @@
             <!-- uncomment this when the twitter page is ready -->
         </div>
         <div class="footer-left">
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Contact Us</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <form>
+                                    <div class="form-group" ng-show="!UserAuthenticated">
+                                        <label for="contactNameField">Name</label>
+                                        <input type="text" class="form-control" id="contactNameField" placeholder="Name" ng-model="username">
+                                    </div>
+                                    <div class="form-group" ng-show="!UserAuthenticated">
+                                        <label for="contactEmailField">Email</label>
+                                        <input type="email" class="form-control" id="contactEmailField" placeholder="Email" ng-model="Email">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="contactSubjectField">Subject</label>
+                                        <input type="text" class="form-control" id="contactSubjectField" placeholder="Feature request? Bugs? Tell us everything!">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="contactContentField">How can we help?</label>
+                                        <textarea type="text" class="form-control" id="contactContentField" placeholder="What do you want to tell us?" style="min-width: 100%; max-width: 100%; height: 150px; max-height: 50%"></textarea>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-info">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <p class="footer-links">
+                <a data-toggle="modal" data-target="#myModal">Contact Us</a>
+                ·
                 <a ng-click="PrivacyButtonClick()">Privacy Policy</a>
-                <!-- <a href="#">Home</a>
-                ·
-                <a href="#">Blog</a>
-                ·
-                <a href="#">Pricing</a>
-                ·
-                <a href="#">About</a>
-                ·
-                <a href="#">Faq</a>
-                ·
-                <a href="#">Contact</a> -->
             </p>
             <p>Serify &copy; 2017</p>
         </div>

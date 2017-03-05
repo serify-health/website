@@ -30,6 +30,7 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
 					cognitoSub: data.sub,
 					email: data['cognito:username']
 				});
+				$scope.email = data['cognito:username'];
 			}
 			catch (exception) {}
 			$scope.UserAuthenticated = true;

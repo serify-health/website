@@ -36,16 +36,16 @@ a:hover {
 	transition-delay: 0.15s;
 }
 
-html {	/* Making html 100% makes short webpages appear fullscreen. So animation would go smooth when transitioning from one page to another. */
-	min-height: 100vh;	/* use vh instead of % otherwise animation would be slightly broken on iOS devices */
-	position: relative;
+/********** **********/
+
+html,body{
+    height: 100%;
 }
 
 body {
 	-webkit-touch-callout: none;	/* prevent callout to copy image, etc when tap to hold */
 	-webkit-text-size-adjust: none;	/* prevent webkit from resizing text to fit */
 	-webkit-user-select: none;		/* prevent copy paste, to allow, change 'none' to 'text' */
-	margin: 0px 0px 78px 0px;		/* martin-bottom needs to be the same height as footer */
 	font-size: 12px;
 	padding: 0px;
 	width: 100%;
@@ -54,21 +54,19 @@ body {
 	-o-background-size: cover;
 	background-size: cover;
 	background-color: #FFFFFF;
-	min-height: 100%;	/* Same as html 100% above */
 }
 
 .loginScreen {
-	height: 100%;
 	width: 100%;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
 	background-color: #FFFFFF;
+	min-height: calc(100% - 78px);
 }
 
 .app {
-	height: 100%;
 	width: 100%;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
@@ -265,17 +263,7 @@ h1 {
 
 /********** FOOTER **********/
 
-/*.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 60px;
-  background-color: #f5f5f5;
-}*/
-
 .footer{
-	position: absolute;
-	bottom: 0;
 	background-color: #f5f5f5;
 	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
 	box-sizing: border-box;
@@ -444,5 +432,10 @@ h1 {
 	}
 	#loginContainer {
 		width: 90%;
+	}
+	/* Footer */
+	.footer-container {
+		width: 90%;
+		margin: auto;
 	}
 }
