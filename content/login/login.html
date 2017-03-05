@@ -160,43 +160,8 @@
             <!-- uncomment this when the twitter page is ready -->
         </div>
         <div class="footer-left">
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">Contact Us</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div>
-                                <form>
-                                    <div class="form-group" ng-show="!UserAuthenticated">
-                                        <label for="contactNameField">Name</label>
-                                        <input type="text" class="form-control" id="contactNameField" placeholder="Name" ng-model="username">
-                                    </div>
-                                    <div class="form-group" ng-show="!UserAuthenticated">
-                                        <label for="contactEmailField">Email</label>
-                                        <input type="email" class="form-control" id="contactEmailField" placeholder="Email" ng-model="Email">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="contactSubjectField">Subject</label>
-                                        <input type="text" class="form-control" id="contactSubjectField" placeholder="Feature request? Bugs? Tell us everything!">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="contactContentField">How can we help?</label>
-                                        <textarea type="text" class="form-control" id="contactContentField" placeholder="What do you want to tell us?" style="min-width: 100%; max-width: 100%; height: 150px; max-height: 50%"></textarea>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-info">Submit</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <p class="footer-links">
-                <a data-toggle="modal" data-target="#myModal">Contact Us</a>
+                <a ng-click="ShowFeedBackFormClick()">Contact Us</a>
                 ·
                 <a ng-click="PrivacyButtonClick()">Privacy Policy</a>
             </p>

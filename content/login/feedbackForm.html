@@ -1,0 +1,31 @@
+<form novalidate>
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="DismissFeedbackForm()"><span aria-hidden="true">&times;</span></button>
+		<h4 class="modal-title" id="myModalLabel">Contact Us</h4>
+	</div>
+	<div class="modal-body">
+		<div>
+		
+			<div class="form-group" ng-show="!form.userAuthenticated">
+				<label for="contactNameField">Name</label>
+				<input type="text" class="form-control" id="contactNameField" placeholder="Name" ng-model="form.username">
+			</div>
+			<div class="form-group" ng-show="!form.userAuthenticated">
+				<label for="contactEmailField">Email</label>
+				<input type="text" class="form-control" id="contactEmailField" placeholder="Email" ng-model="form.email">
+			</div>
+			<div class="form-group">
+				<label for="contactSubjectField">Subject</label>
+				<input type="text" class="form-control" id="contactSubjectField" placeholder="Feature request? Bugs? Tell us everything!" ng-model="form.feedbackSubject">
+			</div>
+			<div class="form-group">
+				<label for="contactContentField">How can we help?</label>
+				<textarea type="text" class="form-control" id="contactContentField" placeholder="What do you want to tell us?" style="min-width: 100%; max-width: 100%; height: 150px; max-height: 50%" ng-model="form.feedbackBody"></textarea>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="submit" class="btn btn-info" ng-click="SubmitFeedbackForm()">Submit</button>
+	</div>
+	<div ng-show="alert" style="margin-top:5px; text-align: center;" uib-alert ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert()" dismiss-on-timeout="1000">{{alert.msg}}</div>
+</form>
