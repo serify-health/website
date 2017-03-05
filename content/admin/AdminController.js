@@ -25,11 +25,14 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, v
 	function SetupUser() {
 		return loginStatusProvider.validateAuthenticationPromise()
 		.then(function(auth) {
-			userManager.GetUserIdPromise().then(function(id){
-				if(!adminService.IsAdmin(id)) {
-					pageService.NavigateToPage('/');
-					return;
-				}
+			userManager.GetUserDataPromise()
+			.then(function(user){
+				$scope.$apply(function(){
+					if(!user.admin) {
+						pageService.NavigateToPage('/');
+						return;
+					}
+				});
 			});
 
 			console.log((auth || {}).UserId);

@@ -15,8 +15,7 @@ angular.module(GOLFPRO).controller('loginController', [
 	'utilities',
 	'linkManager',
 	'logoutService',
-	'adminService',
-function($scope, $routeParams, $uibModal, loginStatusProvider, eventHandler, pageService, userManager, ngDialog, utilities, linkManager, logoutService, adminService) {
+function($scope, $routeParams, $uibModal, loginStatusProvider, eventHandler, pageService, userManager, ngDialog, utilities, linkManager, logoutService) {
 	$scope.closeAlert = function(){ $scope.alert = null; };
 	/******** SignInButton Block ********/
 	$scope.IsAdmin = false;
@@ -38,7 +37,6 @@ function($scope, $routeParams, $uibModal, loginStatusProvider, eventHandler, pag
 			return userManager.GetUserIdPromise().then(function(id){
 				$scope.$apply(function(){
 					$scope.UserId = id;
-					$scope.IsAdmin = adminService.IsAdmin(id);
 				});
 			});
 		})
@@ -46,6 +44,7 @@ function($scope, $routeParams, $uibModal, loginStatusProvider, eventHandler, pag
 			var usernamemetadataPromise = userManager.GetUserDataPromise()
 			.then(function(user){
 				$scope.$apply(function(){
+					$scope.IsAdmin = user.admin;
 					$scope.userProfile = (user.userData || {}).profile;
 					$scope.username = (user.userData || {}).username;
 					var verifications = (user || {}).Verifications || [];

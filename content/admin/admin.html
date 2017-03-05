@@ -68,7 +68,7 @@
 								<th class="text-center">Message</th>
 							</thead>
 							<tbody style="height: 40px">
-								<tr ng-repeat="feedback in feedbackList | orderBy : 'time' : true">
+								<tr ng-repeat="feedback in feedbackList | orderBy: 'time' : true | limitTo: 10">
 									<td>
 										{{ feedback.timeString }}
 									</td>
