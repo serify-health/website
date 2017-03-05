@@ -6,6 +6,7 @@ angular.module(GOLFPRO).config(['$routeProvider', function($routeProvider) {
 angular.module(GOLFPRO).controller('loginController', [
 	'$scope',
 	'$routeParams',
+	'$uibModal',
 	'loginStatusProvider',
 	'eventHandler',
 	'pageService',
@@ -14,8 +15,7 @@ angular.module(GOLFPRO).controller('loginController', [
 	'utilities',
 	'linkManager',
 	'logoutService',
-	'adminService',
-function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, userManager, ngDialog, utilities, linkManager, logoutService, adminService) {
+function($scope, $routeParams, $uibModal, loginStatusProvider, eventHandler, pageService, userManager, ngDialog, utilities, linkManager, logoutService) {
 	$scope.closeAlert = function(){ $scope.alert = null; };
 	/******** SignInButton Block ********/
 	$scope.IsAdmin = false;
@@ -37,7 +37,6 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
 			return userManager.GetUserIdPromise().then(function(id){
 				$scope.$apply(function(){
 					$scope.UserId = id;
-					$scope.IsAdmin = adminService.IsAdmin(id);
 				});
 			});
 		})
@@ -45,6 +44,7 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
 			var usernamemetadataPromise = userManager.GetUserDataPromise()
 			.then(function(user){
 				$scope.$apply(function(){
+					$scope.IsAdmin = user.admin;
 					$scope.userProfile = (user.userData || {}).profile;
 					$scope.username = (user.userData || {}).username;
 					var verifications = (user || {}).Verifications || [];
@@ -68,6 +68,51 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
 		}).catch(function(f){ console.log(f); });
 	}
 
+	$scope.ShowFeedBackFormClick = function () {
+		var modalInstance = $uibModal.open({
+			templateUrl: 'login/feedbackForm.html',
+			controller: ['$scope', '$uibModalInstance', 'loginStatusProvider', 'feedbackManager', function($scope, $uibModalInstance, loginStatusProvider, feedbackManager) {
+				$scope.form = $scope.$resolve.form;
+				$scope.closeAlert = function(){ $scope.alert = null; };
+				$scope.alert = null;
+				$scope.SubmitFeedbackForm = function () {
+					loginStatusProvider.validateUnauthenticationPromise()
+					.then(function() {
+						feedbackManager.CreateFeedback($scope.form)
+						.then(function() {
+							$scope.$apply(function() {
+								$scope.alert = { type: 'success', msg: 'Feedback Submitted!'};
+							});
+							setTimeout(function() {
+								$scope.$apply(function() { $uibModalInstance.close('closed'); });
+							}, 1000);
+						}, function() {
+							$scope.alert = { type: 'danger', msg: 'Failed to send feedback, please try again.'};
+						});
+					});
+				};
+
+				$scope.DismissFeedbackForm = function () {
+					$uibModalInstance.dismiss('cancel');
+				};
+			}],
+			resolve: {
+				form: function() {
+					return {
+						userAuthenticated: $scope.UserAuthenticated,
+						username: $scope.username,
+						email: $scope.email
+					};
+				}
+			}
+		});
+
+		modalInstance.result.then(function (selectedItem) {
+			$scope.selected = selectedItem;
+		}, function () {
+			console.log('Modal dismissed at: ' + new Date());
+		});
+	};
 	$scope.SignInButtonClick = function() {
 		if($scope.UserAuthenticated) {
 			logoutService.Logout()
