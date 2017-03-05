@@ -14,9 +14,11 @@ angular.module(GOLFPRO).controller('adminController', [
 	'logoutService',
 	'userManager',
 	'adminService',
-function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, verificationManager, ngDialog, utilities, linkManager, logoutService, userManager, adminService) {
+	'feedbackManager',
+function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, verificationManager, ngDialog, utilities, linkManager, logoutService, userManager, adminService, feedbackManager) {
 	$scope.closeAlert = function(){ $scope.alert = null; };
 	$scope.verificationRequests = [];
+	$scope.feedbackList = [];
 	/******** SignInButton Block ********/
 	$scope.UserAuthenticated = false;
 	$scope.links = [];
@@ -66,6 +68,21 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, v
 									checked: false
 								};
 							})
+						};
+					});
+				});
+			});
+			feedbackManager.GetFeedback()
+			.then(function(data) {
+				$scope.$apply(function() {
+					$scope.feedbackList = data.feedbackList.map(function(item){
+						return {
+							timeString: new Date(item.time).toLocaleString(),
+							time: new Date(item.time),
+							body: item.information.feedbackBody,
+							subject: item.information.feedbackSubject,
+							email: item.information.email,
+							username: item.information.username
 						};
 					});
 				});

@@ -55,6 +55,43 @@
 			</div>
 		</div>
 		<div>
+			Feedback
+			<div class="container">
+				<div class="row clearfix">
+					<div class="col-md-12 column">
+						<table class="table table-bordered table-hover">
+							<thead>
+								<th class="text-center">Time</th>
+								<th class="text-center">User</th>
+								<th class="text-center">Email</th>
+								<th class="text-center">Subject</th>
+								<th class="text-center">Message</th>
+							</thead>
+							<tbody style="height: 40px">
+								<tr ng-repeat="feedback in feedbackList | orderBy : 'time' : true">
+									<td>
+										{{ feedback.timeString }}
+									</td>
+									<td>
+										{{ feedback.username }}
+									</td>
+									<td>
+										{{ feedback.email }}
+									</td>
+									<td>
+										{{ feedback.subject }}
+									</td>
+									<td>
+										{{ feedback.body }}
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div>
 			<div class="container">
 				<div class="row clearfix">
 					<div class="col-md-12 column">
