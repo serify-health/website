@@ -9,8 +9,7 @@
     "deploy": "node make.js deploy",
     "test": "mocha tests/**/*.js -R spec"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "aws-architect": "^3.3.201",
     "aws-sdk": "^2.2.32",
@@ -21,6 +20,7 @@
     "esprima": "^2.7.2",
     "glob": "^5.0.0",
     "jshint": "^2.9.4",
+    "jsonwebtoken": "^7.3.0",
     "jwk-to-pem": "^1.2.6",
     "mocha": "^2.5.3",
     "openapi-factory": "^2.0.82",
