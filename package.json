@@ -13,13 +13,17 @@
   "devDependencies": {
     "aws-architect": "^3.3.201",
     "aws-sdk": "^2.2.32",
+    "axios": "^0.15.3",
     "chai": "^3.2.0",
     "ci-build-tools": "~1.0",
     "commander": "^2.5.0",
     "esprima": "^2.7.2",
     "glob": "^5.0.0",
     "jshint": "^2.9.4",
+    "jsonwebtoken": "^7.3.0",
+    "jwk-to-pem": "^1.2.6",
     "mocha": "^2.5.3",
+    "openapi-factory": "^2.0.82",
     "sinon": "^1.17.1"
   },
   "repository": {
