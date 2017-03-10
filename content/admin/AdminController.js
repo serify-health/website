@@ -3,6 +3,7 @@ angular.module(GOLFPRO).config(['$routeProvider', function($routeProvider) {
 }]);
 angular.module(GOLFPRO).controller('adminController', [
 	'$scope',
+	'$rootScope',
 	'$routeParams',
 	'loginStatusProvider',
 	'eventHandler',
@@ -14,13 +15,15 @@ angular.module(GOLFPRO).controller('adminController', [
 	'logoutService',
 	'userManager',
 	'adminService',
-	'feedbackManager',
-function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, verificationManager, ngDialog, utilities, linkManager, logoutService, userManager, adminService, feedbackManager) {
+function($scope, $rootScope, $routeParams, loginStatusProvider, eventHandler, pageService, verificationManager, ngDialog, utilities, linkManager, logoutService, userManager, adminService) {
 	$scope.closeAlert = function(){ $scope.alert = null; };
 	$scope.verificationRequests = [];
 	$scope.feedbackList = [];
 	/******** SignInButton Block ********/
+	// $scope.IsAdmin = false;
+	// $rootScope.IsAdmin = false;
 	$scope.UserAuthenticated = false;
+	$rootScope.UserAuthenticated = false;
 	$scope.links = [];
 	function SetupUser() {
 		return loginStatusProvider.validateAuthenticationPromise()
@@ -36,8 +39,8 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, v
 			});
 
 			console.log((auth || {}).UserId);
-			$scope.$apply(function() {
-				$scope.UserAuthenticated = true;
+			$rootScope.$apply(function() {
+				$rootScope.UserAuthenticated = true;
 			});
 			adminService.GetCountsPromise().then(function(summary){
 				$scope.$apply(function(){

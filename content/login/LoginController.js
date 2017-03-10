@@ -5,6 +5,7 @@ angular.module(GOLFPRO).config(['$routeProvider', function($routeProvider) {
 }]);
 angular.module(GOLFPRO).controller('loginController', [
 	'$scope',
+	'$rootScope',
 	'$routeParams',
 	'$uibModal',
 	'loginStatusProvider',
@@ -15,11 +16,13 @@ angular.module(GOLFPRO).controller('loginController', [
 	'utilities',
 	'linkManager',
 	'logoutService',
-function($scope, $routeParams, $uibModal, loginStatusProvider, eventHandler, pageService, userManager, ngDialog, utilities, linkManager, logoutService) {
+function($scope, $rootScope, $routeParams, $uibModal, loginStatusProvider, eventHandler, pageService, userManager, ngDialog, utilities, linkManager, logoutService) {
 	$scope.closeAlert = function(){ $scope.alert = null; };
 	/******** SignInButton Block ********/
-	$scope.IsAdmin = false;
+	// $scope.IsAdmin = false;
+	// $rootScope.IsAdmin = false;
 	$scope.UserAuthenticated = false;
+	$rootScope.UserAuthenticated = false;
 	$scope.links = [];
 	function SetupUser() {
 		return loginStatusProvider.validateAuthenticationPromise()
@@ -30,35 +33,35 @@ function($scope, $routeParams, $uibModal, loginStatusProvider, eventHandler, pag
 					cognitoSub: data.sub,
 					email: data['cognito:username']
 				});
-				$scope.email = data['cognito:username'];
+				$rootScope.email = data['cognito:username'];
 			}
 			catch (exception) {}
-			$scope.UserAuthenticated = true;
+			$rootScope.UserAuthenticated = true;
 			return userManager.GetUserIdPromise().then(function(id){
-				$scope.$apply(function(){
-					$scope.UserId = id;
+				$rootScope.$apply(function(){
+					$rootScope.UserId = id;
 				});
 			});
 		})
 		.then(function(){
 			var usernamemetadataPromise = userManager.GetUserDataPromise()
 			.then(function(user){
-				$scope.$apply(function(){
-					$scope.IsAdmin = user.admin;
-					$scope.userProfile = (user.userData || {}).profile;
-					$scope.username = (user.userData || {}).username;
+				$rootScope.$apply(function(){
+					$rootScope.IsAdmin = user.admin;
+					$rootScope.userProfile = (user.userData || {}).profile;
+					$rootScope.username = (user.userData || {}).username;
 					var verifications = (user || {}).Verifications || [];
 					verifications.map(function(verification) {
 						verification.Inverse = verification.Name !== 'HPV' && verification.Name !== 'PrEP';
 						verification.Name = TESTS.find(function(t){ return t.id === verification.Name; }).name;
 					});
-					$scope.verifications = verifications;
+					$rootScope.verifications = verifications;
 				});
 			});
 			var usernameLinkCreationPromise = linkManager.GetNewLinkPromise(null, null)
 			.then(function(link){
-				$scope.$apply(function(){
-					$scope.userLink = {
+				$rootScope.$apply(function(){
+					$rootScope.userLink = {
 						url: WEBSITE_VIEW_URL + link,
 						link: link
 					};
@@ -67,54 +70,9 @@ function($scope, $routeParams, $uibModal, loginStatusProvider, eventHandler, pag
 			return Promise.all([usernamemetadataPromise, usernameLinkCreationPromise]);
 		}).catch(function(f){ console.log(f); });
 	}
-
-	$scope.ShowFeedBackFormClick = function () {
-		var modalInstance = $uibModal.open({
-			templateUrl: 'login/feedbackForm.html',
-			controller: ['$scope', '$uibModalInstance', 'loginStatusProvider', 'feedbackManager', function($scope, $uibModalInstance, loginStatusProvider, feedbackManager) {
-				$scope.form = $scope.$resolve.form;
-				$scope.closeAlert = function(){ $scope.alert = null; };
-				$scope.alert = null;
-				$scope.SubmitFeedbackForm = function () {
-					loginStatusProvider.validateUnauthenticationPromise()
-					.then(function() {
-						feedbackManager.CreateFeedback($scope.form)
-						.then(function() {
-							$scope.$apply(function() {
-								$scope.alert = { type: 'success', msg: 'Feedback Submitted!'};
-							});
-							setTimeout(function() {
-								$scope.$apply(function() { $uibModalInstance.close('closed'); });
-							}, 1000);
-						}, function() {
-							$scope.alert = { type: 'danger', msg: 'Failed to send feedback, please try again.'};
-						});
-					});
-				};
-
-				$scope.DismissFeedbackForm = function () {
-					$uibModalInstance.dismiss('cancel');
-				};
-			}],
-			resolve: {
-				form: function() {
-					return {
-						userAuthenticated: $scope.UserAuthenticated,
-						username: $scope.username,
-						email: $scope.email
-					};
-				}
-			}
-		});
-
-		modalInstance.result.then(function (selectedItem) {
-			$scope.selected = selectedItem;
-		}, function () {
-			console.log('Modal dismissed at: ' + new Date());
-		});
-	};
+	
 	$scope.SignInButtonClick = function() {
-		if($scope.UserAuthenticated) {
+		if($rootScope.UserAuthenticated) {
 			logoutService.Logout()
 			.catch(function(failure) {
 				console.log(failure);
@@ -141,12 +99,6 @@ function($scope, $routeParams, $uibModal, loginStatusProvider, eventHandler, pag
 	$scope.AddVerificationsButtonClick = function(){
 		pageService.NavigateToPage('update');
 	};
-	$scope.AdminButtonClick = function() {
-		pageService.NavigateToPage('admin');
-	};
-	$scope.PublicProfileButtonClick = function() {
-		pageService.NavigateToPage('view/'+$scope.userLink.link);
-	};
 	$scope.SaveProfileButtonClick = function() {
 		userManager.UpdateUserDataPromise({
 			profile: $scope.userProfile,
@@ -161,8 +113,5 @@ function($scope, $routeParams, $uibModal, loginStatusProvider, eventHandler, pag
 				$scope.alert = { type: 'danger', msg: 'Failed to save profile. Please try again.' };
 			});
 		});
-	};
-	$scope.PrivacyButtonClick = function() {
-		pageService.NavigateToPage('policy');
 	};
 }]);

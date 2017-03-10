@@ -17,17 +17,18 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, eventHandler,
 	/******** SignInButton Block ********/
 	$scope.closeAlert = function(){ $scope.alert = null; };
 	$scope.UserAuthenticated = false;
+	$rootScope.UserAuthenticated = false;
 	$scope.links = [];
 	
 	function SetupUser() {
 		return loginStatusProvider.validateAuthenticationPromise()
 		.then(function(authData) {
-			$scope.$apply(function() { $scope.UserAuthenticated = true; });
+			$scope.$apply(function() { $rootScope.UserAuthenticated = true; });
 		}).catch(function(f){ console.log(f); });
 	}
 
 	$scope.SignInButtonClick = function() {
-		if($scope.UserAuthenticated) {
+		if($rootScope.ScopeUserAuthenticated) {
 			logoutService.Logout()
 			.catch(function(failure) {
 				console.log(failure);
@@ -50,8 +51,4 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, eventHandler,
 	SetupUser();
 
 	/******** SignInButton Block ********/
-
-	$scope.ProfileButtonClick = function() {
-		pageService.NavigateToPage('/');
-	};
 }]);

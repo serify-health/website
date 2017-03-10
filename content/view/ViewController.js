@@ -3,6 +3,7 @@ angular.module(GOLFPRO).config(['$routeProvider', function($routeProvider) {
 }]);
 angular.module(GOLFPRO).controller('viewController', [
 	'$scope',
+	'$rootScope',
 	'$routeParams',
 	'loginStatusProvider',
 	'eventHandler',
@@ -12,14 +13,17 @@ angular.module(GOLFPRO).controller('viewController', [
 	'utilities',
 	'linkManager',
 	'logoutService',
-function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, userManager, ngDialog, utilities, linkManager, logoutService) {
+function($scope, $rootScope, $routeParams, loginStatusProvider, eventHandler, pageService, userManager, ngDialog, utilities, linkManager, logoutService) {
 	/******** SignInButton Block ********/
+	// $scope.IsAdmin = false;
+	// $rootScope.IsAdmin = false;
 	$scope.UserAuthenticated = false;
+	$rootScope.UserAuthenticated = false;
 	function SetupUser() {
 		return loginStatusProvider.validateAuthenticationPromise()
 		.then(function() {
-			$scope.$apply(function() {
-				$scope.UserAuthenticated = true;
+			$rootScope.$apply(function() {
+				$rootScope.UserAuthenticated = true;
 			});
 		})
 		.catch(function(error) {
@@ -31,7 +35,7 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
 	}
 
 	$scope.SignInButtonClick = function() {
-		if($scope.UserAuthenticated) {
+		if($rootScope.UserAuthenticated) {
 			logoutService.Logout()
 			.catch(function(failure) {
 				console.log(failure);
@@ -103,10 +107,4 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
 			$scope.error = 'This link is no longer valid.';
 		});
 	});
-	$scope.ProfileButtonClick = function() {
-		pageService.NavigateToPage('/');
-	};
-	$scope.NavIconClick = function() {
-		pageService.NavigateToPage('/');
-	};
 }]);

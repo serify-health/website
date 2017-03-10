@@ -1,50 +1,4 @@
 <div>
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <!-- <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                                    <span class="sr-only">Toggle navigation</span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                </button> -->
-                <a class="navbar-brand navBarIcon" ng-click="ProfileButtonClick()">
-                    <img alt="Serify nav icon" src="image/serify_nav_icon.png" style="height: 34px; width: auto;">
-                </a>
-                <ul class="visible-xs" style="list-style: none;">
-                    <li class="pull-right">
-                        <button id="signInButton" type="button" class="btn btn-warning navbar-btn navbar-right" ng-click="SignInButtonClick()">{{UserAuthenticated ? 'Sign out' : 'Sign in'}}</button>
-                    </li>
-                    <li class="pull-right" ng-show="UserAuthenticated">
-                        <button id="profileButton" type="button" class="btn btn-warning navbar-btn" ng-click="ProfileButtonClick()">Profile</button>
-                    </li>
-                </ul>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <!-- <li><a href="#">Link</a></li>
-                                        <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="#">Action</a></li>
-                                                <li><a href="#">Another action</a></li>
-                                                <li><a href="#">Something else here</a></li>
-                                                <li role="separator" class="divider"></li>
-                                                <li><a href="#">Separated link</a></li>
-                                            </ul>
-                                        </li> -->
-                    <li class="pull-right">
-                        <button type="button" id="signInButton" class="btn btn-warning navbar-btn" ng-click="SignInButtonClick()">{{UserAuthenticated ? 'Sign out' : 'Sign in'}}</button>
-                    </li>
-                    <li class="pull-right" ng-show="UserAuthenticated">
-                        <button id="profileButton" type="button" class="btn btn-warning navbar-btn" ng-click="ProfileButtonClick()">Profile</button>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
     <div class="ui" style="text-align: left;">
         <p><strong>Last Revised: February 15, 2017</strong></p>
         <p>&nbsp;</p>
@@ -132,30 +86,3 @@
     </div>
 
 </div>
-
-<footer class="footer">
-    <div class="footer-container">
-        <div class="footer-right" ng-show="!UserAuthenticated">
-            <a href="https://www.facebook.com/Serify-1820992791522117/"><i class="fa fa-facebook"></i></a>
-            <!-- <a href="https://twitter.com/serifyhealth"><i class="fa fa-twitter"></i></a> -->
-            <!-- uncomment this when the twitter page is ready -->
-        </div>
-        <div class="footer-left">
-            <p class="footer-links">
-                <a ng-click="PrivacyButtonClick()">Privacy Policy</a>
-                <!-- <a href="#">Home</a>
-                ·
-                <a href="#">Blog</a>
-                ·
-                <a href="#">Pricing</a>
-                ·
-                <a href="#">About</a>
-                ·
-                <a href="#">Faq</a>
-                ·
-                <a href="#">Contact</a> -->
-            </p>
-            <p>Serify &copy; 2017</p>
-        </div>
-    </div>
-</footer>
