@@ -1,4 +1,4 @@
-angular.module(GOLFPRO).provider('storageProviderService', function(){
+angular.module(SERIFYAPP).provider('storageProviderService', function(){
 	var StorageProvider = function(id){
 		var storageId = id;
 		return {

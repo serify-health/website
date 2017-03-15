@@ -1,4 +1,4 @@
-angular.module(GOLFPRO).service('logoutService', [
+angular.module(SERIFYAPP).service('logoutService', [
 	'$window',
     'loginStatusProvider',
 	'eventHandler',

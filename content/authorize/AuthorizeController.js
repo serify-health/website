@@ -1,7 +1,7 @@
-angular.module(GOLFPRO).config(['$routeProvider', function($routeProvider) {
+angular.module(SERIFYAPP).config(['$routeProvider', function($routeProvider) {
 	$routeProvider.when('/authorize/:pin?', { templateUrl: 'authorize/authorize.html', controller: 'authorizeController' });
 }]);
-angular.module(GOLFPRO).controller('authorizeController', [
+angular.module(SERIFYAPP).controller('authorizeController', [
 	'$scope',
 	'$routeParams',
 	'loginStatusProvider',

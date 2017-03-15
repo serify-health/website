@@ -1,6 +1,6 @@
 var isMobile = false;
 
-var module = angular.module(GOLFPRO, ['ngRoute', 'ngAnimate', 'ngTouch', 'ngSanitize', 'ngDialog', 'ui.bootstrap']);
+var module = angular.module(SERIFYAPP, ['ngRoute', 'ngAnimate', 'ngTouch', 'ngSanitize', 'ngDialog', 'ui.bootstrap']);
 module.provider('utilities', [function() {
 	var service = {
 		getGuid: function() {
@@ -85,7 +85,7 @@ module.directive('ngEnter', function () {
     };
 });
 
-angular.module(GOLFPRO).controller('navController', [
+angular.module(SERIFYAPP).controller('navController', [
 	'$scope',
 	'$rootScope',
 	'$routeParams',
@@ -246,6 +246,6 @@ function($scope, $rootScope, $routeParams, $location, $uibModal, loginStatusProv
 
 var mainApp = document.getElementsByTagName('body');
 angular.element(mainApp).ready(function() {
-	angular.bootstrap(mainApp, [GOLFPRO], { strictDi: true });
+	angular.bootstrap(mainApp, [SERIFYAPP], { strictDi: true });
 });
 FastClick.attach(document.body);

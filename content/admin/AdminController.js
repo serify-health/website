@@ -1,7 +1,7 @@
-angular.module(GOLFPRO).config(['$routeProvider', function($routeProvider) {
+angular.module(SERIFYAPP).config(['$routeProvider', function($routeProvider) {
 	$routeProvider.when('/admin', { templateUrl: 'admin/admin.html', controller: 'adminController' });
 }]);
-angular.module(GOLFPRO).controller('adminController', [
+angular.module(SERIFYAPP).controller('adminController', [
 	'$scope',
 	'$rootScope',
 	'$routeParams',

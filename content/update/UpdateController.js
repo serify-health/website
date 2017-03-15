@@ -1,7 +1,7 @@
-angular.module(GOLFPRO).config(['$routeProvider', function($routeProvider) {
+angular.module(SERIFYAPP).config(['$routeProvider', function($routeProvider) {
 	$routeProvider.when('/update', { templateUrl: 'update/update.html', controller: 'updateController' });
 }]);
-angular.module(GOLFPRO).controller('updateController', [
+angular.module(SERIFYAPP).controller('updateController', [
 	'$scope',
 	'$rootScope',
 	'$anchorScroll',

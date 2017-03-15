@@ -1,4 +1,4 @@
-angular.module(GOLFPRO).provider('loginStatusProvider', [function() {
+angular.module(SERIFYAPP).provider('loginStatusProvider', [function() {
 	var GOOGLEPLUS_AUTH_INFO = {
 		//scopes: 'profile email',
 		//webClientId: '942710094206-sjnk1ita1794lv0pqebt02u2r18lq5k8.apps.googleusercontent.com'

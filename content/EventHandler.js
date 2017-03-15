@@ -1,4 +1,4 @@
-angular.module(GOLFPRO).provider('eventHandler', ['apiServiceProvider', 'pageServiceProvider', 'utilitiesProvider', 'storageProviderServiceProvider',
+angular.module(SERIFYAPP).provider('eventHandler', ['apiServiceProvider', 'pageServiceProvider', 'utilitiesProvider', 'storageProviderServiceProvider',
 		function(apiServiceProvider, pageServiceProvider, utilitiesProvider, storageProviderServiceProvider) {
 	var isMobile = window.cordova && window.cordova.platformId !== 'browser';
 	var getLogObjectPromise = function(eventType, information) {

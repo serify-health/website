@@ -1,7 +1,7 @@
-angular.module(GOLFPRO).config(['$routeProvider', function($routeProvider) {
+angular.module(SERIFYAPP).config(['$routeProvider', function($routeProvider) {
 	$routeProvider.when('/view/:base64hash?', { templateUrl: 'view/view.html', controller: 'viewController' });
 }]);
-angular.module(GOLFPRO).controller('viewController', [
+angular.module(SERIFYAPP).controller('viewController', [
 	'$scope',
 	'$rootScope',
 	'$routeParams',

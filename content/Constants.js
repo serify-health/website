@@ -7,8 +7,8 @@ var AWS_REGION = 'us-east-1';
 var IDENTITY_POOL_ID = 'us-east-1:f4734f5b-60cc-4d70-9377-a935fc69d2ef';
 /* exported FACEBOOK_APP_ID */
 //var FACEBOOK_APP_ID = '1141557832563745';
-/* exported GOLFPRO */
-var GOLFPRO = 'MainApp';
+/* exported SERIFYAPP */
+var SERIFYAPP = 'MainApp';
 /* exported USER_POOL_ID */
 var USER_POOL_ID = 'us-east-1_iZyQwO6Ai';
 /* exported POOL_DATA */

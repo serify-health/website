@@ -1,4 +1,4 @@
-angular.module(GOLFPRO).service('userManager', [ 'apiService', 'loginStatusProvider', function(apiService, loginStatusProvider) {
+angular.module(SERIFYAPP).service('userManager', [ 'apiService', 'loginStatusProvider', function(apiService, loginStatusProvider) {
 	this.UserId = null;
 	this.GetUserIdPromise = function() {
 		if(this.UserId) { return Promise.resolve(this.UserId); }

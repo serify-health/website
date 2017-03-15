@@ -1,4 +1,4 @@
-angular.module(GOLFPRO).controller('authSigninController', [
+angular.module(SERIFYAPP).controller('authSigninController', [
 	'$scope',
 	'$routeParams',
 	'loginStatusProvider',
