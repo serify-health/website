@@ -78,7 +78,7 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, v
 				});
 			});
 		});
-	};
+	}
 
 	/******** SignInButton Block ********/
 
