@@ -1,15 +1,19 @@
 angular.module(SERIFYAPP).service('logoutService', [
 	'$window',
+    '$rootScope',
     'loginStatusProvider',
 	'eventHandler',
 	'pageService',
 	'storageProviderService',
 	'utilities',
-function($window, loginStatusProvider, eventHandler, pageService, storageProviderService, utilities) {
+function($window, $rootScope, loginStatusProvider, eventHandler, pageService, storageProviderService, utilities) {
     var storageProvider = storageProviderService.GetStorageProvider('credentials');
     this.Logout = function() {
         loginStatusProvider.logoutPromise()
         .then(function() {
+            $rootScope.$apply(function() {
+                $rootScope.authentication = {};
+            });
             storageProvider.Delete('forgotPassword');
             storageProvider.Delete('username');
             storageProvider.Delete('password');

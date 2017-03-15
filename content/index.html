@@ -44,7 +44,7 @@
 	</head>
 	<body style="height:100%">
 		<nav class="navbar navbar-default" ng-controller="navController">
-	        <div class="container-fluid">
+	        <div ng-cloak class="container-fluid">
 	            <!-- Brand and toggle get grouped for better mobile display -->
 	            <div class="navbar-header custom-navbar">
 	                <a class="navbar-brand navBarIcon" ng-click="ProfileButtonClick()">
@@ -52,15 +52,15 @@
 	                </a>
 	                <ul class="visible-xs" style="list-style: none;">
 	                    <li class="pull-right">
-	                        <button id="signInButton" type="button" class="btn btn-warning navbar-btn navbar-right" ng-click="SignInButtonClick()">{{$root.UserAuthenticated ? 'Sign out' : 'Sign in'}}</button>
+	                        <button ng-cloak id="signInButton" type="button" class="btn btn-warning navbar-btn navbar-right" ng-click="SignInButtonClick()">{{authentication.UserAuthenticated ? 'Sign out' : 'Sign in'}}</button>
 	                    </li>
-	                    <li ng-show="$root.IsAdmin && $root.UserAuthenticated && !isActive('/admin')" class="pull-right">
+	                    <li ng-show="authentication.IsAdmin && authentication.UserAuthenticated && !isActive('/admin')" class="pull-right">
 	                        <button id="adminButton" type="button" class="btn btn-warning navbar-btn" ng-click="AdminButtonClick()">Admin</button>
 	                    </li>
 	                    <li class="pull-right" ng-hide="isActive('/')">
 	                        <button id="profileButton" type="button" class="btn btn-warning navbar-btn" ng-click="ProfileButtonClick()">Profile</button>
 	                    </li>
-	                    <li ng-show="$root.UserAuthenticated && isActive('/')" class="pull-right">
+	                    <li ng-show="authentication.UserAuthenticated && isActive('/')" class="pull-right">
 	                        <button id="publicProfileButton" type="button" class="btn btn-info navbar-btn" ng-click="PublicProfileButtonClick()">Public Profile</button>
 	                    </li>
 	                </ul>
@@ -69,15 +69,15 @@
 	            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	                <ul class="nav navbar-nav navbar-right">
 	                    <li class="pull-right">
-	                        <button id="signInButton" type="button" class="btn btn-warning navbar-btn" ng-click="SignInButtonClick()">{{$root.UserAuthenticated ? 'Sign out' : 'Sign in'}}</button>
+	                        <button ng-cloak id="signInButton" type="button" class="btn btn-warning navbar-btn" ng-click="SignInButtonClick()">{{authentication.UserAuthenticated ? 'Sign out' : 'Sign in'}}</button>
 	                    </li>
-	                    <li ng-show="$root.IsAdmin && $root.UserAuthenticated && !isActive('/admin')" class="pull-right">
+	                    <li ng-show="authentication.IsAdmin && authentication.UserAuthenticated && !isActive('/admin')" class="pull-right">
 	                        <button id="adminButton" type="button" class="btn btn-warning navbar-btn" ng-click="AdminButtonClick()">Admin</button>
 	                    </li>
 	                    <li class="pull-right" ng-hide="isActive('/')">
 	                        <button id="profileButton" type="button" class="btn btn-warning navbar-btn" ng-click="ProfileButtonClick()">Profile</button>
 	                    </li>
-	                    <li ng-show="$root.UserAuthenticated && isActive('/')" class="pull-right">
+	                    <li ng-show="authentication.UserAuthenticated && isActive('/')" class="pull-right">
 	                        <button id="publicProfileButton" type="button" class="btn btn-info navbar-btn" ng-click="PublicProfileButtonClick()">Public Profile</button>
 	                    </li>
 	                </ul>
@@ -92,7 +92,7 @@
 
 		<footer class="footer" ng-controller="navController">
 		    <div class="footer-container">
-		        <div class="footer-right" ng-show="!$root.UserAuthenticated">
+		        <div class="footer-right">
 		            <a href="https://www.facebook.com/Serify-1820992791522117/"><i class="fa fa-facebook"></i></a>
 		            <!-- <a href="https://twitter.com/serifyhealth"><i class="fa fa-twitter"></i></a> -->
 		            <!-- uncomment this when the twitter page is ready -->
@@ -167,5 +167,6 @@
 		<script type="text/javascript" src="update/UpdateController.js" defer></script>
 		<script type="text/javascript" src="admin/AdminController.js" defer></script>
 		<script type="text/javascript" src="policy/PolicyController.js" defer></script>
+		<script type="text/javascript" src="feedback/FeedbackController.js" defer></script>
 	</body>
 </html>

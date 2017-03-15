@@ -67,5 +67,5 @@ angular.module(SERIFYAPP).provider('pageService', [function(){
 			}
 		}
 	};
-	this.$get = function() { return service; };
+	this.$get = function(){ return service; };
 }]);

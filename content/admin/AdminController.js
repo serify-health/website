@@ -3,7 +3,6 @@ angular.module(SERIFYAPP).config(['$routeProvider', function($routeProvider) {
 }]);
 angular.module(SERIFYAPP).controller('adminController', [
 	'$scope',
-	'$rootScope',
 	'$routeParams',
 	'loginStatusProvider',
 	'eventHandler',
@@ -15,123 +14,71 @@ angular.module(SERIFYAPP).controller('adminController', [
 	'logoutService',
 	'userManager',
 	'adminService',
-function($scope, $rootScope, $routeParams, loginStatusProvider, eventHandler, pageService, verificationManager, ngDialog, utilities, linkManager, logoutService, userManager, adminService) {
+	'feedbackManager',
+function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, verificationManager, ngDialog, utilities, linkManager, logoutService, userManager, adminService, feedbackManager) {
 	$scope.closeAlert = function(){ $scope.alert = null; };
 	$scope.verificationRequests = [];
 	$scope.feedbackList = [];
 	/******** SignInButton Block ********/
-	// $scope.IsAdmin = false;
-	// $rootScope.IsAdmin = false;
-	$scope.UserAuthenticated = false;
-	$rootScope.UserAuthenticated = false;
 	$scope.links = [];
+	$scope.$watch('authentication.complete', SetupUser, true);
 	function SetupUser() {
-		return loginStatusProvider.validateAuthenticationPromise()
-		.then(function(auth) {
-			userManager.GetUserDataPromise()
-			.then(function(user){
-				$scope.$apply(function(){
-					if(!user.admin) {
-						pageService.NavigateToPage('/');
-						return;
-					}
-				});
-			});
-
-			console.log((auth || {}).UserId);
-			$rootScope.$apply(function() {
-				$rootScope.UserAuthenticated = true;
-			});
-			adminService.GetCountsPromise().then(function(summary){
-				$scope.$apply(function(){
-					$scope.userCount = summary.userCount;
-					$scope.requestCount = summary.requestCount;
-				});
-			}, function(){
-				$scope.userCount = '?';
-				$scope.requestCount = '?';
-			});
-			verificationManager.GetVerifications()
-			.then(function(verificationRequests) {
-				$scope.$apply(function() {
-					$scope.verificationRequests = verificationRequests.map(function(r){
-						return {
-							status: r.Status,
-							userId: r.UserId,
-							time: r.Time,
-							name: (r.Info || r.info).user.name,
-							email: (r.userIdentity || {}).email,
-							dob: (r.Info || r.info).user.dob,
-							clinic: (r.Info || r.info).user.clinicName,
-							address: (r.Info || r.info).user.clinicInfo,
-							signature: (r.Info || r.info).user.signature,
-							verifications: (r.Info || r.info).verifications.map(function(v){
-								return {
-									name: v.Name,
-									date: v.Date,
-									id: v.Id,
-									status: v.Status,
-									checked: false
-								};
-							})
-						};
-					});
-				});
-			});
-			feedbackManager.GetFeedback()
-			.then(function(data) {
-				$scope.$apply(function() {
-					$scope.feedbackList = data.feedbackList.map(function(item){
-						return {
-							timeString: new Date(item.time).toLocaleString(),
-							time: new Date(item.time),
-							body: item.information.feedbackBody,
-							subject: item.information.feedbackSubject,
-							email: item.information.email,
-							username: item.information.username
-						};
-					});
-				});
-			});
-		});
-	}
-
-	$scope.SignInButtonClick = function() {
-		if($scope.UserAuthenticated) {
-			logoutService.Logout()
-			.catch(function(failure) {
-				console.log(failure);
-				$scope.$apply(function(){
-					$scope.alert = { type: 'danger', msg: 'Failed to log out' };
-				});
-			});
+		if(!$scope.authentication.IsAdmin) {
+			pageService.NavigateToPage('/');
 			return;
 		}
-		ngDialog.open({
-			closeByNavigation: true,
-			width: 320,
-			template: 'login/signup.html',
-			controller: 'signinController',
-			className: 'ngdialog-theme-default'
-		}).closePromise.then(function(){
-			return SetupUser();
+		adminService.GetCountsPromise().then(function(summary){
+			$scope.$apply(function(){
+				$scope.userCount = summary.userCount;
+				$scope.requestCount = summary.requestCount;
+			});
+		}, function(){
+			$scope.userCount = '?';
+			$scope.requestCount = '?';
+		});
+		verificationManager.GetVerifications()
+		.then(function(verificationRequests) {
+			$scope.$apply(function() {
+				$scope.verificationRequests = verificationRequests.map(function(r){
+					return {
+						status: r.Status,
+						userId: r.UserId,
+						time: r.Time,
+						name: (r.Info || r.info).user.name,
+						email: (r.userIdentity || {}).email,
+						dob: (r.Info || r.info).user.dob,
+						clinic: (r.Info || r.info).user.clinicName,
+						address: (r.Info || r.info).user.clinicInfo,
+						signature: (r.Info || r.info).user.signature,
+						verifications: (r.Info || r.info).verifications.map(function(v){
+							return {
+								name: v.Name,
+								date: v.Date,
+								id: v.Id,
+								status: v.Status,
+								checked: false
+							};
+						})
+					};
+				});
+			});
+		});
+		feedbackManager.GetFeedback()
+		.then(function(data) {
+			$scope.$apply(function() {
+				$scope.feedbackList = data.feedbackList.map(function(item){
+					return {
+						timeString: new Date(item.time).toLocaleString(),
+						time: new Date(item.time),
+						body: item.information.feedbackBody,
+						subject: item.information.feedbackSubject,
+						email: item.information.email,
+						username: item.information.username
+					};
+				});
+			});
 		});
 	};
-
-	loginStatusProvider.validateAuthenticationPromise()
-	.then(function() {
-		return SetupUser();
-	}, function(notLoggedIn){
-		ngDialog.open({
-			closeByNavigation: true,
-			width: 320,
-			template: 'login/signup.html',
-			controller: 'signinController',
-			className: 'ngdialog-theme-default'
-		}).closePromise.then(function(){
-			return SetupUser();
-		});
-	});
 
 	/******** SignInButton Block ********/
 

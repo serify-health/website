@@ -37,6 +37,8 @@ module.factory('$exceptionHandler', ['$log', 'eventHandler', function($log, even
 module.run(['$rootScope', '$window', '$location', '$animate', 'eventHandler', 'pageService', 'loginStatusProvider',
 	function($rootScope, $window, $location, $animate, eventHandler, pageService, loginStatusProvider) {
 	$rootScope.GoBackClick = pageService.GoBackPage;
+	$rootScope.authentication = {};
+	$rootScope.closeAlert = function(){ $rootScope.alert = null; };
 	$window.handleOpenURL = pageService.OpenUrl;
 	document.addEventListener("backbutton", function(e) { pageService.GoBackPage(); }, false);
 	document.addEventListener("resume", function(e){
@@ -100,18 +102,14 @@ angular.module(SERIFYAPP).controller('navController', [
 	'linkManager',
 	'logoutService',
 function($scope, $rootScope, $routeParams, $location, $uibModal, loginStatusProvider, eventHandler, pageService, userManager, ngDialog, utilities, linkManager, logoutService) {
-	$scope.closeAlert = function(){ $scope.alert = null; };
-
 	// Check current location
 	$scope.isActive = function(viewLocation) {
-    	return viewLocation === $location.path();
+		return viewLocation === pageService.GetCurrentPage();
 	};
 
 	/******** SignInButton Block ********/
-	$scope.IsAdmin = false;
-	$rootScope.IsAdmin = false;
-	$scope.UserAuthenticated = false;
-	$rootScope.UserAuthenticated = false;
+	$rootScope.authentication.IsAdmin = false;
+	$rootScope.authentication.UserAuthenticated = false;
 	$scope.links = [];
 	function SetupUser() {
 		return loginStatusProvider.validateAuthenticationPromise()
@@ -122,78 +120,42 @@ function($scope, $rootScope, $routeParams, $location, $uibModal, loginStatusProv
 					cognitoSub: data.sub,
 					email: data['cognito:username']
 				});
-				$rootScope.email = data['cognito:username'];
+				$rootScope.$apply(function(){
+					$rootScope.authentication.email = data['cognito:username'];
+				});
 			}
 			catch (exception) {}
-			$rootScope.UserAuthenticated = true;
-			return userManager.GetUserIdPromise().then(function(id){
+			$rootScope.$apply(function(){
+				$rootScope.authentication.UserAuthenticated = true;
+			});
+		})
+		.then(function(){
+			return userManager.GetUserDataPromise()
+			.then(function(user){
 				$rootScope.$apply(function(){
-					$rootScope.UserId = id;
+					$rootScope.authentication.IsAdmin = user.admin;
+					$rootScope.authentication.username = (user.userData || {}).username;
 				});
 			});
 		})
 		.then(function(){
-			var usernamemetadataPromise = userManager.GetUserDataPromise()
-			.then(function(user){
-				$rootScope.$apply(function(){
-					$rootScope.IsAdmin = user.admin;
-					$rootScope.userProfile = (user.userData || {}).profile;
-					$rootScope.username = (user.userData || {}).username;
-					var verifications = (user || {}).Verifications || [];
-					verifications.map(function(verification) {
-						verification.Inverse = verification.Name !== 'HPV' && verification.Name !== 'PrEP';
-						verification.Name = TESTS.find(function(t){ return t.id === verification.Name; }).name;
-					});
-					$rootScope.verifications = verifications;
-				});
+			$rootScope.$apply(function(){
+				$rootScope.authentication.complete = true;
 			});
-			var usernameLinkCreationPromise = linkManager.GetNewLinkPromise(null, null)
-			.then(function(link){
-				$rootScope.$apply(function(){
-					$rootScope.userLink = {
-						url: WEBSITE_VIEW_URL + link,
-						link: link
-					};
-				});
-			});
-			return Promise.all([usernamemetadataPromise, usernameLinkCreationPromise]);
-		}).catch(function(f){ console.log(f); });
+		})
+		.catch(function(f){ console.log(f); });
 	}
 
 	$scope.ShowFeedBackFormClick = function () {
 		var modalInstance = $uibModal.open({
-			templateUrl: 'login/feedbackForm.html',
-			controller: ['$scope', '$uibModalInstance', 'loginStatusProvider', 'feedbackManager', function($scope, $uibModalInstance, loginStatusProvider, feedbackManager) {
-				$scope.form = $scope.$resolve.form;
-				$scope.closeAlert = function(){ $scope.alert = null; };
-				$scope.alert = null;
-				$scope.SubmitFeedbackForm = function () {
-					loginStatusProvider.validateUnauthenticationPromise()
-					.then(function() {
-						feedbackManager.CreateFeedback($scope.form)
-						.then(function() {
-							$scope.$apply(function() {
-								$scope.alert = { type: 'success', msg: 'Feedback Submitted!'};
-							});
-							setTimeout(function() {
-								$scope.$apply(function() { $uibModalInstance.close('closed'); });
-							}, 1000);
-						}, function() {
-							$scope.alert = { type: 'danger', msg: 'Failed to send feedback, please try again.'};
-						});
-					});
-				};
-
-				$scope.DismissFeedbackForm = function () {
-					$uibModalInstance.dismiss('cancel');
-				};
-			}],
+			templateUrl: 'feedback/feedbackForm.html',
+			controller: 'feedbackController',
 			resolve: {
 				form: function() {
 					return {
-						userAuthenticated: $rootScope.UserAuthenticated,
-						username: $scope.username,
-						email: $scope.email
+						userAuthenticated: $rootScope.authentication.UserAuthenticated,
+						username: $rootScope.authentication.username,
+						email: $rootScope.authentication.email
 					};
 				}
 			}
@@ -205,13 +167,13 @@ function($scope, $rootScope, $routeParams, $location, $uibModal, loginStatusProv
 			console.log('Modal dismissed at: ' + new Date());
 		});
 	};
-	$scope.SignInButtonClick = function() {
-		if($rootScope.UserAuthenticated) {
+	$rootScope.SignInButtonClick = function() {
+		if($rootScope.authentication.UserAuthenticated) {
 			logoutService.Logout()
 			.catch(function(failure) {
 				console.log(failure);
-				$scope.$apply(function(){
-					$scope.alert = { type: 'danger', msg: 'Failed to log out.' };
+				$rootScope.$apply(function(){
+					$rootScope.alert = { type: 'danger', msg: 'Failed to log out.' };
 				});
 			});
 			return;
@@ -226,6 +188,7 @@ function($scope, $rootScope, $routeParams, $location, $uibModal, loginStatusProv
 			return SetupUser();
 		});
 	};
+
 	SetupUser();
 
 	/******** SignInButton Block ********/
@@ -237,7 +200,10 @@ function($scope, $rootScope, $routeParams, $location, $uibModal, loginStatusProv
 		pageService.NavigateToPage('/');
 	};
 	$scope.PublicProfileButtonClick = function() {
-		pageService.NavigateToPage('view/'+$scope.userLink.link);
+		var usernameLinkCreationPromise = linkManager.GetNewLinkPromise(null, null)
+		.then(function(link){
+			pageService.NavigateToPage('view/' + link);
+		});
 	};
 	$scope.PrivacyButtonClick = function() {
 		pageService.NavigateToPage('policy');

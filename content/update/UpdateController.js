@@ -3,7 +3,6 @@ angular.module(SERIFYAPP).config(['$routeProvider', function($routeProvider) {
 }]);
 angular.module(SERIFYAPP).controller('updateController', [
 	'$scope',
-	'$rootScope',
 	'$anchorScroll',
 	'$routeParams',
 	'loginStatusProvider',
@@ -14,23 +13,10 @@ angular.module(SERIFYAPP).controller('updateController', [
 	'utilities',
 	'linkManager',
 	'logoutService',
-function($scope, $rootScope, $anchorScroll, $routeParams, loginStatusProvider, eventHandler, pageService, userManager, ngDialog, utilities, linkManager, logoutService) {
+function($scope, $anchorScroll, $routeParams, loginStatusProvider, eventHandler, pageService, userManager, ngDialog, utilities, linkManager, logoutService) {
 	/******** SignInButton Block ********/
 	$scope.closeAlert = function(){ $scope.alert = null; };
-	
-	$scope.IsAdmin = false;
-	$rootScope.IsAdmin = false;
-	$scope.UserAuthenticated = false;
-	$rootScope.UserAuthenticated = false;
 	$scope.links = [];
-	function SetupUser() {
-		return loginStatusProvider.validateAuthenticationPromise()
-		.then(function() {
-			$rootScope.UserAuthenticated = true;
-		}, function(notLoggedIn){
-			pageService.NavigateToPage('/');
-		});
-	}
 	$scope.tests = TESTS;
 	var currentYear = new Date().getFullYear();
 	$scope.years = Array.apply(null, {length:100}).map(Number.call, Number).map(function(i) { return currentYear - i - 13; });
@@ -41,28 +27,6 @@ function($scope, $rootScope, $anchorScroll, $routeParams, loginStatusProvider, e
 	$scope.selectedDobDay = null;
 	$scope.verificationMonths = Array.apply(null, {length:12}).map(Number.call, Number).map(function(i) { return i + 1; });
 	$scope.verificationYears = [0, 1, 2, 3, 4, 5].map(function(i) { return currentYear - i; });
-	$scope.SignInButtonClick = function() {
-		if($rootScope.UserAuthenticated) {
-			logoutService.Logout()
-			.catch(function(failure) {
-				console.log(failure);
-				$scope.$apply(function(){
-					$scope.alert = { type: 'danger', msg: 'Failed to log out' };
-				});
-			});
-			return;
-		}
-		ngDialog.open({
-			closeByNavigation: true,
-			width: 320,
-			template: 'login/signup.html',
-			controller: 'signinController',
-			className: 'ngdialog-theme-default'
-		}).closePromise.then(function(){
-			return SetupUser();
-		});
-	};
-	SetupUser();
 
 	/******** SignInButton Block ********/
 	$scope.verifications = [];
@@ -105,7 +69,7 @@ function($scope, $rootScope, $anchorScroll, $routeParams, loginStatusProvider, e
 			$anchorScroll();
 			return;
 		}
-		if(!$rootScope.UserAuthenticated) {
+		if(!$scope.authentication.UserAuthenticated) {
 			$scope.alert = { type: 'danger', msg: 'Create account to get your test results verified.' };
 			$anchorScroll();
 			return;
