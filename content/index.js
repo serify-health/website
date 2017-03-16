@@ -1,6 +1,6 @@
 var isMobile = false;
 
-var module = angular.module(GOLFPRO, ['ngRoute', 'ngAnimate', 'ngTouch', 'ngSanitize', 'ngDialog', 'ui.bootstrap']);
+var module = angular.module(SERIFYAPP, ['ngRoute', 'ngAnimate', 'ngTouch', 'ngSanitize', 'ngDialog', 'ui.bootstrap']);
 module.provider('utilities', [function() {
 	var service = {
 		getGuid: function() {
@@ -37,6 +37,8 @@ module.factory('$exceptionHandler', ['$log', 'eventHandler', function($log, even
 module.run(['$rootScope', '$window', '$location', '$animate', 'eventHandler', 'pageService', 'loginStatusProvider',
 	function($rootScope, $window, $location, $animate, eventHandler, pageService, loginStatusProvider) {
 	$rootScope.GoBackClick = pageService.GoBackPage;
+	$rootScope.authentication = {};
+	$rootScope.closeAlert = function(){ $rootScope.alert = null; };
 	$window.handleOpenURL = pageService.OpenUrl;
 	document.addEventListener("backbutton", function(e) { pageService.GoBackPage(); }, false);
 	document.addEventListener("resume", function(e){
@@ -85,8 +87,131 @@ module.directive('ngEnter', function () {
     };
 });
 
+angular.module(SERIFYAPP).controller('navController', [
+	'$scope',
+	'$rootScope',
+	'$routeParams',
+	'$location',
+	'$uibModal',
+	'loginStatusProvider',
+	'eventHandler',
+	'pageService',
+	'userManager',
+	'ngDialog',
+	'utilities',
+	'linkManager',
+	'logoutService',
+function($scope, $rootScope, $routeParams, $location, $uibModal, loginStatusProvider, eventHandler, pageService, userManager, ngDialog, utilities, linkManager, logoutService) {
+	// Check current location
+	$scope.isActive = function(viewLocation) {
+		return viewLocation === pageService.GetCurrentPage();
+	};
+
+	/******** SignInButton Block ********/
+	$rootScope.authentication.IsAdmin = false;
+	$rootScope.authentication.UserAuthenticated = false;
+	$scope.links = [];
+	function SetupUser() {
+		return loginStatusProvider.validateAuthenticationPromise()
+		.then(function(authData) {
+			try {
+				var data = JSON.parse(atob(authData.UserId.split('.')[1]));
+				userManager.CaptureUserIdentity({
+					cognitoSub: data.sub,
+					email: data['cognito:username']
+				});
+				$rootScope.$apply(function(){
+					$rootScope.authentication.email = data['cognito:username'];
+				});
+			}
+			catch (exception) {}
+			$rootScope.$apply(function(){
+				$rootScope.authentication.UserAuthenticated = true;
+			});
+		})
+		.then(function(){
+			return userManager.GetUserDataPromise()
+			.then(function(user){
+				$rootScope.$apply(function(){
+					$rootScope.authentication.IsAdmin = user.admin;
+					$rootScope.authentication.username = (user.userData || {}).username;
+				});
+			});
+		})
+		.then(function(){
+			$rootScope.$apply(function(){
+				$rootScope.authentication.complete = true;
+			});
+		})
+		.catch(function(f){ console.log(f); });
+	}
+
+	$scope.ShowFeedBackFormClick = function () {
+		var modalInstance = $uibModal.open({
+			templateUrl: 'feedback/feedbackForm.html',
+			controller: 'feedbackController',
+			resolve: {
+				form: function() {
+					return {
+						userAuthenticated: $rootScope.authentication.UserAuthenticated,
+						username: $rootScope.authentication.username,
+						email: $rootScope.authentication.email
+					};
+				}
+			}
+		});
+
+		modalInstance.result.then(function (selectedItem) {
+			$scope.selected = selectedItem;
+		}, function () {
+			console.log('Modal dismissed at: ' + new Date());
+		});
+	};
+	$rootScope.SignInButtonClick = function() {
+		if($rootScope.authentication.UserAuthenticated) {
+			logoutService.Logout()
+			.catch(function(failure) {
+				console.log(failure);
+				$rootScope.$apply(function(){
+					$rootScope.alert = { type: 'danger', msg: 'Failed to log out.' };
+				});
+			});
+			return;
+		}
+		ngDialog.open({
+			closeByNavigation: true,
+			width: 320,
+			template: 'login/signup.html',
+			controller: 'signinController',
+			className: 'ngdialog-theme-default'
+		}).closePromise.then(function(){
+			return SetupUser();
+		});
+	};
+
+	SetupUser();
+
+	/******** SignInButton Block ********/
+	
+	$scope.AdminButtonClick = function() {
+		pageService.NavigateToPage('admin');
+	};
+	$scope.ProfileButtonClick = function() {
+		pageService.NavigateToPage('/');
+	};
+	$scope.PublicProfileButtonClick = function() {
+		var usernameLinkCreationPromise = linkManager.GetNewLinkPromise(null, null)
+		.then(function(link){
+			pageService.NavigateToPage('view/' + link);
+		});
+	};
+	$scope.PrivacyButtonClick = function() {
+		pageService.NavigateToPage('policy');
+	};
+}]);
+
 var mainApp = document.getElementsByTagName('body');
 angular.element(mainApp).ready(function() {
-	angular.bootstrap(mainApp, [GOLFPRO], { strictDi: true });
+	angular.bootstrap(mainApp, [SERIFYAPP], { strictDi: true });
 });
 FastClick.attach(document.body);

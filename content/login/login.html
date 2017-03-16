@@ -1,58 +1,6 @@
 <div class="loginScreen">
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header custom-navbar">
-                <!-- <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-				          <span class="sr-only">Toggle navigation</span>
-				          <span class="icon-bar"></span>
-				          <span class="icon-bar"></span>
-				          <span class="icon-bar"></span>
-				        </button> -->
-                <a class="navbar-brand navBarIcon">
-                    <img alt="Serify nav icon" src="image/serify_nav_icon.png" style="height: 34px; width: auto;">
-                </a>
-                <ul class="visible-xs" style="list-style: none;">
-                    <li class="pull-right">
-                        <button id="signInButton" type="button" class="btn btn-warning navbar-btn navbar-right" ng-click="SignInButtonClick()">{{UserAuthenticated ? 'Sign out' : 'Sign in'}}</button>
-                    </li>
-                    <li ng-show="IsAdmin && UserAuthenticated" class="pull-right">
-                        <button id="adminButton" type="button" class="btn btn-warning navbar-btn" ng-click="AdminButtonClick()">Admin</button>
-                    </li>
-                    <li ng-show="UserAuthenticated" class="pull-right">
-                        <button id="publicProfileButton" type="button" class="btn btn-info navbar-btn" ng-click="PublicProfileButtonClick()">Public Profile</button>
-                    </li>
-                </ul>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <!-- <li><a href="#">Link</a></li>
-					          <li class="dropdown">
-					            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-					            <ul class="dropdown-menu">
-					              <li><a href="#">Action</a></li>
-					              <li><a href="#">Another action</a></li>
-					              <li><a href="#">Something else here</a></li>
-					              <li role="separator" class="divider"></li>
-					              <li><a href="#">Separated link</a></li>
-					            </ul>
-					          </li> -->
-                    <li class="pull-right">
-                        <button id="signInButton" type="button" class="btn btn-warning navbar-btn" ng-click="SignInButtonClick()">{{UserAuthenticated ? 'Sign out' : 'Sign in'}}</button>
-                    </li>
-                    <li ng-show="IsAdmin && UserAuthenticated" class="pull-right">
-                        <button id="adminButton" type="button" class="btn btn-warning navbar-btn" ng-click="AdminButtonClick()">Admin</button>
-                    </li>
-                    <li ng-show="UserAuthenticated" class="pull-right">
-                        <button id="publicProfileButton" type="button" class="btn btn-info navbar-btn" ng-click="PublicProfileButtonClick()">Public Profile</button>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
     <div ng-show="alert" style="text-align: center" uib-alert ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert()" dismiss-on-timeout="5000">{{alert.msg}}</div>
-    <div ng-show="UserAuthenticated" class="ui ng-fade">
+    <div ng-show="authentication.UserAuthenticated" class="ui ng-fade">
         <div style="text-align:center;">
             <form class="form-inline">
                 <div class="input-group col-xs-12 mb-2 mr-sm-2 mb-sm-0">
@@ -120,7 +68,7 @@
             </div>
         </div>
     </div>
-    <div ng-show="!UserAuthenticated" class="ng-fade">
+    <div ng-show="!authentication.UserAuthenticated" class="ng-fade">
         <div class="header">
             <img id="headerIcon" src="image/serify_icon.png" alt="Serify icon">
             <h1 id="headerTitle">Serify</h1>
@@ -152,20 +100,3 @@
         </div>
     </div>
 </div>
-<footer class="footer">
-    <div class="footer-container">
-        <div class="footer-right" ng-show="!UserAuthenticated">
-            <a href="https://www.facebook.com/Serify-1820992791522117/"><i class="fa fa-facebook"></i></a>
-            <!-- <a href="https://twitter.com/serifyhealth"><i class="fa fa-twitter"></i></a> -->
-            <!-- uncomment this when the twitter page is ready -->
-        </div>
-        <div class="footer-left">
-            <p class="footer-links">
-                <a ng-click="ShowFeedBackFormClick()">Contact Us</a>
-                ·
-                <a ng-click="PrivacyButtonClick()">Privacy Policy</a>
-            </p>
-            <p>Serify &copy; 2017</p>
-        </div>
-    </div>
-</footer>

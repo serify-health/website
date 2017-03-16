@@ -43,10 +43,70 @@
 		<link rel="stylesheet" href="spinner.css">
 	</head>
 	<body style="height:100%">
-		<div id="main" style="height:100%">
-			<div ng-view="" style="height:100%">
+		<nav class="navbar navbar-default" ng-controller="navController">
+	        <div ng-cloak class="container-fluid">
+	            <!-- Brand and toggle get grouped for better mobile display -->
+	            <div class="navbar-header custom-navbar">
+	                <a class="navbar-brand navBarIcon" ng-click="ProfileButtonClick()">
+	                    <img alt="Serify nav icon" src="image/serify_nav_icon.png" style="height: 34px; width: auto;">
+	                </a>
+	                <ul class="visible-xs" style="list-style: none;">
+	                    <li class="pull-right">
+	                        <button ng-cloak id="signInButton" type="button" class="btn btn-warning navbar-btn navbar-right" ng-click="SignInButtonClick()">{{authentication.UserAuthenticated ? 'Sign out' : 'Sign in'}}</button>
+	                    </li>
+	                    <li ng-show="authentication.IsAdmin && authentication.UserAuthenticated && !isActive('/admin')" class="pull-right">
+	                        <button id="adminButton" type="button" class="btn btn-warning navbar-btn" ng-click="AdminButtonClick()">Admin</button>
+	                    </li>
+	                    <li class="pull-right" ng-hide="isActive('/')">
+	                        <button id="profileButton" type="button" class="btn btn-warning navbar-btn" ng-click="ProfileButtonClick()">Profile</button>
+	                    </li>
+	                    <li ng-show="authentication.UserAuthenticated && isActive('/')" class="pull-right">
+	                        <button id="publicProfileButton" type="button" class="btn btn-info navbar-btn" ng-click="PublicProfileButtonClick()">Public Profile</button>
+	                    </li>
+	                </ul>
+	            </div>
+	            <!-- Collect the nav links, forms, and other content for toggling -->
+	            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	                <ul class="nav navbar-nav navbar-right">
+	                    <li class="pull-right">
+	                        <button ng-cloak id="signInButton" type="button" class="btn btn-warning navbar-btn" ng-click="SignInButtonClick()">{{authentication.UserAuthenticated ? 'Sign out' : 'Sign in'}}</button>
+	                    </li>
+	                    <li ng-show="authentication.IsAdmin && authentication.UserAuthenticated && !isActive('/admin')" class="pull-right">
+	                        <button id="adminButton" type="button" class="btn btn-warning navbar-btn" ng-click="AdminButtonClick()">Admin</button>
+	                    </li>
+	                    <li class="pull-right" ng-hide="isActive('/')">
+	                        <button id="profileButton" type="button" class="btn btn-warning navbar-btn" ng-click="ProfileButtonClick()">Profile</button>
+	                    </li>
+	                    <li ng-show="authentication.UserAuthenticated && isActive('/')" class="pull-right">
+	                        <button id="publicProfileButton" type="button" class="btn btn-info navbar-btn" ng-click="PublicProfileButtonClick()">Public Profile</button>
+	                    </li>
+	                </ul>
+	            </div>
+	        </div>
+	    </nav>
+
+		<div id="main" style="min-height: calc(100% - 150px);">
+			<div ng-view="">
 			</div>
 		</div>
+
+		<footer class="footer" ng-controller="navController">
+		    <div class="footer-container">
+		        <div class="footer-right">
+		            <a href="https://www.facebook.com/Serify-1820992791522117/"><i class="fa fa-facebook"></i></a>
+		            <!-- <a href="https://twitter.com/serifyhealth"><i class="fa fa-twitter"></i></a> -->
+		            <!-- uncomment this when the twitter page is ready -->
+		        </div>
+		        <div class="footer-left">
+		            <p class="footer-links">
+		                <a ng-click="ShowFeedBackFormClick()">Contact Us</a>
+		                ·
+		                <a ng-click="PrivacyButtonClick()">Privacy Policy</a>
+		            </p>
+		            <p>Serify &copy; 2017</p>
+		        </div>
+		    </div>
+		</footer>
 
 		<script type="text/javascript" src="Constants.js"></script>
 		<script type="text/javascript" src="MainHandler.js"></script>
@@ -107,5 +167,6 @@
 		<script type="text/javascript" src="update/UpdateController.js" defer></script>
 		<script type="text/javascript" src="admin/AdminController.js" defer></script>
 		<script type="text/javascript" src="policy/PolicyController.js" defer></script>
+		<script type="text/javascript" src="feedback/FeedbackController.js" defer></script>
 	</body>
 </html>

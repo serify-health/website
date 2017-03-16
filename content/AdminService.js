@@ -1,4 +1,4 @@
-angular.module(GOLFPRO).service('adminService', [ 'apiService', 'loginStatusProvider', function(apiService, loginStatusProvider) {
+angular.module(SERIFYAPP).service('adminService', [ 'apiService', 'loginStatusProvider', function(apiService, loginStatusProvider) {
 	this.GetCountsPromise = function(userId) {
 		return apiService.getPromise('GET', '/summary', {})
 		.catch(function(failure) {

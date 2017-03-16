@@ -1,4 +1,4 @@
-angular.module(GOLFPRO).directive('awLimitLength', function () {
+angular.module(SERIFYAPP).directive('awLimitLength', function () {
 	return {
 		restrict: "A",
 		require: 'ngModel',

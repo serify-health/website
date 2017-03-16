@@ -1,4 +1,4 @@
-angular.module(GOLFPRO).provider('apiService', ['$locationProvider', function($locationProvider) {
+angular.module(SERIFYAPP).provider('apiService', ['$locationProvider', function($locationProvider) {
 	var isDebug = window.isDebug;
 	this.$get = ['$location', '$http', function($location, $http) {
 		var host = $location.host();

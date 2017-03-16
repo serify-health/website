@@ -1,4 +1,4 @@
-angular.module(GOLFPRO).service('linkManager', [ 'apiService', 'loginStatusProvider', function(apiService, loginStatusProvider) {
+angular.module(SERIFYAPP).service('linkManager', [ 'apiService', 'loginStatusProvider', function(apiService, loginStatusProvider) {
 	this.GetNewLinkPromise = function(linkname, username) {
 		return apiService.getPromise('POST', '/link', {
 			linkname: linkname,

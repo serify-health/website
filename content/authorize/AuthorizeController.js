@@ -1,8 +1,9 @@
-angular.module(GOLFPRO).config(['$routeProvider', function($routeProvider) {
+angular.module(SERIFYAPP).config(['$routeProvider', function($routeProvider) {
 	$routeProvider.when('/authorize/:pin?', { templateUrl: 'authorize/authorize.html', controller: 'authorizeController' });
 }]);
-angular.module(GOLFPRO).controller('authorizeController', [
+angular.module(SERIFYAPP).controller('authorizeController', [
 	'$scope',
+	'$window',
 	'$routeParams',
 	'loginStatusProvider',
 	'eventHandler',
@@ -11,7 +12,7 @@ angular.module(GOLFPRO).controller('authorizeController', [
 	'ngDialog',
 	'storageProviderService',
 	'utilities',
-function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, userManager, ngDialog, storageProviderService, utilities) {
+function($scope, $window, $routeParams, loginStatusProvider, eventHandler, pageService, userManager, ngDialog, storageProviderService, utilities) {
 	$scope.closeAlert = function(){ $scope.alert = null; };
 	var storageProvider = storageProviderService.GetStorageProvider('credentials');
 
@@ -92,6 +93,7 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
 		loginStatusProvider.confirmNewPasswordPromise($routeParams.pin, username, password)
 		.then(function(){
 			pageService.NavigateToPage('/');
+			$window.location.reload();
 		}, function(error){
 			switch (error.code) {
 				case 'ExpiredCodeException':
@@ -116,6 +118,7 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
 		return loginStatusProvider.confirmUsernamePromise($routeParams.pin, username, password)
 		.then(function(){
 			pageService.NavigateToPage('/');
+			$window.location.reload();
 		})
 		.catch(function(error){
 			switch (error.code) {
@@ -170,13 +173,16 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
 		})
 		.then(function(){
 			pageService.NavigateToPage('/');
+			$window.location.reload();
 		});
 	}
 	else {
 		pageService.NavigateToPage('/');
+		$window.location.reload();
 	}
 
 	$scope.ProfileButtonClick = function() {
 		pageService.NavigateToPage('/');
+		$window.location.reload();
 	};
 }]);

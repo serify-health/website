@@ -1,4 +1,4 @@
-angular.module(GOLFPRO).provider('pageService', [function(){
+angular.module(SERIFYAPP).provider('pageService', [function(){
 	var currentPage = '/';
 	var stack = [];
 	var service = {
@@ -67,5 +67,5 @@ angular.module(GOLFPRO).provider('pageService', [function(){
 			}
 		}
 	};
-	this.$get = function() { return service; };
+	this.$get = function(){ return service; };
 }]);

@@ -1,4 +1,4 @@
-angular.module(GOLFPRO).service('feedbackManager', [ 'apiService', 'loginStatusProvider', function(apiService, loginStatusProvider) {
+angular.module(SERIFYAPP).service('feedbackManager', [ 'apiService', 'loginStatusProvider', function(apiService, loginStatusProvider) {
 	this.CreateFeedback = function(feedback) {
 		return apiService.getPromise('POST', '/feedback', feedback)
 		.catch(function(failure) {

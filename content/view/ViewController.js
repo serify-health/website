@@ -1,7 +1,7 @@
-angular.module(GOLFPRO).config(['$routeProvider', function($routeProvider) {
+angular.module(SERIFYAPP).config(['$routeProvider', function($routeProvider) {
 	$routeProvider.when('/view/:base64hash?', { templateUrl: 'view/view.html', controller: 'viewController' });
 }]);
-angular.module(GOLFPRO).controller('viewController', [
+angular.module(SERIFYAPP).controller('viewController', [
 	'$scope',
 	'$routeParams',
 	'loginStatusProvider',
@@ -13,48 +13,6 @@ angular.module(GOLFPRO).controller('viewController', [
 	'linkManager',
 	'logoutService',
 function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, userManager, ngDialog, utilities, linkManager, logoutService) {
-	/******** SignInButton Block ********/
-	$scope.UserAuthenticated = false;
-	function SetupUser() {
-		return loginStatusProvider.validateAuthenticationPromise()
-		.then(function() {
-			$scope.$apply(function() {
-				$scope.UserAuthenticated = true;
-			});
-		})
-		.catch(function(error) {
-			console.log('Failed to log user in: ' + error);
-			$scope.$apply(function(){
-				$scope.alert = { type: 'danger', msg: 'Failed to log in.' };
-			});
-		});
-	}
-
-	$scope.SignInButtonClick = function() {
-		if($scope.UserAuthenticated) {
-			logoutService.Logout()
-			.catch(function(failure) {
-				console.log(failure);
-				$scope.$apply(function(){
-					$scope.alert = { type: 'danger', msg: 'Failed to log out' };
-				});
-			});
-			return;
-		}
-		ngDialog.open({
-			closeByNavigation: true,
-			width: 320,
-			template: 'login/signup.html',
-			controller: 'signinController',
-			className: 'ngdialog-theme-default'
-		}).closePromise.then(function(){
-			return SetupUser();
-		});
-	};
-	SetupUser();
-
-	/******** SignInButton Block ********/
-
 	loginStatusProvider.validateUnauthenticationPromise()
 	.then(function() {
 		return linkManager.ResolveHashPromise($routeParams.base64hash)
@@ -103,10 +61,4 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
 			$scope.error = 'This link is no longer valid.';
 		});
 	});
-	$scope.ProfileButtonClick = function() {
-		pageService.NavigateToPage('/');
-	};
-	$scope.NavIconClick = function() {
-		pageService.NavigateToPage('/');
-	};
 }]);

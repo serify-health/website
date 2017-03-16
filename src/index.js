@@ -24,13 +24,20 @@ api.get('/links', (event, context) => {
     return new Api.Response(links, 200, { 'Content-Type': 'application/json' });
 });
 
+let verifications = [
+    {
+        Name: 'PreviousTest',
+        Date: new Date(),
+        Status: 'Verified'
+    }
+];
 let users = [
     {
         userId: localUserId,
 		UserId: localUserId,
         userData: {},
-        Verifications: [],
-        verifications: [],
+        Verifications: verifications,
+        verifications: verifications,
         admin: true
     }
 ];
@@ -40,7 +47,6 @@ api.get('/user', (event, context) => {
 api.put('/user', (event, context) => {
     return new Api.Response({}, 200, { 'Content-Type': 'application/json' });
 });
-let verifications = [];
 api.post('/user/verifications', (event, context) => {
     verifications.push({
         Info: event.body,

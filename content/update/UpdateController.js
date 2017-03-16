@@ -1,7 +1,7 @@
-angular.module(GOLFPRO).config(['$routeProvider', function($routeProvider) {
+angular.module(SERIFYAPP).config(['$routeProvider', function($routeProvider) {
 	$routeProvider.when('/update', { templateUrl: 'update/update.html', controller: 'updateController' });
 }]);
-angular.module(GOLFPRO).controller('updateController', [
+angular.module(SERIFYAPP).controller('updateController', [
 	'$scope',
 	'$anchorScroll',
 	'$routeParams',
@@ -16,16 +16,7 @@ angular.module(GOLFPRO).controller('updateController', [
 function($scope, $anchorScroll, $routeParams, loginStatusProvider, eventHandler, pageService, userManager, ngDialog, utilities, linkManager, logoutService) {
 	/******** SignInButton Block ********/
 	$scope.closeAlert = function(){ $scope.alert = null; };
-	$scope.UserAuthenticated = false;
 	$scope.links = [];
-	function SetupUser() {
-		return loginStatusProvider.validateAuthenticationPromise()
-		.then(function() {
-			$scope.UserAuthenticated = true;
-		}, function(notLoggedIn){
-			pageService.NavigateToPage('/');
-		});
-	}
 	$scope.tests = TESTS;
 	var currentYear = new Date().getFullYear();
 	$scope.years = Array.apply(null, {length:100}).map(Number.call, Number).map(function(i) { return currentYear - i - 13; });
@@ -36,28 +27,6 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, eventHandler,
 	$scope.selectedDobDay = null;
 	$scope.verificationMonths = Array.apply(null, {length:12}).map(Number.call, Number).map(function(i) { return i + 1; });
 	$scope.verificationYears = [0, 1, 2, 3, 4, 5].map(function(i) { return currentYear - i; });
-	$scope.SignInButtonClick = function() {
-		if($scope.UserAuthenticated) {
-			logoutService.Logout()
-			.catch(function(failure) {
-				console.log(failure);
-				$scope.$apply(function(){
-					$scope.alert = { type: 'danger', msg: 'Failed to log out' };
-				});
-			});
-			return;
-		}
-		ngDialog.open({
-			closeByNavigation: true,
-			width: 320,
-			template: 'login/signup.html',
-			controller: 'signinController',
-			className: 'ngdialog-theme-default'
-		}).closePromise.then(function(){
-			return SetupUser();
-		});
-	};
-	SetupUser();
 
 	/******** SignInButton Block ********/
 	$scope.verifications = [];
@@ -100,7 +69,7 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, eventHandler,
 			$anchorScroll();
 			return;
 		}
-		if(!$scope.UserAuthenticated) {
+		if(!$scope.authentication.UserAuthenticated) {
 			$scope.alert = { type: 'danger', msg: 'Create account to get your test results verified.' };
 			$anchorScroll();
 			return;
@@ -146,16 +115,7 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, eventHandler,
 			});
 		});
 	};
-
-	$scope.ProfileButtonClick = function() {
-		pageService.NavigateToPage('/');
-	};
-
 	$scope.ClearSignatureButtonClick = function() {
 		signaturePad.clear();
-	};
-
-	$scope.PrivacyButtonClick = function() {
-		pageService.NavigateToPage('policy');
 	};
 }]);

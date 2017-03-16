@@ -1,35 +1,6 @@
 <div class="loginScreen">
-	<nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <a class="navbar-brand navBarIcon" href="#">
-                    <img alt="Serify nav icon" src="image/serify_nav_icon.png" style="height: 34px; width: auto;">
-                </a>
-                <ul class="visible-xs" style="list-style: none;">
-                    <li class="pull-right">
-                        <button id="signInButton" type="button" class="btn btn-warning navbar-btn navbar-right" ng-click="SignInButtonClick()">{{UserAuthenticated ? 'Sign out' : 'Sign in'}}</button>
-                    </li>
-                    <li class="pull-right" ng-show="UserAuthenticated">
-                        <button id="profileButton" type="button" class="btn btn-warning navbar-btn" ng-click="ProfileButtonClick()">Profile</button>
-                    </li>
-                </ul>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="pull-right">
-                        <button type="button" id="signInButton" class="btn btn-warning navbar-btn" ng-click="SignInButtonClick()">{{UserAuthenticated ? 'Sign out' : 'Sign in'}}</button>
-                    </li>
-                    <li class="pull-right" ng-show="UserAuthenticated">
-                        <button id="profileButton" type="button" class="btn btn-warning navbar-btn" ng-click="ProfileButtonClick()">Profile</button>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
 	<div ng-show="alert" style="text-align: center" uib-alert ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert()" dismiss-on-timeout="5000">{{alert.msg}}</div>
-	<div ng-show="UserAuthenticated" class="ui" style="margin:0% 10% 0% 10%;width:80% !important">
+	<div ng-show="authentication.UserAuthenticated" class="ui" style="margin:0% 10% 0% 10%;width:80% !important">
 		<div>
 			<div class="container">
 				<div class="row clearfix">
