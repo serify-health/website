@@ -33,7 +33,7 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
 						verification.Inverse = verification.Name !== 'HPV' && verification.Name !== 'PrEP';
 					});
 					var uniqueVerificationsMap = {};
-					verifications.map(function(v){
+					verifications.filter(function(v) { return TESTS[v.Name]; }).map(function(v){
 						if(!uniqueVerificationsMap[v.Name]) {
 							uniqueVerificationsMap[v.Name] = v;
 						}

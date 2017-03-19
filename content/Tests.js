@@ -1,5 +1,5 @@
 var TESTS = (function(){
-    var dict = {
+    return {
         "HIV": {
             name: "HIV"
         },
@@ -20,12 +20,6 @@ var TESTS = (function(){
         },
         "HPV": {
             name: "HPV Vaccine"
-        },
-        "PrEP": {
-            name: "Pre-exposure prophylaxis"
         }
     };
-    return Object.keys(dict).map(function(key){
-        return { id: key, name: dict[key].name };
-    });
 })();
