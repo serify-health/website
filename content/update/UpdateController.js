@@ -17,7 +17,9 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, eventHandler,
 	/******** SignInButton Block ********/
 	$scope.closeAlert = function(){ $scope.alert = null; };
 	$scope.links = [];
-	$scope.tests = TESTS;
+	$scope.tests = Object.keys(TESTS).map(function(key){
+		return { id: key, name: TESTS[key].name };
+	});
 	var currentYear = new Date().getFullYear();
 	$scope.years = Array.apply(null, {length:100}).map(Number.call, Number).map(function(i) { return currentYear - i - 13; });
 	$scope.months = Array.apply(null, {length:12}).map(Number.call, Number).map(function(i) { return i + 1; });

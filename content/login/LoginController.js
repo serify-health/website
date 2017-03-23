@@ -26,10 +26,11 @@ function($scope, $routeParams, $uibModal, loginStatusProvider, eventHandler, pag
 			$scope.$apply(function(){
 				$scope.userProfile = (user.userData || {}).profile;
 				$scope.username = (user.userData || {}).username;
-				var verifications = (user || {}).Verifications || [];
-				verifications.map(function(verification) {
+				var originalVerifications = (user || {}).Verifications || [];
+				var verifications = originalVerifications.filter(function(v) { return TESTS[v.Name]; }).map(function(verification) {
 					verification.Inverse = verification.Name !== 'HPV' && verification.Name !== 'PrEP';
-					verification.Name = TESTS.find(function(t){ return t.id === verification.Name; }).name;
+					verification.Name = TESTS[verification.Name || verification.name].name;
+					return verification;
 				});
 				$scope.verifications = verifications;
 			});

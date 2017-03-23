@@ -26,6 +26,11 @@ api.get('/links', (event, context) => {
 
 let verifications = [
     {
+        Name: 'DoesNotExist',
+        Date: new Date(),
+        Status: 'Verified'
+    },
+    {
         Name: 'HIV',
         Date: new Date(),
         Status: 'Verified'
