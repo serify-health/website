@@ -34,6 +34,16 @@ let verifications = [
         Name: 'HIV',
         Date: new Date(),
         Status: 'Verified'
+    },
+    {
+        Name: 'PrEP',
+        Date: new Date(),
+        Status: 'Unknown'
+    },
+    {
+        Name: 'HerpesII',
+        Date: new Date(),
+        Status: 'Rejected'
     }
 ];
 let users = [
