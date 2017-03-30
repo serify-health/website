@@ -63,6 +63,17 @@
 			</div>
 		</div>
 		<div>
+			<form class="navbar-form" role="search">
+				<div class="input-group add-on">
+					<input class="form-control" placeholder="user@emailaddress.com" name="srch-term" id="srch-term" type="text" ng-model="lookupEmailAddress">
+					<div class="input-group-btn">
+						<button  ng-click="JumpToUserProfileButtonClick()" class="btn btn-default" type="submit"><i class="fa fa-link"></i> Jump to Profile</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<br>
+		<div>
 			<div class="container">
 				<div class="row clearfix">
 					<div class="col-md-12 column">

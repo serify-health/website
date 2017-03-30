@@ -97,6 +97,9 @@ let feedbackData = {
 api.get('/feedback', (event, context) => {
     return new Api.Response(feedbackData, 200, { 'Content-Type': 'application/json' });
 });
+api.get('/admin/user', (event, context) => {
+    return new Api.Response({}, 400, { 'Content-Type': 'application/json' });
+});
 api.post('/feedback', (event, context) => {
     feedbackData.feedbackList.push({
         time: new Date(),

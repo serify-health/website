@@ -42,7 +42,6 @@ angular.module(SERIFYAPP).service('userManager', [ 'apiService', 'loginStatusPro
 			user: user
 		})
 		.then(function(result) {
-			console.log(JSON.stringify({Title: 'User Update Result', Result: result.toString(), Detail: result}, null, 2));
 			return result;
 		})
 		.catch(function(failure) {
@@ -67,4 +66,17 @@ angular.module(SERIFYAPP).service('userManager', [ 'apiService', 'loginStatusPro
 			});
 		});
 	};
+	this.GetUserAllInformation = function(emailAddress) {
+		return apiService.getPromise('GET', '/admin/user', { emailAddress: emailAddress})
+		.then(function(result) {
+			return result;
+		})
+		.catch(function(failure) {
+			console.error(JSON.stringify({Title: 'Failed to get user.', Error: failure.stack || failure.toString(), Detail: failure}, null, 2));
+			return Promise.reject({
+				Error: 'Unable to get user.',
+				Detail: failure
+			});
+		});
+	}
 }]);
