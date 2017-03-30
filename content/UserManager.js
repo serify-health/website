@@ -78,5 +78,5 @@ angular.module(SERIFYAPP).service('userManager', [ 'apiService', 'loginStatusPro
 				Detail: failure
 			});
 		});
-	}
+	};
 }]);
