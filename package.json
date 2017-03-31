@@ -24,7 +24,8 @@
     "jwk-to-pem": "^1.2.6",
     "mocha": "^2.5.3",
     "openapi-factory": "^2.0.82",
-    "sinon": "^1.17.1"
+    "sinon": "^1.17.1",
+    "uuid": "^3.0.1"
   },
   "repository": {
     "type": "git",

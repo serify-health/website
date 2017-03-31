@@ -3,6 +3,7 @@ const Api = require('openapi-factory');
 const jwtManager = require('jsonwebtoken');
 const jwkConverter = require('jwk-to-pem');
 const axios = require('axios');
+const uuid = require('uuid');
 
 module.exports = api = new Api();
 
@@ -29,6 +30,11 @@ let verifications = [
         Name: 'DoesNotExist',
         Date: new Date(),
         Status: 'Verified'
+    },
+    {
+        Name: 'Syphilis',
+        Date: new Date(),
+        Status: 'Unknown'
     },
     {
         Name: 'HIV',
@@ -62,8 +68,41 @@ api.post('/user/verifications', (event, context) => {
 api.put('/user/data', (event, context) => {
     return new Api.Response({}, 200, { 'Content-Type': 'application/json' });
 });
+let verificationRequests = [
+    {
+        Status: 'NEW',
+        UserId: localUserId,
+        Time: new Date(),
+        info: {
+            user: {
+                name: localUserId,
+                dob: new Date(),
+                clinicName: 'this is a test clinic',
+                clinicInfo: 'not a real address',
+            },
+            verifications: [
+                {
+                    Name: 'Syphilis',
+                    Date: new Date(),
+                    Id: uuid.v4(),
+                    Status: 'Unknown'
+                },
+                {
+                    Name: 'Herpes',
+                    Date: new Date(),
+                    Id: uuid.v4(),
+                    Status: 'Unknown'
+                }
+            ]
+        },
+        userIdentity: {
+            email: 'not@an-email.com'
+        }
+    }
+];
+
 api.get('/verifications', (event, context) => {
-    return new Api.Response([], 200, { 'Content-Type': 'application/json' });
+    return new Api.Response(verificationRequests, 200, { 'Content-Type': 'application/json' });
 });
 api.post('/verifications', (event, context) => {
     return new Api.Response({}, 200, { 'Content-Type': 'application/json' });
@@ -72,7 +111,10 @@ api.post('/event', (event, context) => {
     return new Api.Response({}, 200, { 'Content-Type': 'application/json' });
 });
 api.get('/summary', (event, context) => {
-    return new Api.Response({}, 200, { 'Content-Type': 'application/json' });
+    return new Api.Response({
+        userCount: 1,
+        requestCount: 1
+    }, 200, { 'Content-Type': 'application/json' });
 });
 let feedbackData = {
     feedbackList: [

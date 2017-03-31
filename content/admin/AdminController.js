@@ -3,19 +3,14 @@ angular.module(SERIFYAPP).config(['$routeProvider', function($routeProvider) {
 }]);
 angular.module(SERIFYAPP).controller('adminController', [
 	'$scope',
+	'$route',
 	'$routeParams',
-	'loginStatusProvider',
-	'eventHandler',
+	'$uibModal',
 	'pageService',
 	'verificationManager',
-	'ngDialog',
-	'utilities',
-	'linkManager',
-	'logoutService',
-	'userManager',
 	'adminService',
 	'feedbackManager',
-function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, verificationManager, ngDialog, utilities, linkManager, logoutService, userManager, adminService, feedbackManager) {
+function($scope, $route, $routeParams, $uibModal, pageService, verificationManager, adminService, feedbackManager) {
 	$scope.closeAlert = function(){ $scope.alert = null; };
 	$scope.verificationRequests = [];
 	$scope.feedbackList = [];
@@ -39,28 +34,27 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, v
 		verificationManager.GetVerifications()
 		.then(function(verificationRequests) {
 			$scope.$apply(function() {
-				$scope.verificationRequests = verificationRequests.map(function(r){
-					return {
-						status: r.Status,
-						userId: r.UserId,
-						time: r.Time,
-						name: (r.Info || r.info).user.name,
-						email: (r.userIdentity || {}).email,
-						dob: (r.Info || r.info).user.dob,
-						clinic: (r.Info || r.info).user.clinicName,
-						address: (r.Info || r.info).user.clinicInfo,
-						signature: (r.Info || r.info).user.signature,
-						verifications: (r.Info || r.info).verifications.map(function(v){
-							return {
-								name: v.Name,
+				$scope.verificationRequests = verificationRequests.reduce(function(list, r) {
+					return list.concat((r.Info || r.info).verifications.map(function(v) {
+						return {
+							status: r.Status,
+							userId: r.UserId,
+							time: r.Time,
+							name: (r.Info || r.info).user.name,
+							email: (r.userIdentity || {}).email,
+							dob: (r.Info || r.info).user.dob,
+							clinic: (r.Info || r.info).user.clinicName,
+							address: (r.Info || r.info).user.clinicInfo,
+							signature: (r.Info || r.info).user.signature,
+							verification: {
+								name: TESTS[v.Name].name,
 								date: v.Date,
 								id: v.Id,
-								status: v.Status,
-								checked: false
-							};
-						})
-					};
-				});
+								status: v.Status
+							}
+						};
+					}));
+				}, []).filter(function(r) { return r.verification.status === 'Unknown'});
 			});
 		});
 		feedbackManager.GetFeedback()
@@ -83,22 +77,11 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, v
 	/******** SignInButton Block ********/
 
 	$scope.VerificationRequestApproveClick = function(verificationRequest) {
-		var verifications = verificationRequest.verifications.filter(function(v) { return v.checked; }).map(function(v){
-			return {
-				Id: v.id
-			};
-		});
+		var verifications = [ {Id: verificationRequest.verification.id} ];
 		verificationManager.ApproveVerifications(verifications, verificationRequest.userId, verificationRequest.time)
 		.then(function() {
 			$scope.$apply(function() {
-				var foundVerificationRequest = $scope.verificationRequests.find(function(r) {
-					return r.userId === verificationRequest.userId && r.time === verificationRequest.time;
-				});
-				foundVerificationRequest.status = verificationRequest.verifications.some(function(v){ return v.status.match(/unknown/i) && !v.checked; }) ? 'NEW' : 'DONE';
-				foundVerificationRequest.verifications.filter(function(v) { return v.checked; }).map(function(v){
-					v.status = 'Verified';
-					v.checked = false;
-				});
+				verificationRequest.status = 'DONE';
 			});
 		})
 		.catch(function(error) {
@@ -107,23 +90,26 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, v
 			});
 		});
 	};
-	$scope.VerificationRequestRejectClick = function(verificationRequest) {
-		var verifications = verificationRequest.verifications.filter(function(v) { return v.checked; }).map(function(v){
-			return {
-				Id: v.id
-			};
+	$scope.VerificationRequestEditClick = function(verificationRequest) {
+		var modalInstance = $uibModal.open({
+			templateUrl: 'admin/updateForm.html',
+			controller: 'adminUpdateController',
+			resolve: {
+				verificationRequest: function() {
+					return verificationRequest;
+				}
+			}
 		});
+
+		modalInstance.result.then(function (updatedVerificationRequest) { console.log('completed', updatedVerificationRequest) }, function() { console.log('Modal dismissed at: ' + new Date()); })
+		.then(function() { $route.reload(); });
+	};
+	$scope.VerificationRequestRejectClick = function(verificationRequest) {
+		var verifications = [ {Id: verificationRequest.verification.id} ];
 		verificationManager.RejectVerifications(verifications, verificationRequest.userId, verificationRequest.time)
 		.then(function() {
 			$scope.$apply(function() {
-				var foundVerificationRequest = $scope.verificationRequests.find(function(r) {
-					return r.userId === verificationRequest.userId && r.time === verificationRequest.time;
-				});
-				foundVerificationRequest.status = verificationRequest.verifications.some(function(v){ return v.status.match(/unknown/i) && !v.checked; }) ? 'NEW' : 'DONE';
-				foundVerificationRequest.verifications.filter(function(v) { return v.checked; }).map(function(v){
-					v.status = 'Rejected';
-					v.checked = false;
-				});
+				verificationRequest.status = 'DONE';
 			});
 		})
 		.catch(function(error) {
@@ -131,6 +117,9 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, v
 				$scope.alert = { type: 'danger', msg: 'Failed to reject verification.' };
 			});
 		});
+	};
+	$scope.VerificationRequestPositiveClick = function(verificationRequest) {
+		$scope.alert = { type: 'danger', msg: 'The "Set Positive" Button has not been enabled yet. If this is required please contact the development team.' };
 	};
 	$scope.ProfileButtonClick = function() {
 		pageService.NavigateToPage('/');
