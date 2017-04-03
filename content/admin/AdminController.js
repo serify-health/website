@@ -54,7 +54,7 @@ function($scope, $route, $routeParams, $uibModal, pageService, verificationManag
 							}
 						};
 					}));
-				}, []).filter(function(r) { return r.verification.status === 'Unknown'});
+				}, []).filter(function(r) { return r.verification.status === 'Unknown'; });
 			});
 		});
 		feedbackManager.GetFeedback()
@@ -101,7 +101,7 @@ function($scope, $route, $routeParams, $uibModal, pageService, verificationManag
 			}
 		});
 
-		modalInstance.result.then(function (updatedVerificationRequest) { console.log('completed', updatedVerificationRequest) }, function() { console.log('Modal dismissed at: ' + new Date()); })
+		modalInstance.result.then(function (updatedVerificationRequest) { console.log('completed', updatedVerificationRequest); }, function() { console.log('Modal dismissed at: ' + new Date()); })
 		.then(function() { $route.reload(); });
 	};
 	$scope.VerificationRequestRejectClick = function(verificationRequest) {
