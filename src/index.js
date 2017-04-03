@@ -34,6 +34,16 @@ let verifications = [
         Name: 'HIV',
         Date: new Date(),
         Status: 'Verified'
+    },
+    {
+        Name: 'PrEP',
+        Date: new Date(),
+        Status: 'Unknown'
+    },
+    {
+        Name: 'HerpesII',
+        Date: new Date(),
+        Status: 'Rejected'
     }
 ];
 let users = [
@@ -86,6 +96,9 @@ let feedbackData = {
 };
 api.get('/feedback', (event, context) => {
     return new Api.Response(feedbackData, 200, { 'Content-Type': 'application/json' });
+});
+api.get('/admin/user', (event, context) => {
+    return new Api.Response({}, 400, { 'Content-Type': 'application/json' });
 });
 api.post('/feedback', (event, context) => {
     feedbackData.feedbackList.push({

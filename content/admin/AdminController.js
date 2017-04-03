@@ -135,4 +135,18 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, v
 	$scope.ProfileButtonClick = function() {
 		pageService.NavigateToPage('/');
 	};
+	$scope.lookupEmailAddress = null;
+	$scope.JumpToUserProfileButtonClick = function() {
+		if ($scope.lookupEmailAddress === null) {
+			$scope.alert = { type: 'danger', msg: 'Plesae enter email address.' };
+			return;
+		}
+		userManager.GetUserAllInformation($scope.lookupEmailAddress).then(function(userData) {
+			pageService.NavigateToPage('view/' + userData.linkInfo);
+		}).catch(function(error) {
+			$scope.$apply(function(){
+				$scope.alert = { type: 'danger', msg: 'Failed to get page for ' + $scope.lookupEmailAddress + ':' + JSON.stringify(error, null, 2) };
+			});
+		});
+	};
 }]);
