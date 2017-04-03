@@ -101,6 +101,8 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, eventHandler,
 		};
 		var verifications = $scope.verifications.filter(function(v){ return v.Name; }).map(function(v) {
 			v.Date = v.Month + '/' + v.Year;
+			delete v.Year;
+			delete v.Month;
 			return v;
 		});
 		var verificationPromise = userManager.VerificationRequest(verifications, userDetails)

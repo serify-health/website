@@ -5,17 +5,10 @@ angular.module(SERIFYAPP).config(['$routeProvider', function($routeProvider) {
 }]);
 angular.module(SERIFYAPP).controller('loginController', [
 	'$scope',
-	'$routeParams',
-	'$uibModal',
-	'loginStatusProvider',
-	'eventHandler',
 	'pageService',
 	'userManager',
-	'ngDialog',
-	'utilities',
 	'linkManager',
-	'logoutService',
-function($scope, $routeParams, $uibModal, loginStatusProvider, eventHandler, pageService, userManager, ngDialog, utilities, linkManager, logoutService) {
+function($scope, pageService, userManager, linkManager) {
 	$scope.closeAlert = function(){ $scope.alert = null; };
 	/******** SignInButton Block ********/
 	$scope.links = [];

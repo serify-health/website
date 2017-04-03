@@ -40,7 +40,23 @@ angular.module(SERIFYAPP).service('verificationManager', [ 'apiService', 'loginS
 			return result;
 		})
 		.catch(function(failure) {
-			console.error(JSON.stringify({Title: 'Failed to set verification as approved.', Error: failure.stack || failure.toString(), Detail: failure}, null, 2));
+			console.error(JSON.stringify({Title: 'Failed to set verification as rejected.', Error: failure.stack || failure.toString(), Detail: failure}, null, 2));
+			return Promise.reject({
+				Error: 'Unable to update verification request, please resumbit.',
+				Detail: failure
+			});
+		});
+	};
+	this.UpdateVerificationRequest = function(updatedVerificationRequest) {
+		return apiService.getPromise('PUT', '/verifications', {
+			verificationRequest: updatedVerificationRequest
+		})
+		.then(function(result) {
+			console.log(JSON.stringify({Title: 'Verification Request Update Result', Result: result.toString(), Detail: result}, null, 2));
+			return result;
+		})
+		.catch(function(failure) {
+			console.error(JSON.stringify({Title: 'Failed to update verification.', Error: failure.stack || failure.toString(), Detail: failure}, null, 2));
 			return Promise.reject({
 				Error: 'Unable to update verification request, please resumbit.',
 				Detail: failure

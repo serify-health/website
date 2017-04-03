@@ -85,10 +85,9 @@
 								<th class="text-center">DOB</th>
 								<th class="text-center">Clinic</th>
 								<th class="text-center">Address</th>
-								<th class="text-center">Verifications</th>
+								<th class="text-center">Verification</th>
 								<th class="text-center">Signature</th>
-								<th class="text-center">Approve</th>
-								<th class="text-center">Reject</th>
+								<th class="text-center">Options</th>
 							</thead>
 							<tbody style="height: 40px">
 								<tr ng-repeat="verificationRequest in verificationRequests | filter:{'status':'NEW'} | orderBy : 'time'">
@@ -109,28 +108,20 @@
 									<td>
 										{{ verificationRequest.clinic }}
 									</td>
-									<td>
+									<td style="width: 160px;">
 										{{ verificationRequest.address }}
 									</td>
-									<td>
-										<div style="width: 160px; text-align: left;" ng-repeat="verification in verificationRequest.verifications | filter: { status: 'Unknown'}">
-											<input type="checkbox" ng-model="verification.checked" ></input> {{ verification.name }} - {{ verification.date }}
-										</div>
-										<div style="width: 160px; text-align: left;" ng-repeat="verification in verificationRequest.verifications | filter: { status: 'Verified'}">
-											<i style="color: green" class="fa fa-check-square-o" aria-hidden="true"> {{ verification.name }} - {{ verification.date }}</i>
-										</div>
-										<div style="width: 160px; text-align: left;" ng-repeat="verification in verificationRequest.verifications | filter: { status: 'Rejected'}">
-											<i style="color: red" class="fa fa-check-square-o" aria-hidden="true"> {{ verification.name }} - {{ verification.date }}</i>
-										</div>
+									<td style="width: 160px; text-align: left;">
+										{{ verificationRequest.verification.name }}<br>{{ verificationRequest.verification.date }}
 									</td>
 									<td style="width: 100px; text-align: center">
 										<img style="max-height: 40px" ng-src="{{verificationRequest.signature}}">
 									</td>
-									<td style="width: 60px;">
-										<button tabindex="-1" type="button" class="btn btn-default btn-sm" ng-click="VerificationRequestApproveClick(verificationRequest)">Approve</button>
-									</td>
-									<td style="width: 60px;">
-										<button tabindex="-1" type="button" class="btn btn-default btn-sm" ng-click="VerificationRequestRejectClick(verificationRequest)">Reject</button>
+									<td style="width: 250px; padding-top:10px;">
+										<button tabindex="-1" type="button" class="btn btn-success btn-sm" ng-click="VerificationRequestApproveClick(verificationRequest)">Approve</button>
+										<button tabindex="-1" type="button" class="btn btn-default btn-sm" ng-click="VerificationRequestEditClick(verificationRequest)">Edit</button>
+										<button tabindex="-1" type="button" class="btn btn-warning btn-sm" ng-click="VerificationRequestRejectClick(verificationRequest)">Reject</button>
+										<!--<button tabindex="-1" type="button" class="btn btn-danger btn-sm" ng-click="VerificationRequestPositiveClick(verificationRequest)">Set Positive</button>-->
 									</td>
 								</tr>
 							</tbody>
