@@ -51,9 +51,9 @@
                         <tr>
                             <td class="text-center">Date of Birth</td>
                             <td class="text-center">
-                                <select ng-model="selectedDobYear" ng-options="x for x in years"></select>
-                                <select ng-model="selectedDobMonth" ng-options="x for x in months"></select>
-                                <select ng-model="selectedDobDay" ng-options="x for x in days"></select>
+                                Y <select style="padding: 4px 5px;" ng-model="selectedDobYear" ng-options="x for x in years"></select>
+                                M <select style="padding: 4px 5px;" ng-model="selectedDobMonth" ng-options="x for x in months"></select>
+                                D <select style="padding: 4px 5px;" ng-model="selectedDobDay" ng-options="x for x in days"></select>
                             </td>
                         </tr>
                         <tr>
@@ -80,14 +80,15 @@
                     <center>
                         <table>
                             <thead>
-                            		<h5>Signature</h5>
+                                <tr>
+                                    <th>
+                                        <h5 style="text-align: center;">Signature</h5>
+                                    </th>
+                                </tr>
+                            </thead>
                             <tbody>
                                 <td>
                                     <canvas id="signCanvas"></canvas>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-default btn-sm" ng-click="ClearSignatureButtonClick()" style="margin-left: 5px;"><i class="fa fa-refresh" aria-hidden="true"></i>
-                                    </button>
                                 </td>
                             </tbody>
                         </table>
@@ -95,7 +96,8 @@
                 </div>
             </div>
             <div style="text-align:center; margin-top: 15px; margin-bottom: 50px;">
-                <button class="btn btn-default" ng-click="SubmitVerificationsButtonClick()">Submit</button>
+                <button type="button" class="btn btn-default" ng-click="ClearSignatureButtonClick()" style="margin-left: 5px; margin-right: 5px"><i class="fa fa-refresh" aria-hidden="true"></i> Clear</button>
+                <button class="btn btn-default" style="margin-left: 5px;" ng-click="SubmitVerificationsButtonClick()">Submit</button>
             </div>
         </div>
     </div>

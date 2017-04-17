@@ -2,7 +2,7 @@
 <div class="ui" style="margin:0% 10% 0% 10%;width:80% !important">
 	<hr>
 	<div ng-show="linkname && !error" class="do-not-animate" style="text-align: center; border: 3px solid #00CED1;">
-			<h4>You are viewing the unique profile for:</h4>
+			<h4>Serify profile:</h4>
 			<h4>{{username}}</h4>
 	</div>
 	<div ng-show="profile" style="text-align:center">
@@ -31,10 +31,10 @@
 						<tbody>
 							<tr ng-repeat="verification in verifications track by $index">
 								<td>
-									<input readonly ng-model="verification.Name" class="form-control" />
+									<div style="text-align: center; padding-top:10px;"> {{ verification.displayName }} </div>
 								</td>
 								<td>
-									<input readonly ng-model="verification.Date" class="form-control" />
+									<div style="text-align: center; padding-top:10px;"> {{ verification.Date }} </div>
 								</td>
 								<td tabindex="-1" style="text-align:center">
 									<i style="color: limeGreen;padding-top: 5px;" ng-show="verification.Inverse" class="fa fa-minus fa-2x" aria-hidden="true"></i>
