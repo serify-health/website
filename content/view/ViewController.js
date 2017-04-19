@@ -34,6 +34,7 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
 					});
 					var uniqueVerificationsMap = {};
 					verifications.filter(function(v) { return TESTS[v.Name] && v.Status === 'Verified'; }).map(function(v){
+						v.displayName = TESTS[v.Name || v.name].name;
 						if(!uniqueVerificationsMap[v.Name]) {
 							uniqueVerificationsMap[v.Name] = v;
 						}

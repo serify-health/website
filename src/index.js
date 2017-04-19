@@ -38,11 +38,16 @@ let verifications = [
     },
     {
         Name: 'HIV',
-        Date: new Date(),
+        Date: '04/2017',
         Status: 'Verified'
     },
     {
         Name: 'PrEP',
+        Date: '04/2018',
+        Status: 'Verified'
+    },
+    {
+        Name: 'HerpesI',
         Date: new Date(),
         Status: 'Unknown'
     },
@@ -93,13 +98,13 @@ let verificationRequests = [
             verifications: [
                 {
                     Name: 'Syphilis',
-                    Date: new Date(),
+                    Date: '04/2017',
                     Id: uuid.v4(),
                     Status: 'Unknown'
                 },
                 {
                     Name: 'Herpes',
-                    Date: new Date(),
+                    Date: '04/2017',
                     Id: uuid.v4(),
                     Status: 'Unknown'
                 }
