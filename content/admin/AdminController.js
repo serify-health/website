@@ -10,7 +10,8 @@ angular.module(SERIFYAPP).controller('adminController', [
 	'verificationManager',
 	'adminService',
 	'feedbackManager',
-function($scope, $route, $routeParams, $uibModal, pageService, verificationManager, adminService, feedbackManager) {
+	'userManager',
+function($scope, $route, $routeParams, $uibModal, pageService, verificationManager, adminService, feedbackManager, userManager) {
 	$scope.closeAlert = function(){ $scope.alert = null; };
 	$scope.verificationRequests = [];
 	$scope.feedbackList = [];
