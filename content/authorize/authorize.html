@@ -1,7 +1,21 @@
 <div class="loginScreen">
 	<div ng-show="alert" style="text-align: center" uib-alert ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert()" dismiss-on-timeout="5000">{{alert.msg}}</div>
 	<div class="ui" style="margin:0% 10% 0% 10%;width:80% !important; text-align:center">
-		<h1 class="entry-title" style="color: gray;">Verifying user... Please use responsibly.</h1>
-		<h4><a href="/">Serify home page</a></h4>
+		<div style="text-align: center">
+			<h2>Privacy and Terms</h2>
+			<br>
+			<h4>By choosing "I agree" below you agree to Serify's <a href="https://serify.org/#/terms" target="_blank">Terms of Use</a>.</h4>
+			<h4>You also agree to our <a href="https://serify.org/#/policy" target="_blank">Privacy Policy</a>, which describes how we process your information.</h4>
+		</div>
+		<br><br>
+		<div class="form-group" style="margin-bottom: 5px; width: 100%;">
+			<center>
+				<img ng-show="hideAuthorize" ng-src="image/spinner.gif" class="fadeFast">
+				<div style="text-align: center; position:relative; width: 100%; height: 49px; padding:5px 0px;">
+					<button ng-show="!hideAuthorize" id="signupButton" style="max-width:100px; margin: 10px;" class="btn btn-info fadeFast" ng-click="CancelButtonClick()">CANCEL</button>
+					<button ng-show="!hideAuthorize" id="signinButton" style="max-width:100px; margin: 10px;" type="submit" class="btn btn-success fadeFast" ng-hide="HideLoginButton" ng-click="AgreementButtonClick()">I AGREE</button>
+				</div>
+			</center>
+		</div>
 	</div>
 </div>
