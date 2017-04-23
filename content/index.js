@@ -184,7 +184,7 @@ function($scope, $rootScope, $routeParams, $location, $uibModal, loginStatusProv
 			template: 'login/signup.html',
 			controller: 'signinController',
 			className: 'ngdialog-theme-default'
-		}).closePromise.then(function(){
+		}).closePromise.then(function() {
 			return SetupUser();
 		});
 	};
@@ -208,6 +208,10 @@ function($scope, $rootScope, $routeParams, $location, $uibModal, loginStatusProv
 	$scope.PrivacyButtonClick = function() {
 		pageService.NavigateToPage('policy');
 	};
+	$scope.TermsOfServiceButtonClick = function() {
+		pageService.NavigateToPage('terms');
+	};
+	$scope.copyRightDate = new Date().getFullYear();
 }]);
 
 var mainApp = document.getElementsByTagName('body');
