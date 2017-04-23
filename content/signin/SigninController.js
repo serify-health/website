@@ -97,7 +97,7 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
                 storageProvider.Save('username', signinUsername);
                 storageProvider.Save('password', signinPassword);
                 $scope.$apply(function(){
-                    $scope.alert = { type: 'success', msg: 'Please check your email for a password reset link.', done: true };
+                    $scope.alert = { type: 'success', msg: 'Please check your email for a Serify activation link.', done: true };
                 });
                 setTimeout(function(){
                     $scope.closeThisDialog(true);
@@ -191,7 +191,7 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
         return loginStatusProvider.resendAuthorizationCodePromise(username, password)
         .then(function(){
             $scope.$apply(function(){
-                $scope.alert = { type: 'success', msg: 'Please check your email for a password reset link.', done: true };
+                $scope.alert = { type: 'success', msg: 'Please check your email for a verification link.', done: true };
             });
             setTimeout(function(){
                 $scope.closeThisDialog(true);
