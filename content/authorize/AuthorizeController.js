@@ -174,7 +174,6 @@ function($scope, $window, $routeParams, loginStatusProvider, eventHandler, pageS
 							return signInUser(username, password);
 						default:
 							return openPopup();
-							break;
 					}
 				}, 300);
 			})
