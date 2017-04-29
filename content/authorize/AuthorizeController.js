@@ -126,6 +126,10 @@ function($scope, $window, $routeParams, loginStatusProvider, eventHandler, pageS
 
 	$scope.CancelButtonClick = function() {
 		pageService.NavigateToPage('/');
+		eventHandler.capture('TermsCancelWarning', {
+			title: 'User cancelled terms agreement',
+			User: username
+		});
 	};
 
 	$scope.hideAuthorize = false;
