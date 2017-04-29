@@ -124,7 +124,15 @@ function($scope, $rootScope, $routeParams, $location, $uibModal, loginStatusProv
 					$rootScope.authentication.email = data['cognito:username'];
 				});
 			}
-			catch (exception) {}
+			catch (exception) {
+				eventHandler.capture('CaptureUserIdentityFailure', {
+					title: 'Failure to register user identity',
+					userData: authData,
+					exception: exception.toString(),
+					stack: exception.stack,
+					details: exception
+				});
+			}
 			$rootScope.$apply(function(){
 				$rootScope.authentication.UserAuthenticated = true;
 			});

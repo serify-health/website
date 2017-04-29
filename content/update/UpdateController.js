@@ -6,14 +6,13 @@ angular.module(SERIFYAPP).controller('updateController', [
 	'$anchorScroll',
 	'$routeParams',
 	'loginStatusProvider',
-	'eventHandler',
 	'pageService',
 	'userManager',
 	'ngDialog',
 	'utilities',
 	'linkManager',
 	'logoutService',
-function($scope, $anchorScroll, $routeParams, loginStatusProvider, eventHandler, pageService, userManager, ngDialog, utilities, linkManager, logoutService) {
+function($scope, $anchorScroll, $routeParams, loginStatusProvider, pageService, userManager, ngDialog, utilities, linkManager, logoutService) {
 	/******** SignInButton Block ********/
 	$scope.closeAlert = function(){ $scope.alert = null; };
 	$scope.links = [];

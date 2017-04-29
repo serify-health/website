@@ -2,11 +2,10 @@ angular.module(SERIFYAPP).service('logoutService', [
 	'$window',
     '$rootScope',
     'loginStatusProvider',
-	'eventHandler',
 	'pageService',
 	'storageProviderService',
 	'utilities',
-function($window, $rootScope, loginStatusProvider, eventHandler, pageService, storageProviderService, utilities) {
+function($window, $rootScope, loginStatusProvider, pageService, storageProviderService, utilities) {
     var storageProvider = storageProviderService.GetStorageProvider('credentials');
     this.Logout = function() {
         loginStatusProvider.logoutPromise()
