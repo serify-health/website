@@ -8,7 +8,7 @@ angular.module(SERIFYAPP).service('logoutService', [
 function($window, $rootScope, loginStatusProvider, pageService, storageProviderService, utilities) {
     var storageProvider = storageProviderService.GetStorageProvider('credentials');
     this.Logout = function() {
-        loginStatusProvider.logoutPromise()
+        return loginStatusProvider.logoutPromise()
         .then(function() {
             $rootScope.$apply(function() {
                 $rootScope.authentication = {};
