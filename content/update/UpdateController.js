@@ -11,7 +11,8 @@ angular.module(SERIFYAPP).controller('updateController', [
 	'ngDialog',
 	'utilities',
 	'linkManager',
-function($scope, $anchorScroll, $routeParams, loginStatusProvider, pageService, userManager, ngDialog, utilities, linkManager) {
+	'eventHandler',
+function($scope, $anchorScroll, $routeParams, loginStatusProvider, pageService, userManager, ngDialog, utilities, linkManager, eventHandler) {
 	/******** SignInButton Block ********/
 	$scope.closeAlert = function(){ $scope.alert = null; };
 	$scope.links = [];
@@ -48,6 +49,7 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, pageService, 
 
 	var alertElement = angular.element(document.querySelector('#alert'));
 	$scope.SubmitVerificationsButtonClick = function() {
+		eventHandler.interaction('Verifications', 'SubmitAttempt');
 		if($scope.verifications.length < 1) {
 			$scope.alert = { type: 'danger', msg: 'Add a test to verify.' };
 			$anchorScroll();
@@ -103,6 +105,7 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, pageService, 
 			delete v.Month;
 			return v;
 		});
+		eventHandler.interaction('Verifications', 'Submitted');
 		var verificationPromise = userManager.VerificationRequest(verifications, userDetails)
 		.then(function(){
 			$scope.$apply(function(){
@@ -118,6 +121,7 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, pageService, 
 		});
 	};
 	$scope.ClearSignatureButtonClick = function() {
+		eventHandler.interaction('Verifications', 'ClearedSignature');
 		signaturePad.clear();
 	};
 }]);

@@ -126,6 +126,7 @@ function($scope, $window, $routeParams, loginStatusProvider, eventHandler, pageS
 
 	$scope.CancelButtonClick = function() {
 		pageService.NavigateToPage('/');
+		eventHandler.interaction('TermsOfService', 'CancelledTerms');
 		eventHandler.capture('TermsCancelWarning', {
 			title: 'User cancelled terms agreement',
 			User: username
@@ -161,6 +162,7 @@ function($scope, $window, $routeParams, loginStatusProvider, eventHandler, pageS
 		});
 	};
 	$scope.AgreementButtonClick = function() {
+		eventHandler.interaction('TermsOfService', 'AcceptedTerms');
 		$scope.hideAuthorize = true;
 		if($routeParams.pin && username && password) {
 			return loginStatusProvider.confirmUsernamePromise($routeParams.pin, username, password)

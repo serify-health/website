@@ -8,36 +8,39 @@ angular.module(SERIFYAPP).controller('loginController', [
 	'pageService',
 	'userManager',
 	'linkManager',
-function($scope, pageService, userManager, linkManager) {
+	'eventHandler',
+function($scope, pageService, userManager, linkManager, eventHandler) {
 	$scope.closeAlert = function(){ $scope.alert = null; };
 	/******** SignInButton Block ********/
 	$scope.links = [];
 	$scope.$watch('authentication.complete', SetupUser, true);
 	function SetupUser() {
-		var usernamemetadataPromise = userManager.GetUserDataPromise()
-		.then(function(user){
-			$scope.$apply(function(){
-				$scope.userProfile = (user.userData || {}).profile;
-				$scope.username = (user.userData || {}).username;
-				var originalVerifications = (user || {}).Verifications || [];
-				var verifications = originalVerifications.filter(function(v) { return TESTS[v.Name]; }).map(function(verification) {
-					verification.Inverse = verification.Name !== 'HPV' && verification.Name !== 'PrEP';
-					verification.Name = TESTS[verification.Name || verification.name].name;
-					return verification;
+		if ($scope.authentication.UserAuthenticated) {
+			var usernamemetadataPromise = userManager.GetUserDataPromise()
+			.then(function(user){
+				$scope.$apply(function(){
+					$scope.userProfile = (user.userData || {}).profile;
+					$scope.username = (user.userData || {}).username;
+					var originalVerifications = (user || {}).Verifications || [];
+					var verifications = originalVerifications.filter(function(v) { return TESTS[v.Name]; }).map(function(verification) {
+						verification.Inverse = verification.Name !== 'HPV' && verification.Name !== 'PrEP';
+						verification.Name = TESTS[verification.Name || verification.name].name;
+						return verification;
+					});
+					$scope.verifications = verifications;
 				});
-				$scope.verifications = verifications;
 			});
-		});
-		var usernameLinkCreationPromise = linkManager.GetNewLinkPromise(null, null)
-		.then(function(link){
-			$scope.$apply(function(){
-				$scope.userLink = {
-					url: WEBSITE_VIEW_URL + link,
-					link: link
-				};
+			var usernameLinkCreationPromise = linkManager.GetNewLinkPromise(null, null)
+			.then(function(link){
+				$scope.$apply(function(){
+					$scope.userLink = {
+						url: WEBSITE_VIEW_URL + link,
+						link: link
+					};
+				});
 			});
-		});
-		return Promise.all([usernamemetadataPromise, usernameLinkCreationPromise]).catch(function(f){ console.log(f); });
+			return Promise.all([usernamemetadataPromise, usernameLinkCreationPromise]).catch(function(f){ console.log(f); });
+		}
 	}
 
 	/******** SignInButton Block ********/
@@ -46,6 +49,7 @@ function($scope, pageService, userManager, linkManager) {
 		pageService.NavigateToPage('update');
 	};
 	$scope.SaveProfileButtonClick = function() {
+		eventHandler.interaction('Profile', 'Save');
 		userManager.UpdateUserDataPromise({
 			profile: $scope.userProfile,
 			username: $scope.username

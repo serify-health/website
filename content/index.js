@@ -155,6 +155,7 @@ function($scope, $rootScope, $routeParams, $location, $uibModal, loginStatusProv
 	}
 
 	$scope.ShowFeedBackFormClick = function () {
+		eventHandler.interaction('Feedback', 'ShowForm');
 		var modalInstance = $uibModal.open({
 			templateUrl: 'feedback/feedbackForm.html',
 			controller: 'feedbackController',
@@ -177,6 +178,7 @@ function($scope, $rootScope, $routeParams, $location, $uibModal, loginStatusProv
 	};
 	$rootScope.SignInButtonClick = function() {
 		if($rootScope.authentication.UserAuthenticated) {
+			eventHandler.interaction('Profile', 'Logout');
 			logoutService.Logout()
 			.catch(function(failure) {
 				console.log(failure);
@@ -186,6 +188,7 @@ function($scope, $rootScope, $routeParams, $location, $uibModal, loginStatusProv
 			});
 			return;
 		}
+		eventHandler.interaction('Profile', 'Login');
 		ngDialog.open({
 			closeByNavigation: true,
 			width: 320,

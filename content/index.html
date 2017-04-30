@@ -22,7 +22,7 @@
 				connect-src 'self' gap: https://graph.facebook.com https://*.amazonaws.com/;
 				style-src 'self' gap: https://maxcdn.bootstrapcdn.com https://cdnjs.cloudflare.com 'unsafe-inline';
 				frame-src gap: https://*.facebook.com http://*.facebook.com;
-				script-src 'self' gap: 'sha256-Wwy8T4qUyWuyCV5NOJcw4QmXcbK4SdaMZve1QU3oueI=' https://www.google-analytics.com/ https://cdnjs.cloudflare.com https://*.facebook.net https://graph.facebook.com/ http://connect.facebook.net/en_US/sdk.js 'unsafe-eval';
+				script-src 'self' gap: 'sha256-DnYP+Zzlc1dNpka2302cKGbPxVdICnzHK2y0nUziS3I=' https://www.google-analytics.com/ https://cdnjs.cloudflare.com https://*.facebook.net https://graph.facebook.com/ http://connect.facebook.net/en_US/sdk.js 'unsafe-eval';
 				img-src 'self' data: file: gap: *;
 				font-src https://maxcdn.bootstrapcdn.com;
 				media-src *">
@@ -41,6 +41,16 @@
 
 		<link rel="stylesheet" href="index.css">
 		<link rel="stylesheet" href="spinner.css">
+
+		<!-- Google Analytics sha256-DnYP+Zzlc1dNpka2302cKGbPxVdICnzHK2y0nUziS3I= -->
+		<script>
+			window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+			ga('create', 'UA-88747342-1', 'auto');
+			ga('send', 'pageview');
+		</script>
+		<script async src='https://www.google-analytics.com/analytics.js'></script>
+		<!-- End Google Analytics -->
+
 	</head>
 	<body style="height:100%">
 		<nav class="navbar navbar-default" ng-controller="navController">
@@ -114,16 +124,6 @@
 		<script type="text/javascript" src="Constants.js"></script>
 		<script type="text/javascript" src="MainHandler.js"></script>
 
-		<script>
-			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-			})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-			ga('create', 'UA-88747342-1', 'auto');
-			ga('send', 'pageview');
-
-		</script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-route.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-touch.min.js"></script>

@@ -25,6 +25,19 @@ angular.module(SERIFYAPP).provider('eventHandler', ['apiServiceProvider', 'pageS
 	if(!cachedUserGuid) { storageProviderService.Save('userGuid', userGuid); }
 	this.$get = ['$injector', function($injector) {
 		return {
+			interaction: function(category, action, label, value) {
+				var sendObject = {
+					hitType: 'event',
+					eventCategory: category,
+					eventAction: action
+				};
+				if (label) { sendObject.eventLabel = label; }
+				if (value) { sendObject.eventValue = value; }
+				if(ga) {
+					ga('send', sendObject);
+				}
+				return Promise.resolve();
+			},
 			capture: function(eventType, information) {
 				var $http = $injector.get('$http');
 				return getLogObjectPromise(eventType, information)
