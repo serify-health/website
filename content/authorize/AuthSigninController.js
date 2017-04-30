@@ -103,6 +103,11 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
                             $scope.closeThisDialog(true);
                             pageService.NavigateToPage('/');
                         });
+                    case 'UserNotFoundException':
+                        $scope.$apply(function(){
+                            $scope.alert = { type: 'danger', msg: 'No user with that email address exists.'};
+                        });
+                        break;
                     default:
                         $scope.$apply(function(){
                             $scope.alert = { type: 'danger', msg: 'Failed to register, please try again'};
