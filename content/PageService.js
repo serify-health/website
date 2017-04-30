@@ -13,7 +13,7 @@ angular.module(SERIFYAPP).provider('pageService', [function(){
 			if(currentPage == '/') {
 				console.log('Navigating to Origin page: ' + currentPage + ' => ' + newPage);
 				if(ga) {
-					ga('set', 'page', '/' + newPage);
+					ga('set', 'page', '/' + newPage.split('/')[0]);
 					ga('send', 'pageview');
 				}
 				window.location.hash = newPage;
@@ -23,7 +23,7 @@ angular.module(SERIFYAPP).provider('pageService', [function(){
 			console.log('Navigating to page: ' + currentPage + ' => ' + newPage);
 			window.location.hash = newPage;
 			if(ga) {
-				ga('set', 'page', '/' + newPage);
+				ga('set', 'page', '/' + newPage.split('/')[0]);
 				ga('send', 'pageview');
 			}
 		},
@@ -32,7 +32,7 @@ angular.module(SERIFYAPP).provider('pageService', [function(){
 			stack = ['home'];
 			window.location.hash = newPage;
 			if(ga) {
-				ga('set', 'page', '/' + newPage);
+				ga('set', 'page', '/' + newPage.split('/')[0]);
 				ga('send', 'pageview');
 			}
 		},
@@ -41,7 +41,7 @@ angular.module(SERIFYAPP).provider('pageService', [function(){
 			stack.push(currentPage);
 			window.location.hash = newPage;
 			if(ga) {
-				ga('set', 'page', '/' + newPage);
+				ga('set', 'page', '/' + newPage.split('/')[0]);
 				ga('send', 'pageview');
 			}
 		},
@@ -62,7 +62,7 @@ angular.module(SERIFYAPP).provider('pageService', [function(){
 			console.log('Navigating to page: ' + currentPage + ' => ' + previousPage);
 			window.location.hash = previousPage;
 			if(ga) {
-				ga('set', 'page', '/' + previousPage);
+				ga('set', 'page', '/' + previousPage.split('/')[1]);
 				ga('send', 'pageview');
 			}
 		}
