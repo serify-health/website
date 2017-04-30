@@ -3,11 +3,13 @@ angular.module(SERIFYAPP).controller('feedbackController', [
     '$uibModalInstance',
     'loginStatusProvider',
     'feedbackManager',
-function($scope, $uibModalInstance, loginStatusProvider, feedbackManager) {
+    'eventHandler',
+function($scope, $uibModalInstance, loginStatusProvider, feedbackManager, eventHandler) {
     $scope.form = $scope.$resolve.form;
     $scope.closeAlert = function(){ $scope.alert = null; };
     $scope.alert = null;
     $scope.SubmitFeedbackForm = function () {
+        eventHandler.interaction('Feedback', 'CreatedFeedback');
         loginStatusProvider.validateUnauthenticationPromise()
         .then(function() {
             feedbackManager.CreateFeedback($scope.form)
@@ -25,6 +27,7 @@ function($scope, $uibModalInstance, loginStatusProvider, feedbackManager) {
     };
 
     $scope.DismissFeedbackForm = function () {
+        eventHandler.interaction('Feedback', 'CancelledFeedback');
         $uibModalInstance.dismiss('cancel');
     };
 }]);

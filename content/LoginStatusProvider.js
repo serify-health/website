@@ -154,9 +154,6 @@ angular.module(SERIFYAPP).provider('loginStatusProvider', [function() {
 			if (cognitoUser === null) { return s(null); }
 
 			cognitoUser.getSession(function(error, session) {
-				if(error) {
-					console.error(JSON.stringify({Title: 'Error on getSession', Error: error.stack || error.toString(), Detail: error}, null, 2));
-				}
 				if(error || !session.isValid()) { return s(null); }
 
 				var jwt = session.getIdToken().getJwtToken();

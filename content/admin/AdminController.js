@@ -11,7 +11,8 @@ angular.module(SERIFYAPP).controller('adminController', [
 	'adminService',
 	'feedbackManager',
 	'userManager',
-function($scope, $route, $routeParams, $uibModal, pageService, verificationManager, adminService, feedbackManager, userManager) {
+	'eventHandler',
+function($scope, $route, $routeParams, $uibModal, pageService, verificationManager, adminService, feedbackManager, userManager, eventHandler) {
 	$scope.closeAlert = function(){ $scope.alert = null; };
 	$scope.verificationRequests = [];
 	$scope.feedbackList = [];
@@ -78,6 +79,7 @@ function($scope, $route, $routeParams, $uibModal, pageService, verificationManag
 	/******** SignInButton Block ********/
 
 	$scope.VerificationRequestApproveClick = function(verificationRequest) {
+		eventHandler.interaction('Admin', 'ApproveVerification');
 		var verifications = [ {Id: verificationRequest.verification.id} ];
 		verificationManager.ApproveVerifications(verifications, verificationRequest.userId, verificationRequest.time)
 		.then(function() {
@@ -92,6 +94,7 @@ function($scope, $route, $routeParams, $uibModal, pageService, verificationManag
 		});
 	};
 	$scope.VerificationRequestEditClick = function(verificationRequest) {
+		eventHandler.interaction('Admin', 'EditVerification');
 		var modalInstance = $uibModal.open({
 			templateUrl: 'admin/updateForm.html',
 			controller: 'adminUpdateController',
@@ -106,6 +109,7 @@ function($scope, $route, $routeParams, $uibModal, pageService, verificationManag
 		.then(function() { $route.reload(); });
 	};
 	$scope.VerificationRequestRejectClick = function(verificationRequest) {
+		eventHandler.interaction('Admin', 'RejectVerification');
 		var verifications = [ {Id: verificationRequest.verification.id} ];
 		verificationManager.RejectVerifications(verifications, verificationRequest.userId, verificationRequest.time)
 		.then(function() {
@@ -127,6 +131,7 @@ function($scope, $route, $routeParams, $uibModal, pageService, verificationManag
 	};
 	$scope.lookupEmailAddress = null;
 	$scope.JumpToUserProfileButtonClick = function() {
+		eventHandler.interaction('Admin', 'JumpToProfile');
 		if ($scope.lookupEmailAddress === null) {
 			$scope.alert = { type: 'danger', msg: 'Plesae enter email address.' };
 			return;
