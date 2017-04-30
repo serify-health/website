@@ -15,7 +15,7 @@ angular.module(SERIFYAPP).controller('viewController', [
 function($scope, $routeParams, loginStatusProvider, pageService, userManager, ngDialog, utilities, linkManager, eventHandler, storageProviderService) {
 	eventHandler.interaction('View', 'Profile');
 	var storageProvider = storageProviderService.GetStorageProvider('announcements');
-	$scope.hideBanner = storageProvider.Get('bigideas-2017');
+	$scope.hideBanner = true;
 	$scope.closeAlert = function() {
 		eventHandler.interaction('Banner', 'Dismissed', 'Message', 'bigideas-2017');
 		$scope.hideBanner = true;
