@@ -11,8 +11,24 @@ angular.module(SERIFYAPP).controller('viewController', [
 	'utilities',
 	'linkManager',
 	'eventHandler',
-function($scope, $routeParams, loginStatusProvider, pageService, userManager, ngDialog, utilities, linkManager, eventHandler) {
+	'storageProviderService',
+function($scope, $routeParams, loginStatusProvider, pageService, userManager, ngDialog, utilities, linkManager, eventHandler, storageProviderService) {
 	eventHandler.interaction('View', 'Profile');
+	var storageProvider = storageProviderService.GetStorageProvider('announcements');
+	$scope.hideBanner = true;
+	$scope.closeAlert = function() {
+		eventHandler.interaction('Banner', 'Dismissed', 'Message', 'bigideas-2017');
+		$scope.hideBanner = true;
+		storageProvider.Save('bigideas-2017', true);
+	};
+
+	$scope.voteButtonClick = function() {
+		eventHandler.interaction('Banner', 'Voted', 'Message', 'bigideas-2017');
+		$scope.hideBanner = true;
+		storageProvider.Save('bigideas-2017', true);
+		window.open('http://platform.votigo.com/fbcontests/showentry/2017-Big-Ideas-Peoples-Choice-Video-Contest/2206327');
+	};
+
 	loginStatusProvider.validateUnauthenticationPromise()
 	.then(function() {
 		return linkManager.ResolveHashPromise($routeParams.base64hash)
