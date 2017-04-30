@@ -1,6 +1,9 @@
-<div ng-show="alert" style="text-align: center" uib-alert ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert()" dismiss-on-timeout="5000">{{alert.msg}}</div>
+<div style="text-align: center" ng-show="!hideBanner" class="alert alert-success alert-dismissible" uib-alert close="closeAlert()" role="alert">
+  <h4 class="alert-heading">Serify is going live!</h4>
+  <h5 >Serify has made it to the final round of the Big Ideas @ Berkeley 2017.</h5>
+  <h5 class="mb-0"><a ng-click="voteButtonClick()">Help us go live, Vote Here!</a></h5>
+</div>
 <div class="ui" style="margin:0% 10% 0% 10%;width:80% !important">
-	<hr>
 	<div ng-show="linkname && !error" class="do-not-animate" style="text-align: center; border: 3px solid #00CED1;">
 			<h4>Serify profile:</h4>
 			<h4>{{username}}</h4>
