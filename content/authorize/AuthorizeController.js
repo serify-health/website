@@ -127,10 +127,6 @@ function($scope, $window, $routeParams, loginStatusProvider, eventHandler, pageS
 	$scope.CancelButtonClick = function() {
 		pageService.NavigateToPage('/');
 		eventHandler.interaction('TermsOfService', 'CancelledTerms');
-		eventHandler.capture('TermsCancelWarning', {
-			title: 'User cancelled terms agreement',
-			User: username
-		});
 	};
 
 	$scope.hideAuthorize = false;
@@ -197,6 +193,7 @@ function($scope, $window, $routeParams, loginStatusProvider, eventHandler, pageS
 	};
 
 	$scope.ProfileButtonClick = function() {
+		eventHandler.interaction('Authorization', 'Navigation', 'Profile');
 		pageService.NavigateToPage('/');
 		$window.location.reload();
 	};

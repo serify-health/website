@@ -25,6 +25,7 @@ angular.module(SERIFYAPP).provider('eventHandler', ['apiServiceProvider', 'pageS
 	if(!cachedUserGuid) { storageProviderService.Save('userGuid', userGuid); }
 	this.$get = ['$injector', function($injector) {
 		return {
+			// https://developers.google.com/analytics/devguides/collection/analyticsjs/events
 			interaction: function(category, action, label, value) {
 				var sendObject = {
 					hitType: 'event',

@@ -21,6 +21,7 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
     var forgotPasswordFlow = storageProvider.Get('forgotPassword');
 
     $scope.VerifyButtonClick = function() {
+        eventHandler.interaction('Authorization', 'Verify');
         var username = ($scope.email || '').toLowerCase();
         var password = $scope.password || '';
         if(username.length === 0 || password.length === 0) {
