@@ -11,7 +11,7 @@ let localUserId = "us-east-1:localUser";
 let links = [
     {
         "UserId": localUserId,
-        "Base64Hash": "dW5kZWZpbmVkOnVuZGVmaW5lZDp1cy1lYXN0LTE6NjJlYjY4ZGUtZTExYi00Y2E3LWJjM2ItYTA3Yjc0ZjYwMWFj",
+        "Base64Hash": "UNIT-TEST-IGNORE",
         currentLink: true
     }
 ];
