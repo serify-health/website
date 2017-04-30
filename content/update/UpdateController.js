@@ -32,6 +32,7 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, pageService, 
 	/******** SignInButton Block ********/
 	$scope.verifications = [];
 	$scope.AddRowButtonClick = function() {
+		eventHandler.interaction('Verifications', 'AddRow');
 		$scope.verifications.push({
 			Id: utilities.getGuid(),
 			Name: '',
@@ -41,6 +42,7 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, pageService, 
 		});
 	};
 	$scope.RemoveVerification = function(verificationId) {
+		eventHandler.interaction('Verifications', 'RemoveRow');
 		$scope.verifications.splice($scope.verifications.findIndex(function(v){ return v.Id === verificationId; }), 1);
 	};
 

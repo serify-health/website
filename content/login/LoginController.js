@@ -45,7 +45,8 @@ function($scope, pageService, userManager, linkManager, eventHandler) {
 
 	/******** SignInButton Block ********/
 	$scope.verifications = [];
-	$scope.AddVerificationsButtonClick = function(){
+	$scope.AddVerificationsButtonClick = function() {
+		eventHandler.interaction('Profile', 'StartVerifications');
 		pageService.NavigateToPage('update');
 	};
 	$scope.SaveProfileButtonClick = function() {

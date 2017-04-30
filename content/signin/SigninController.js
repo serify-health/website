@@ -35,7 +35,7 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
             storageProvider.Save('username', username);
             storageProvider.Save('password', password);
             storageProvider.Save('forgotPassword', true);
-            eventHandler.capture('ForgotPassword', {Title: 'Starting forgot password flow', User: username});
+            eventHandler.interaction('SignIn', 'ForgotPassword', 'Username', username);
             loginStatusProvider.startForgotPasswordPromise(username)
             .then(function(){
                 $scope.$apply(function(){
@@ -78,6 +78,7 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
     $scope.RegisterButtonClick = function() {
         storageProvider.Delete('forgotPassword');
         var signinUsername = ($scope.email || '').toLowerCase();
+        eventHandler.interaction('SignIn', 'Register', 'Username', signinUsername);
         var signinPassword = $scope.password || '';
         if (!$scope.email || !$scope.password) {
                 $scope.alert = { type: 'danger', msg: 'Please enter your email address and password.'};
@@ -91,7 +92,6 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
         else {
             $scope.HideLoginButton = true;
             $scope.closeAlert();
-            eventHandler.capture('RegisterUser', {Title: 'Starting new user flow', User: signinUsername});
             loginStatusProvider.signupPromise(signinUsername, signinPassword)
             .then(function() {
                 storageProvider.Save('username', signinUsername);
@@ -227,6 +227,7 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
         });
     }
     $scope.SignInButtonClick = function() {
+        eventHandler.interaction('SignIn', 'Login');
         var username = ($scope.email || '').toLowerCase();
         var password = $scope.password || '';
         if(username.length === 0 || password.length === 0) {
@@ -304,6 +305,7 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
     };
 
     $scope.ResendVerificationCodeButtonClick = function() {
+        eventHandler.interaction('SignIn', 'ResendVerificationCode');
         var username = ($scope.email || '').toLowerCase();
         var password = $scope.password || '';
         if(username.length === 0 || password.length === 0) {

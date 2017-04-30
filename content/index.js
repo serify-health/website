@@ -205,9 +205,11 @@ function($scope, $rootScope, $routeParams, $location, $uibModal, loginStatusProv
 	/******** SignInButton Block ********/
 	
 	$scope.AdminButtonClick = function() {
+		eventHandler.interaction('Index', 'Navigation', 'Admin');
 		pageService.NavigateToPage('admin');
 	};
 	$scope.ProfileButtonClick = function() {
+		eventHandler.interaction('Index', 'Navigation', 'Profile');
 		pageService.NavigateToPage('/');
 	};
 	$scope.PublicProfileButtonClick = function() {
@@ -217,9 +219,11 @@ function($scope, $rootScope, $routeParams, $location, $uibModal, loginStatusProv
 		});
 	};
 	$scope.PrivacyButtonClick = function() {
+		eventHandler.interaction('Index', 'Navigation', 'Policy');
 		pageService.NavigateToPage('policy');
 	};
 	$scope.TermsOfServiceButtonClick = function() {
+		eventHandler.interaction('Index', 'Navigation', 'Terms');
 		pageService.NavigateToPage('terms');
 	};
 	$scope.copyRightDate = new Date().getFullYear();

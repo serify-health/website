@@ -10,7 +10,9 @@ angular.module(SERIFYAPP).controller('viewController', [
 	'ngDialog',
 	'utilities',
 	'linkManager',
-function($scope, $routeParams, loginStatusProvider, pageService, userManager, ngDialog, utilities, linkManager) {
+	'eventHandler',
+function($scope, $routeParams, loginStatusProvider, pageService, userManager, ngDialog, utilities, linkManager, eventHandler) {
+	eventHandler.interaction('View', 'Profile');
 	loginStatusProvider.validateUnauthenticationPromise()
 	.then(function() {
 		return linkManager.ResolveHashPromise($routeParams.base64hash)
