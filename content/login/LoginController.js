@@ -64,4 +64,9 @@ function($scope, pageService, userManager, linkManager, eventHandler) {
 			});
 		});
 	};
+
+	$scope.CreateButtonClick = function() {
+		eventHandler.interaction('Index', 'CreateAccount');
+		$scope.SignInButtonClick();
+	};
 }]);
