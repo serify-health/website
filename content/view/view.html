@@ -23,7 +23,7 @@
 				<table id="publicProfileTable" class="table" ng-show="linkname && !error">
 					<thead>
 						<tr>
-							<th class="tableTopText text-center">Test</th>
+							<th class="col-xs-6 col-sm-4 tableTopText text-center">Test</th>
 							<th class="tableTopText text-center">Date</th>
 							<th class="tableTopText text-center">Serify Status</th>
 						</tr>
@@ -31,7 +31,7 @@
 					<tbody>
 						<tr ng-repeat="verification in verifications track by $index">
 							<th>
-								<input readonly ng-model="verification.Name" class="tableText">
+								<input readonly ng-model="verification.displayName" class="tableText">
 							</th>
 							<th>
 								<input readonly ng-model="verification.Date" class="tableText">
