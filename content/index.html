@@ -20,11 +20,11 @@
 			content="
 				default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval';
 				connect-src 'self' gap: https://graph.facebook.com https://*.amazonaws.com/;
-				style-src 'self' gap: https://maxcdn.bootstrapcdn.com https://cdnjs.cloudflare.com 'unsafe-inline';
+				style-src 'self' gap: https://maxcdn.bootstrapcdn.com https://cdnjs.cloudflare.com https://fonts.googleapis.com 'unsafe-inline';
+				font-src 'self' https://maxcdn.bootstrapcdn.com https://fonts.gstatic.com data:;
 				frame-src gap: https://*.facebook.com http://*.facebook.com;
 				script-src 'self' gap: 'sha256-DnYP+Zzlc1dNpka2302cKGbPxVdICnzHK2y0nUziS3I=' https://www.google-analytics.com/ https://cdnjs.cloudflare.com https://*.facebook.net https://graph.facebook.com/ http://connect.facebook.net/en_US/sdk.js 'unsafe-eval';
 				img-src 'self' data: file: gap: *;
-				font-src https://maxcdn.bootstrapcdn.com;
 				media-src *">
 		<meta name="format-detection" content="telephone=no">
 		<meta name="msapplication-tap-highlight" content="no">
@@ -38,6 +38,7 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.6.4/css/ngDialog-theme-plain.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.6.4/css/ngDialog-theme-default.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.min.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700">
 
 		<link rel="stylesheet" href="index.css">
 		<link rel="stylesheet" href="spinner.css">
@@ -52,8 +53,8 @@
 		<!-- End Google Analytics -->
 
 	</head>
-	<body ng-controller="navController" ng-style="isPublicProfile('/view') === true ? {'background': '#f5f8fa'} : {'background': 'white'}">
-		<nav class="navbar navbar-default" ng-controller="navController">
+	<body ng-controller="navController" ng-style="isPublicProfile() === true ? {'background': '#f5f8fa'} : {'background': 'white'}">
+		<nav class="navbar navbar-default">
 	        <div ng-cloak class="container-fluid">
 	            <!-- Brand and toggle get grouped for better mobile display -->
 	            <div class="navbar-header custom-navbar">
