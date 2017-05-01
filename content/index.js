@@ -110,9 +110,9 @@ function($scope, $rootScope, $routeParams, $location, $uibModal, loginStatusProv
 	$scope.isPublicProfile = function(viewLocation) {
 		if(pageService.GetCurrentPage().indexOf('/view') >= 0){
 		  // Found /view
-		  return true
+		  return true;
 		} else {
-			return false
+			return false;
 		}
 	};
 
