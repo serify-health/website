@@ -53,7 +53,7 @@
 		<!-- End Google Analytics -->
 
 	</head>
-	<body ng-controller="navController" ng-style="isPublicProfile() === true ? {'background': '#f5f8fa'} : {'background': 'white'}">
+	<body ng-controller="navController" ng-style="isPublicProfile() ? {'background': '#f5f8fa'} : {'background': 'white'}">
 		<nav class="navbar navbar-default">
 	        <div ng-cloak class="container-fluid">
 	            <!-- Brand and toggle get grouped for better mobile display -->
