@@ -107,6 +107,15 @@ function($scope, $rootScope, $routeParams, $location, $uibModal, loginStatusProv
 		return viewLocation === pageService.GetCurrentPage();
 	};
 
+	$scope.isPublicProfile = function(viewLocation) {
+		if(pageService.GetCurrentPage().indexOf('/view') >= 0){
+		  // Found /view
+		  return true
+		} else {
+			return false
+		}
+	};
+
 	/******** SignInButton Block ********/
 	$rootScope.authentication.IsAdmin = false;
 	$rootScope.authentication.UserAuthenticated = false;
