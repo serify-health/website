@@ -107,13 +107,8 @@ function($scope, $rootScope, $routeParams, $location, $uibModal, loginStatusProv
 		return viewLocation === pageService.GetCurrentPage();
 	};
 
-	$scope.isPublicProfile = function(viewLocation) {
-		if(pageService.GetCurrentPage().indexOf('/view') >= 0){
-		  // Found /view
-		  return true;
-		} else {
-			return false;
-		}
+	$scope.isPublicProfile = function() {
+		return pageService.GetCurrentPage().includes('/view');
 	};
 
 	/******** SignInButton Block ********/
