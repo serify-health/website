@@ -3,50 +3,46 @@
   <h5 >Serify has made it to the final round of the Big Ideas @ Berkeley 2017.</h5>
   <h5 class="mb-0"><a ng-click="voteButtonClick()">Help us go live, Vote Here!</a></h5>
 </div>
-<div class="ui" style="margin:0% 10% 0% 10%;width:80% !important">
-	<div ng-show="linkname && !error" class="do-not-animate" style="text-align: center; border: 3px solid #00CED1;">
-			<h4>Serify profile:</h4>
-			<h4>{{username}}</h4>
+<div class="publicProfile">
+	<div ng-show="linkname && !error" class="do-not-animate">
+			<h4 id="publicProfileUsername">{{username}}</h4>
 	</div>
-	<div ng-show="profile" style="text-align:center">
-		<br>
+	<div id="publicProfileInfo" ng-show="linkname && !error">
 		{{profile}}
+		<hr>
 	</div>
-	<div ng-show="!linkname && !error" class="do-not-animate" style="text-align: center; border: 3px solid #00CED1;">
-			<h4>Retrieving health record verifications...</h4>
+	<div ng-show="!linkname && !error" class="do-not-animate">
+			<h4 id="publicProfileUsername">Retrieving Profile...</h4>
 	</div>
-	<div ng-show="error" class="do-not-animate" style="text-align: center; border: 3px solid #FF0000;">
-			<h4>{{error}}</h4>
+	<div ng-show="error" class="do-not-animate">
+			<h4 id="publicProfileUsername">{{error}}</h4>
 	</div>
-	<hr>
 	<div>
-		<div class="container">
-			<div class="row clearfix">
-				<div class="col-md-12 column">
-					<table class="table table-bordered table-hover">
-						<thead>
-							<tr>
-								<th class="text-center">Test</th>
-								<th class="text-center">Date</th>
-								<th class="text-center">Serify Status</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr ng-repeat="verification in verifications track by $index">
-								<td>
-									<div style="text-align: center; padding-top:10px;"> {{ verification.displayName }} </div>
-								</td>
-								<td>
-									<div style="text-align: center; padding-top:10px;"> {{ verification.Date }} </div>
-								</td>
-								<td tabindex="-1" style="text-align:center">
-									<i style="color: limeGreen;padding-top: 5px;" ng-show="verification.Inverse" class="fa fa-minus fa-2x" aria-hidden="true"></i>
-									<i style="color: limeGreen;padding-top: 5px;" ng-show="!verification.Inverse" class="fa fa-check-square-o fa-2x" aria-hidden="true"></i>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
+		<div class="row clearfix">
+			<div class="col-md-12 column">
+				<table id="publicProfileTable" class="table" ng-show="linkname && !error">
+					<thead>
+						<tr>
+							<th class="col-xs-7 col-sm-4 tableTopText text-center">Test</th>
+							<th class="tableTopText text-center">Date</th>
+							<th class="tableTopText text-center">Serify Status</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="verification in verifications track by $index">
+							<th>
+								<input readonly ng-model="verification.displayName" class="tableText">
+							</th>
+							<th>
+								<input readonly ng-model="verification.Date" class="tableText">
+							</th>
+							<td tabindex="-1" style="text-align:center">
+								<i style="color: limeGreen;padding-top: 5px;" ng-show="verification.Inverse" class="fa fa-minus fa-2x" aria-hidden="true"></i>
+								<i style="color: limeGreen;padding-top: 5px;" ng-show="!verification.Inverse" class="fa fa-check-square-o fa-2x" aria-hidden="true"></i>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>
