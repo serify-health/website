@@ -19,7 +19,7 @@ function($scope, pageService, userManager, linkManager, eventHandler) {
 			var usernamemetadataPromise = userManager.GetUserDataPromise()
 			.then(function(user){
 				$scope.$apply(function(){
-					$scope.userProfile = (user.userData || {}).profile;
+					$scope.profile = (user.userData || {}).profile;
 					$scope.username = (user.userData || {}).username;
 					var originalVerifications = (user || {}).Verifications || [];
 					var verifications = originalVerifications.filter(function(v) { return TESTS[v.Name]; }).map(function(verification) {
@@ -49,25 +49,14 @@ function($scope, pageService, userManager, linkManager, eventHandler) {
 		eventHandler.interaction('Profile', 'StartVerifications');
 		pageService.NavigateToPage('update');
 	};
-	$scope.SaveProfileButtonClick = function() {
-		eventHandler.interaction('Profile', 'Save');
-		userManager.UpdateUserDataPromise({
-			profile: $scope.userProfile,
-			username: $scope.username
-		}).then(function(){
-			$scope.$apply(function(){
-				$scope.alert = { type: 'success', msg: 'Profile updated' };
-			});
-		}).catch(function(failure) {
-			console.error("Failed to save user profile: " + failure);
-			$scope.$apply(function(){
-				$scope.alert = { type: 'danger', msg: 'Failed to save profile. Please try again.' };
-			});
-		});
-	};
 
 	$scope.CreateButtonClick = function() {
 		eventHandler.interaction('Index', 'CreateAccount');
 		$scope.SignInButtonClick();
+	};
+
+	$scope.EditProfileButtonClick = function() {
+		eventHandler.interaction('Navigation', 'Edit');
+		pageService.NavigateToPage('edit');
 	};
 }]);

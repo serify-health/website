@@ -1,4 +1,4 @@
-<div class="loginScreen">
+<div class="mainProfilePage">
     <div ng-show="alert" style="text-align: center" uib-alert ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert()" dismiss-on-timeout="5000">{{alert.msg}}</div>
     <div ng-show="authentication.UserAuthenticated" class="ui ng-fade">
         <div style="text-align:center;">
@@ -12,59 +12,50 @@
                 <br> The data you enter here will be visible on your public profile.
             </form>
         </div>
-        <hr>
-        <div class="container">
-            <form class="form-horizontal" style="width: 100%;">
-                <div class="form-group">
-                    <label for="username" class="col-sm-1 col-md-3 control-label">Name </label>
-                    <div class="col-sm-11 col-md-6">
-                        <input id="nameTextBox" type="text" class="form-control" id="username" ng-model="username" placeholder="Anonymous">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="userProfile" class="col-sm-1 col-md-3 control-label">Info </label>
-                    <div class="col-sm-11 col-md-6">
-                        <textarea class="form-control" id="infoTextBox" name="userProfile" cols="50" rows="5" ng-model="userProfile"></textarea>
-                    </div>
-                </div>
-            </form>
-            <div style="text-align:center">
-                <button ng-click="SaveProfileButtonClick()" class="btn btn-default">Save</button>
-            </div>
+        <br>
+
+        <div class="do-not-animate">
+                <h4 id="publicProfileUsername">{{username}}</h4>
         </div>
-        <hr>
+        <div id="publicProfileInfo">
+            {{profile}}
+        </div>
         <div>
-            <div style="width:100%;padding:0 0 50px 0;border:0%;margin:auto;">
-                <div class="row clearfix" style="width: 100%; margin: auto;">
-                    <div class="column">
-                        <table class="table table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">Test</th>
-                                    <th class="text-center">Date</th>
-                                    <th class="text-center">Serify Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="verification in verifications track by $index">
-                                    <td>
-                                        <div style="text-align: center; padding-top:10px;"> {{ verification.Name }} </div>
-                                    </td>
-                                    <td>
-                                        <div style="text-align: center; padding-top:10px;"> {{ verification.Date }} </div>
-                                    </td>
-                                    <td tabindex="-1" style="text-align:center">
-                                        <i style="color: limeGreen;padding-top: 5px;" ng-show="verification.Status === 'Verified' && verification.Inverse" class="fa fa-minus fa-2x" aria-hidden="true"></i>
-                                        <i style="color: limeGreen;padding-top: 5px;" ng-show="verification.Status === 'Verified' && !verification.Inverse" class="fa fa-check-square-o fa-2x" aria-hidden="true"></i>
-                                        <i style="color: #f0ad4e;padding-top: 5px;" ng-show="verification.Status === 'Rejected'" class="fa fa-times-circle-o fa-2x" aria-hidden="true"></i>
-                                        <div style="padding-top: 10px;" ng-show="verification.Status === 'Unknown'">Request Submitted</div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+            <div class="row clearfix">
+                <div class="col-md-12 column">
+                    <table id="publicProfileTable" class="table">
+                        <thead>
+                            <tr>
+                                <th class="col-xs-7 col-sm-4 tableTopText text-center">Test</th>
+                                <th class="tableTopText text-center">Date</th>
+                                <th class="tableTopText text-center">Serify Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="verification in verifications track by $index">
+                                <td>
+                                    <div style="text-align: center; padding-top:10px;"> {{ verification.Name }} </div>
+                                </td>
+                                <td>
+                                    <div style="text-align: center; padding-top:10px;"> {{ verification.Date }} </div>
+                                </td>
+                                <td tabindex="-1" style="text-align:center">
+                                    <i style="color: limeGreen;padding-top: 5px;" ng-show="verification.Status === 'Verified' && verification.Inverse" class="fa fa-minus fa-2x" aria-hidden="true"></i>
+                                    <i style="color: limeGreen;padding-top: 5px;" ng-show="verification.Status === 'Verified' && !verification.Inverse" class="fa fa-check-square-o fa-2x" aria-hidden="true"></i>
+                                    <i style="color: #f0ad4e;padding-top: 5px;" ng-show="verification.Status === 'Rejected'" class="fa fa-times-circle-o fa-2x" aria-hidden="true"></i>
+                                    <div style="padding-top: 10px;" ng-show="verification.Status === 'Unknown'">Request Submitted</div>
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <button ng-click="AddVerificationsButtonClick()" class="btn btn-default">Add Additional Tests</button>
+                <hr style="border: 1px solid #5bc0de">
+                <div style="text-align: center">
+                    <button ng-click="AddVerificationsButtonClick()" class="btn btn-default">Add Additional Tests</button>
+                    <button ng-click="EditProfileButtonClick()" class="btn btn-default">Edit Profile</button>
+                </div>
+                <br>
             </div>
         </div>
     </div>

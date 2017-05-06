@@ -1,0 +1,55 @@
+<div class="loginScreen">
+    <div ng-show="alert" style="text-align: center" uib-alert ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert()" dismiss-on-timeout="5000">{{alert.msg}}</div>
+    <div ng-show="authentication.UserAuthenticated" class="ui ng-fade">
+        <div style="text-align: center">
+            <h4>Public Profile Information</h4>
+            Make your profile unique by adding something personal. This information will be shared on your public profile.
+        </div>
+        <br>
+        <div class="container">
+            <form class="form-horizontal" style="width: 100%;">
+                <div class="form-group">
+                    <label for="username" class="col-sm-1 col-md-3 control-label">Profile name </label>
+                    <div class="col-sm-11 col-md-6">
+                        <input id="nameTextBox" type="text" class="form-control" id="username" ng-model="username" placeholder="Anonymous">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="userProfile" class="col-sm-1 col-md-3 control-label">Info </label>
+                    <div class="col-sm-11 col-md-6">
+                        <textarea class="form-control" id="infoTextBox" name="userProfile" cols="50" rows="5" ng-model="userProfile"></textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <hr style="border: 2px solid #000000;">
+        <div style="text-align: center">
+            <h4>Private Medical Release Information</h4>
+            This information is required to verify released verifications. Anything entered below <strong>will not</strong> be shared on your public profile, unless explicitly released by you.
+        </div>
+        <br>
+        <div>
+            <table id="medicalReleaseTable"class="table table-bordered table-hover">
+                <tbody>
+                    <tr>
+                        <td class="text-center">Name</td>
+                        <td class="text-center">
+                            <input type="text" placeholder='Full Name' ng-model="demographics.name" class="form-control">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">Date of Birth</td>
+                        <td class="text-center">
+                            Y <select style="padding: 4px 5px;" ng-model="demographics.selectedDobYear" ng-options="x for x in years"></select>
+                            M <select style="padding: 4px 5px;" ng-model="demographics.selectedDobMonth" ng-options="x for x in months"></select>
+                            D <select style="padding: 4px 5px;" ng-model="demographics.selectedDobDay" ng-options="x for x in days"></select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="text-align:center">
+            <button ng-click="SaveProfileButtonClick()" class="btn btn-default">Save</button>
+        </div>
+    </div>
+</div>

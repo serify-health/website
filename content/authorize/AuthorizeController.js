@@ -193,7 +193,7 @@ function($scope, $window, $routeParams, loginStatusProvider, eventHandler, pageS
 	};
 
 	$scope.ProfileButtonClick = function() {
-		eventHandler.interaction('Authorization', 'Navigation', 'Profile');
+		eventHandler.interaction('Navigation', 'Profile');
 		pageService.NavigateToPage('/');
 		$window.location.reload();
 	};

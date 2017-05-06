@@ -65,6 +65,20 @@ body {
 	background-color: white;
 }
 
+.mainProfilePage {
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	background-color: white;
+	margin: auto;
+	border-radius: 4px;
+	border-top-color: #e5e6e9;
+	border-left-color: #dfe0e4;
+	border-right-color: #dfe0e4;
+	border-bottom-color: #cbccd0;
+}
+
 .publicProfile {
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
@@ -78,6 +92,13 @@ body {
 	border-left-color: #dfe0e4;
 	border-right-color: #dfe0e4;
 	border-bottom-color: #cbccd0;
+}
+
+.publicProfile > .ui {
+	margin: auto;
+	left: 0;
+	right: 0;
+	width: 70%;
 }
 
 #publicProfileTable {
@@ -121,7 +142,6 @@ body {
 }
 
 .ui {
-	text-align: center;
 	margin: auto;
 	left: 0;
 	right: 0;

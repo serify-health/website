@@ -10,6 +10,7 @@
 
 ## Repository
 This is an angular 1 website which is statically hosted in an AWS S3 bucket.  It targets backend lambda functions and dynamoDB.
+
 ## Development
 Development is templated using the make.js file. All the needed actions are present there. For ease, the AWS Architect to managed as a npm package. So all functionality is available directly from native nodejs, no having to write shell scripts just do some simple development.
 
@@ -43,6 +44,9 @@ AWS Architect uses [OpenAPI Factory](https://github.com/wparad/openapi-factory.j
 	npm run deploy
 ```
 	* Configure awsArchitect
+
+### Troubleshooting
+Resolving an angular element `var alertElement = angular.element(document.querySelector('#alert'));`
 
 ## Style:
 * http://www.december.com/html/spec/color3.html
