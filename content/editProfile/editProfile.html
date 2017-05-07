@@ -1,4 +1,7 @@
 <div class="loginScreen">
+    <div id="alert" ng-show="!demographicsComplete" style="text-align: center" uib-alert class="alert-warning" >
+        Please complete the Private Medical Release Information section of your profile before adding verifications.
+    </div>
     <div ng-show="alert" style="text-align: center" uib-alert ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert()" dismiss-on-timeout="5000">{{alert.msg}}</div>
     <div ng-show="authentication.UserAuthenticated" class="ui ng-fade">
         <div style="text-align: center">
@@ -32,9 +35,11 @@
             <table id="medicalReleaseTable"class="table table-bordered table-hover">
                 <tbody>
                     <tr>
-                        <td class="text-center">Name</td>
+                        <td class="text-center">Full Name</td>
                         <td class="text-center">
-                            <input type="text" placeholder='Full Name' ng-model="demographics.name" class="form-control">
+                            <input type="text" placeholder='First Name' ng-model="demographics.firstName" class="form-control">
+                            <input type="text" placeholder='Middle Name (optional)' ng-model="demographics.middleName" class="form-control">
+                            <input type="text" placeholder='Last Name' ng-model="demographics.lastName" class="form-control">
                         </td>
                     </tr>
                     <tr>
@@ -49,6 +54,7 @@
             </table>
         </div>
         <div style="text-align:center">
+            <button ng-click="CancelButtonClick()" class="btn btn-default">Cancel</button>
             <button ng-click="SaveProfileButtonClick()" class="btn btn-default">Save</button>
         </div>
     </div>

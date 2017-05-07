@@ -4,7 +4,11 @@
         Please complete the Private Medical Release Information section of your profile before submitting.
         <a ng-click="NavigateToEditProfileButtonClick()">Update Medical Release Information Here</a>
     </div>
-    <div ng-show="authentication.UserAuthenticated" class="ui">
+    <div ng-show="!demographicsComplete" style="text-align:center">
+        <button ng-click="CancelButtonClick()" class="btn btn-default">Cancel</button>
+        <button ng-click="NavigateToEditProfileButtonClick()" class="btn btn-default">Update Profile</button>
+    </div>
+    <div ng-show="authentication.UserAuthenticated && demographicsComplete" class="ui">
         <div>
             <div class="container" style="width:100%;padding:0;border:0%;margin:auto;">
                 <div class="row clearfix" style="width: 100%; margin: auto;">

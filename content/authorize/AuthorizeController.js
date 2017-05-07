@@ -116,11 +116,21 @@ function($scope, $window, $routeParams, loginStatusProvider, eventHandler, pageS
 						});
 				}
 				console.error(JSON.stringify({Title: 'Failed to verify new password', Error: error.stack || error.toString(), Detail: error}, null, 2));
-				return openPopup();
+				return openPopup()
+				.then(function(){
+					eventHandler.interaction('ForgotPassowrd', 'Complete');
+					pageService.NavigateToPage('/');
+					$window.location.reload();
+				});
 			});
 		}
 		else {
-			openPopup();
+			openPopup()
+			.then(function(){
+				eventHandler.interaction('ForgotPassowrd', 'Complete');
+				pageService.NavigateToPage('/');
+				$window.location.reload();
+			});
 		}
 	}
 
@@ -151,10 +161,6 @@ function($scope, $window, $routeParams, loginStatusProvider, eventHandler, pageS
 					});
 				});
 			}
-		})
-		.then(function(){
-			pageService.NavigateToPage('/');
-			$window.location.reload();
 		});
 	};
 	$scope.AgreementButtonClick = function() {
@@ -163,7 +169,8 @@ function($scope, $window, $routeParams, loginStatusProvider, eventHandler, pageS
 		if($routeParams.pin && username && password) {
 			return loginStatusProvider.confirmUsernamePromise($routeParams.pin, username, password)
 			.then(function(){
-				pageService.NavigateToPage('/');
+				eventHandler.interaction('Profile', 'AfterAuthorization');
+				pageService.NavigateToPage('edit');
 				$window.location.reload();
 			})
 			.catch(function(error) {
@@ -175,7 +182,12 @@ function($scope, $window, $routeParams, loginStatusProvider, eventHandler, pageS
 						case 'InvalidParameterException':
 							return signInUser(username, password);
 						default:
-							return openPopup();
+							return openPopup()
+							.then(function(){
+								eventHandler.interaction('Profile', 'AfterAuthorization');
+								pageService.NavigateToPage('edit');
+								$window.location.reload();
+							});
 					}
 				}, 300);
 			})
@@ -184,7 +196,12 @@ function($scope, $window, $routeParams, loginStatusProvider, eventHandler, pageS
 			});
 		}
 		else if($routeParams.pin) {
-			openPopup();
+			openPopup()
+			.then(function(){
+				eventHandler.interaction('Profile', 'AfterAuthorization');
+				pageService.NavigateToPage('edit');
+				$window.location.reload();
+			});
 		}
 		else {
 			pageService.NavigateToPage('/');

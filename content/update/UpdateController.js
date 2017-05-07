@@ -32,7 +32,7 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, pageService, 
 			.then(function(user){
 				$scope.$apply(function(){
 					$scope.demographics = (user.userData || {}).demographics || {};
-					$scope.demographicsComplete = !!($scope.demographics && $scope.demographics.name && $scope.demographics.selectedDobDay && $scope.demographics.selectedDobMonth && $scope.demographics.selectedDobYear);
+					$scope.demographicsComplete = !!($scope.demographics && $scope.demographics.firstName && $scope.demographics.lastName && $scope.demographics.selectedDobDay && $scope.demographics.selectedDobMonth && $scope.demographics.selectedDobYear);
 					$scope.isLoading = false;
 				});
 			});
@@ -93,7 +93,7 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, pageService, 
 
 		var userDetails = {
 			dob: moment($scope.demographics.selectedDobYear + '-' + $scope.demographics.selectedDobMonth + '-' + $scope.demographics.selectedDobDay, 'YYYY-MM-DD').format(),
-			name: $scope.demographics.name,
+			name: '[' + $scope.demographics.firstName + '],[' + ($scope.demographics.middleName || '') + '],[' + $scope.demographics.lastName + ']',
 			clinicInfo: $scope.clinicInfo,
 			clinicName: $scope.clinicName,
 			signature: signaturePad.toDataURL()
@@ -124,6 +124,11 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, pageService, 
 	$scope.ClearSignatureButtonClick = function() {
 		eventHandler.interaction('Verifications', 'ClearedSignature');
 		signaturePad.clear();
+	};
+
+	$scope.CancelButtonClick = function() {
+		eventHandler.interaction('Navigation', 'CancelUpdatingMedicalRelease');
+		pageService.NavigateToPage('/');
 	};
 
 	$scope.NavigateToEditProfileButtonClick = function() {

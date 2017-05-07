@@ -14,7 +14,9 @@ function($scope, pageService, userManager, eventHandler) {
 	$scope.username = null;
 	$scope.userProfile = null;
 	$scope.demographics = {
-		name: null,
+		firstName: null,
+		middleName: null,
+		lastName: null,
 		selectedDobYear: null,
 		selectedDobMonth: null,
 		selectedDobDay: null
@@ -23,6 +25,9 @@ function($scope, pageService, userManager, eventHandler) {
 	$scope.closeAlert = function(){ $scope.alert = null; };
 	/******** SignInButton Block ********/
 	$scope.links = [];
+	$scope.demographicsComplete = function() {
+		return !!($scope.demographics && $scope.demographics.firstName && $scope.demographics.lastName && $scope.demographics.selectedDobDay && $scope.demographics.selectedDobMonth && $scope.demographics.selectedDobYear);
+	};
 	$scope.$watch('authentication.complete', SetupUser, true);
 	function SetupUser() {
 		if ($scope.authentication.UserAuthenticated) {
@@ -38,11 +43,18 @@ function($scope, pageService, userManager, eventHandler) {
 		}
 	}
 
-	/******** SignInButton Block ********/
+	$scope.CancelButtonClick = function() {
+		eventHandler.interaction('Profile', 'CancelEdit');
+		pageService.NavigateToPage('/');
+	};
+
 	$scope.SaveProfileButtonClick = function() {
 		eventHandler.interaction('Profile', 'Save');
-		if(!$scope.demographics.selectedDobDay || !$scope.demographics.selectedDobMonth || !$scope.demographics.selectedDobDay)
-		{
+		if(!$scope.demographics.firstName && !$scope.demographics.lastName) {
+			$scope.alert = { type: 'danger', msg: 'Please enter your full name.' };
+			return;
+		}
+		if(!$scope.demographics.selectedDobYear || !$scope.demographics.selectedDobMonth || !$scope.demographics.selectedDobDay) {
 			$scope.alert = { type: 'danger', msg: 'DOB is required.' };
 			return;
 		}
@@ -50,14 +62,22 @@ function($scope, pageService, userManager, eventHandler) {
 			$scope.alert = { type: 'danger', msg: 'The minimum age for Serify is 13, please see our information page for details.' };
 			return;
 		}
-		if(!$scope.demographics.name) {
-			$scope.alert = { type: 'danger', msg: 'Please enter your full name.' };
-			return;
+
+		var demographics = {
+			selectedDobYear: $scope.demographics.selectedDobYear,
+			selectedDobMonth: $scope.demographics.selectedDobMonth,
+			selectedDobDay: $scope.demographics.selectedDobDay,
+			firstName: $scope.demographics.firstName,
+			lastName: $scope.demographics.lastName
+		};
+		if ($scope.demographics.middleName && $scope.demographics.middleName.trim().length !== 0) {
+			demographics.middleName = $scope.demographics.middleName;
 		}
+
 		userManager.UpdateUserDataPromise({
 			profile: $scope.userProfile,
 			username: $scope.username,
-			demographics: $scope.demographics
+			demographics: demographics
 		}).then(function(){
 			$scope.$apply(function(){
 				$scope.alert = { type: 'success', msg: 'Profile updated' };
