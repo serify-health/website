@@ -16,13 +16,10 @@ let links = [
     }
 ];
 api.get('/link', (event, context) => {
-    return new Api.Response(links[0], 200, { 'Content-Type': 'application/json' });
+    return new Api.Response(users[0], 200, { 'Content-Type': 'application/json' });
 });
 api.post('/link', (event, context) => {
     return new Api.Response(links.find(l => l.currentLink).Base64Hash, 200, { 'Content-Type': 'application/json' });
-});
-api.get('/links', (event, context) => {
-    return new Api.Response(links, 200, { 'Content-Type': 'application/json' });
 });
 
 let verifications = [
@@ -61,7 +58,10 @@ let users = [
     {
         userId: localUserId,
 		UserId: localUserId,
-        userData: {},
+        userData: {
+            username: 'Tester Username',
+            profile: 'This is the test profile'
+        },
         Verifications: verifications,
         verifications: verifications,
         admin: true
