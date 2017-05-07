@@ -32,44 +32,40 @@ function($scope, $routeParams, loginStatusProvider, pageService, userManager, ng
 	loginStatusProvider.validateUnauthenticationPromise()
 	.then(function() {
 		return linkManager.ResolveHashPromise($routeParams.base64hash)
-		.then(function(data) {
-			if(data === null) {
+		.then(function(user) {
+			if(user === null) {
 				return Promise.reject({title: 'No data for hash', base64Hash: $routeParams.base64hash});
 			}
-			return userManager.GetUserDataPromise(data.UserId)
-			.then(function(user){
-				$scope.$apply(function(){
-					var nonNullUser = user || {};
-					var userData = nonNullUser.userData || {};
-					$scope.linkname = data.Linkname || 'NULL';
-					$scope.username = userData.username || data.Username || 'Anonymous';
-					$scope.profile = userData.profile;
-					var verifications = nonNullUser.Verifications || [];
-					verifications.map(function(verification) {
-						verification.Inverse = verification.Name !== 'HPV' && verification.Name !== 'PrEP';
-					});
-					var uniqueVerificationsMap = {};
-					verifications.filter(function(v) { return TESTS[v.Name] && v.Status === 'Verified'; }).map(function(v){
-						v.displayName = TESTS[v.Name || v.name].name;
-						if(!uniqueVerificationsMap[v.Name]) {
+			$scope.$apply(function() {
+				$scope.user = user;
+				var userData = user.userData || {};
+				$scope.username = userData.username || 'Anonymous';
+				$scope.profile = userData.profile;
+				var verifications = user.verifications || [];
+				verifications.map(function(verification) {
+					verification.Inverse = verification.Name !== 'HPV' && verification.Name !== 'PrEP';
+				});
+				var uniqueVerificationsMap = {};
+				verifications.filter(function(v) { return TESTS[v.Name] && v.Status === 'Verified'; }).map(function(v){
+					v.displayName = TESTS[v.Name || v.name].name;
+					if(!uniqueVerificationsMap[v.Name]) {
+						uniqueVerificationsMap[v.Name] = v;
+					}
+					else {
+						var d = uniqueVerificationsMap[v.Name].Date;
+						var formatMap = {
+							'0': null,
+							'1': 'MM/YYYY',
+							'2': 'MM/DD/YYYY'
+						};
+						var currentDate = moment(d, formatMap[d.split('/').length - 1]);
+						var possibleDate = moment(v.Date, formatMap[v.Date.split('/').length - 1]);
+						if (possibleDate > currentDate) {
 							uniqueVerificationsMap[v.Name] = v;
 						}
-						else {
-							var d = uniqueVerificationsMap[v.Name].Date;
-							var formatMap = {
-								'0': null,
-								'1': 'MM/YYYY',
-								'2': 'MM/DD/YYYY'
-							};
-							var currentDate = moment(d, formatMap[d.split('/').length - 1]);
-							var possibleDate = moment(v.Date, formatMap[v.Date.split('/').length - 1]);
-							if (possibleDate > currentDate) {
-								uniqueVerificationsMap[v.Name] = v;
-							}
-						}
-					});
-					$scope.verifications = Object.keys(uniqueVerificationsMap).map(function(v){ return uniqueVerificationsMap[v]; });
+					}
 				});
+				$scope.verifications = Object.keys(uniqueVerificationsMap).map(function(v){ return uniqueVerificationsMap[v]; });
 			});
 		});
 	})
