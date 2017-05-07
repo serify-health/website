@@ -41,7 +41,7 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, pageService, 
 				$scope.AddRowButtonClick();
 			}
 		}
-	};
+	}
 
 	/******** SignInButton Block ********/
 	$scope.verifications = [];
@@ -129,5 +129,5 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, pageService, 
 	$scope.NavigateToEditProfileButtonClick = function() {
 		eventHandler.interaction('Navigation', 'UpdateMedicalRelease');
 		pageService.NavigateToPage('edit');
-	}
+	};
 }]);

@@ -76,4 +76,4 @@ function($scope, pageService, userManager, eventHandler) {
 	$scope.DeleteProfileButtonClick = function() {
 
 	};
-}]);;
+}]);
