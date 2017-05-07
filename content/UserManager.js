@@ -24,12 +24,10 @@ angular.module(SERIFYAPP).service('userManager', [ 'apiService', 'loginStatusPro
 			});
 		});
 	};
-	this.GetUserDataPromise = function(userId) {
-		return apiService.getPromise('GET', '/user', {
-			user: userId
-		})
+	this.GetUserDataPromise = function() {
+		return apiService.getPromise('GET', '/user', {})
 		.catch(function(failure) {
-			console.error(JSON.stringify({Title: 'Failed to get user', UserId: userId, Error: failure.stack || failure.toString(), Detail: failure}, null, 2));
+			console.error(JSON.stringify({Title: 'Failed to get current user', Error: failure.stack || failure.toString(), Detail: failure}, null, 2));
 			return Promise.reject({
 				Error: 'Unable to get user profile, please try again later.',
 				Detail: failure
