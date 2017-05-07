@@ -27,9 +27,9 @@ function($scope, pageService, userManager, eventHandler) {
 	$scope.links = [];
 	$scope.isLoading = true;
 	$scope.demographicsComplete = function() {
-		return !!($scope.demographics && $scope.demographics.firstName && $scope.demographics.lastName
-			&& $scope.demographics.selectedDobDay && $scope.demographics.selectedDobMonth && $scope.demographics.selectedDobYear)
-			&& $scope.demographics.firstName.trim().length !== 0 && $scope.demographics.lastName.trim().length !== 0;
+		return !!($scope.demographics && $scope.demographics.firstName && $scope.demographics.lastName &&
+			$scope.demographics.selectedDobDay && $scope.demographics.selectedDobMonth && $scope.demographics.selectedDobYear) &&
+			$scope.demographics.firstName.trim().length !== 0 && $scope.demographics.lastName.trim().length !== 0;
 	};
 	$scope.$watch('authentication.complete', SetupUser, true);
 	function SetupUser() {
