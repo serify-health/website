@@ -12,7 +12,7 @@
 		<hr>
 	</div>
 	<div ng-show="!linkname && !error" class="do-not-animate">
-			<h4 id="publicProfileUsername">Retrieving Profile...</h4>
+			<img id="spinner" ng-src="image/spinner.gif" class="fadeFast">
 	</div>
 	<div ng-show="error" class="do-not-animate">
 			<h4 id="publicProfileUsername">{{error}}</h4>
