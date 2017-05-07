@@ -1,5 +1,5 @@
 <div class="loginScreen">
-    <div id="alert" ng-show="!demographicsComplete" style="text-align: center" uib-alert class="alert-warning" >
+    <div id="alert" ng-show="!isLoading && !demographicsComplete()" style="text-align: center" uib-alert class="alert-warning" >
         Please complete the Private Medical Release Information section of your profile before adding verifications.
     </div>
     <div ng-show="alert" style="text-align: center" uib-alert ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert()" dismiss-on-timeout="5000">{{alert.msg}}</div>
@@ -55,7 +55,7 @@
         </div>
         <div style="text-align:center">
             <button ng-click="CancelButtonClick()" class="btn btn-default">Cancel</button>
-            <button ng-click="SaveProfileButtonClick()" class="btn btn-default">Save</button>
+            <button ng-disabled="!demographicsComplete()" ng-click="SaveProfileButtonClick()" class="btn btn-default">Save</button>
         </div>
     </div>
 </div>

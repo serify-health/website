@@ -25,8 +25,11 @@ function($scope, pageService, userManager, eventHandler) {
 	$scope.closeAlert = function(){ $scope.alert = null; };
 	/******** SignInButton Block ********/
 	$scope.links = [];
+	$scope.isLoading = true;
 	$scope.demographicsComplete = function() {
-		return !!($scope.demographics && $scope.demographics.firstName && $scope.demographics.lastName && $scope.demographics.selectedDobDay && $scope.demographics.selectedDobMonth && $scope.demographics.selectedDobYear);
+		return !!($scope.demographics && $scope.demographics.firstName && $scope.demographics.lastName
+			&& $scope.demographics.selectedDobDay && $scope.demographics.selectedDobMonth && $scope.demographics.selectedDobYear)
+			&& $scope.demographics.firstName.trim().length !== 0 && $scope.demographics.lastName.trim().length !== 0;
 	};
 	$scope.$watch('authentication.complete', SetupUser, true);
 	function SetupUser() {
@@ -37,6 +40,7 @@ function($scope, pageService, userManager, eventHandler) {
 					$scope.userProfile = (user.userData || {}).profile;
 					$scope.username = (user.userData || {}).username;
 					$scope.demographics = (user.userData || {}).demographics || {};
+					$scope.isLoading = false;
 				});
 			});
 			return Promise.all([usernamemetadataPromise]).catch(function(f){ console.log(f); });
