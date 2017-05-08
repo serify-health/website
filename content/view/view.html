@@ -4,15 +4,15 @@
   <h5 class="mb-0"><a ng-click="voteButtonClick()">Help us go live, Vote Here!</a></h5>
 </div>
 <div class="publicProfile">
-	<div ng-show="linkname && !error" class="do-not-animate">
+	<div ng-show="user && !error" class="do-not-animate">
 			<h4 id="publicProfileUsername">{{username}}</h4>
 	</div>
-	<div id="publicProfileInfo" ng-show="linkname && !error">
+	<div id="publicProfileInfo" ng-show="user && !error">
 		{{profile}}
 		<hr>
 	</div>
-	<div ng-show="!linkname && !error" class="do-not-animate">
-			<img id="spinner" ng-src="image/spinner.gif" class="fadeFast">
+	<div ng-show="!user && !error" class="do-not-animate">
+		<img id="spinner" src="image/spinner.gif" class="fadeFast">
 	</div>
 	<div ng-show="error" class="do-not-animate">
 			<h4 id="publicProfileUsername">{{error}}</h4>
@@ -20,7 +20,7 @@
 	<div>
 		<div class="row clearfix">
 			<div class="col-md-12 column">
-				<table id="publicProfileTable" class="table" ng-show="linkname && !error">
+				<table id="publicProfileTable" class="table" ng-show="user && !error">
 					<thead>
 						<tr>
 							<th class="col-xs-7 col-sm-4 tableTopText text-center">Test</th>
