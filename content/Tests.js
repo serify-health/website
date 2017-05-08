@@ -22,7 +22,7 @@ var TESTS = (function(){
             name: "HPV Vaccine"
         },
         "PrEP": {
-            name: "Pre-exposure prophylaxis"
+            name: "PrEP"
         }
     };
 })();

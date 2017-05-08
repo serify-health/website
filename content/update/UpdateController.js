@@ -14,20 +14,34 @@ angular.module(SERIFYAPP).controller('updateController', [
 	'eventHandler',
 function($scope, $anchorScroll, $routeParams, loginStatusProvider, pageService, userManager, ngDialog, utilities, linkManager, eventHandler) {
 	/******** SignInButton Block ********/
+	$scope.isLoading = true;
 	$scope.closeAlert = function(){ $scope.alert = null; };
 	$scope.links = [];
 	$scope.tests = Object.keys(TESTS).map(function(key){
 		return { id: key, name: TESTS[key].name };
 	});
 	var currentYear = new Date().getFullYear();
-	$scope.years = Array.apply(null, {length:100}).map(Number.call, Number).map(function(i) { return currentYear - i - 13; });
-	$scope.months = Array.apply(null, {length:12}).map(Number.call, Number).map(function(i) { return i + 1; });
-	$scope.days = Array.apply(null, {length:31}).map(Number.call, Number).map(function(i) { return i + 1; });
-	$scope.selectedDobYear = null;
-	$scope.selectedDobMonth = null;
-	$scope.selectedDobDay = null;
 	$scope.verificationMonths = Array.apply(null, {length:12}).map(Number.call, Number).map(function(i) { return i + 1; });
 	$scope.verificationYears = [0, 1, 2, 3, 4, 5].map(function(i) { return currentYear - i; });
+	$scope.demographicsComplete = false;
+	$scope.demographics = null;
+	$scope.$watch('authentication.complete', SetupUser, true);
+	function SetupUser() {
+		if ($scope.authentication.UserAuthenticated) {
+			userManager.GetUserDataPromise()
+			.then(function(user){
+				$scope.$apply(function(){
+					$scope.demographics = (user.userData || {}).demographics || {};
+					$scope.demographicsComplete = !!($scope.demographics && $scope.demographics.firstName && $scope.demographics.lastName && $scope.demographics.selectedDobDay && $scope.demographics.selectedDobMonth && $scope.demographics.selectedDobYear);
+					$scope.isLoading = false;
+				});
+			});
+
+			if ($scope.verifications.length === 0) {
+				$scope.AddRowButtonClick();
+			}
+		}
+	}
 
 	/******** SignInButton Block ********/
 	$scope.verifications = [];
@@ -49,7 +63,6 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, pageService, 
 	var canvas = document.querySelector("canvas");
 	var signaturePad = new SignaturePad(canvas);
 
-	var alertElement = angular.element(document.querySelector('#alert'));
 	$scope.SubmitVerificationsButtonClick = function() {
 		eventHandler.interaction('Verifications', 'SubmitAttempt');
 		if($scope.verifications.length < 1) {
@@ -62,24 +75,8 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, pageService, 
 			$anchorScroll();
 			return;
 		}
-		if(!$scope.selectedDobDay || !$scope.selectedDobMonth || !$scope.selectedDobDay)
-		{
-			$scope.alert = { type: 'danger', msg: 'DOB is required.' };
-			$anchorScroll();
-			return;
-		}
-		if(moment().add(-13, 'years') < moment($scope.selectedDobYear + '-' + $scope.selectedDobMonth + '-' + $scope.selectedDobDay, 'YYYY-MM-DD')) {
-			$scope.alert = { type: 'danger', msg: 'The minimum age for Serify is 13, please see our information page for details.' };
-			$anchorScroll();
-			return;
-		}
 		if(!$scope.authentication.UserAuthenticated) {
 			$scope.alert = { type: 'danger', msg: 'Create account to get your test results verified.' };
-			$anchorScroll();
-			return;
-		}
-		if(!$scope.name) {
-			$scope.alert = { type: 'danger', msg: 'Please enter your full name.' };
 			$anchorScroll();
 			return;
 		}
@@ -95,17 +92,19 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, pageService, 
 		}
 
 		var userDetails = {
-			dob: moment($scope.selectedDobYear + '-' + $scope.selectedDobMonth + '-' + $scope.selectedDobDay, 'YYYY-MM-DD').format(),
-			name: $scope.name,
+			dob: moment($scope.demographics.selectedDobYear + '-' + $scope.demographics.selectedDobMonth + '-' + $scope.demographics.selectedDobDay, 'YYYY-MM-DD').format(),
+			name: '[' + $scope.demographics.firstName + '],[' + ($scope.demographics.middleName || '') + '],[' + $scope.demographics.lastName + ']',
 			clinicInfo: $scope.clinicInfo,
 			clinicName: $scope.clinicName,
 			signature: signaturePad.toDataURL()
 		};
 		var verifications = $scope.verifications.filter(function(v){ return v.Name; }).map(function(v) {
-			v.Date = v.Month + '/' + v.Year;
-			delete v.Year;
-			delete v.Month;
-			return v;
+			return {
+				Date: v.Month + '/' + v.Year,
+				Name: v.Name,
+				Id: v.Id,
+				Status: v.Status
+			};
 		});
 		eventHandler.interaction('Verifications', 'Submitted');
 		var verificationPromise = userManager.VerificationRequest(verifications, userDetails)
@@ -125,5 +124,15 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, pageService, 
 	$scope.ClearSignatureButtonClick = function() {
 		eventHandler.interaction('Verifications', 'ClearedSignature');
 		signaturePad.clear();
+	};
+
+	$scope.CancelButtonClick = function() {
+		eventHandler.interaction('Navigation', 'CancelUpdatingMedicalRelease');
+		pageService.NavigateToPage('/');
+	};
+
+	$scope.NavigateToEditProfileButtonClick = function() {
+		eventHandler.interaction('Navigation', 'UpdateMedicalRelease');
+		pageService.NavigateToPage('edit');
 	};
 }]);

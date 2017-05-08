@@ -1,6 +1,14 @@
 <div class="loginScreen">
     <div id="alert" ng-show="alert" style="text-align: center" uib-alert ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert()" dismiss-on-timeout="5000">{{alert.msg}}</div>
-    <div ng-show="authentication.UserAuthenticated" class="ui">
+    <div id="alert" ng-show="!isLoading && !demographicsComplete" style="text-align: center" uib-alert class="alert-danger" >
+        Please complete the Private Medical Release Information section of your profile before submitting.
+        <a ng-click="NavigateToEditProfileButtonClick()">Update Medical Release Information Here</a>
+    </div>
+    <div ng-show="!demographicsComplete" style="text-align:center">
+        <button ng-click="CancelButtonClick()" class="btn btn-default">Cancel</button>
+        <button ng-click="NavigateToEditProfileButtonClick()" class="btn btn-default">Update Profile</button>
+    </div>
+    <div ng-show="authentication.UserAuthenticated && demographicsComplete" class="ui">
         <div>
             <div class="container" style="width:100%;padding:0;border:0%;margin:auto;">
                 <div class="row clearfix" style="width: 100%; margin: auto;">
@@ -33,7 +41,9 @@
                         </table>
                     </div>
                 </div>
-                <button ng-click="AddRowButtonClick()" class="btn btn-default"><i class="fa fa-plus-square" aria-hidden="true"></i> Add additional test to verify</button>
+                <div style="text-align: center">
+                    <button ng-click="AddRowButtonClick()" class="btn btn-default"><i class="fa fa-plus-square" aria-hidden="true"></i> Add additional test to verify</button>
+                </div>
             </div>
             <hr>
             <div style="text-align: center">
@@ -42,20 +52,6 @@
             <div>
                 <table id="medicalReleaseTable"class="table table-bordered table-hover">
                     <tbody>
-                        <tr>
-                            <td class="text-center">Name</td>
-                            <td class="text-center">
-                                <input type="text" placeholder='Full Name (as it would appear on your records)' ng-model="name" class="form-control">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">Date of Birth</td>
-                            <td class="text-center">
-                                Y <select style="padding: 4px 5px;" ng-model="selectedDobYear" ng-options="x for x in years"></select>
-                                M <select style="padding: 4px 5px;" ng-model="selectedDobMonth" ng-options="x for x in months"></select>
-                                D <select style="padding: 4px 5px;" ng-model="selectedDobDay" ng-options="x for x in days"></select>
-                            </td>
-                        </tr>
                         <tr>
                             <td class="text-center">Name of Clinic</td>
                             <td class="text-center">
@@ -97,7 +93,7 @@
             </div>
             <div style="text-align:center; margin-top: 15px; margin-bottom: 50px;">
                 <button type="button" class="btn btn-default" ng-click="ClearSignatureButtonClick()" style="margin-left: 5px; margin-right: 5px"><i class="fa fa-refresh" aria-hidden="true"></i> Clear</button>
-                <button class="btn btn-default" style="margin-left: 5px;" ng-click="SubmitVerificationsButtonClick()">Submit</button>
+                <button ng-disabled="!demographicsComplete" class="btn btn-default" style="margin-left: 5px;" ng-click="SubmitVerificationsButtonClick()">Submit</button>
             </div>
         </div>
     </div>
