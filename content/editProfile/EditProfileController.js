@@ -6,7 +6,9 @@ angular.module(SERIFYAPP).controller('editProfileController', [
 	'pageService',
 	'userManager',
 	'eventHandler',
-function($scope, pageService, userManager, eventHandler) {
+	'ngDialog',
+	'logoutService',
+function($scope, pageService, userManager, eventHandler, ngDialog, logoutService) {
 	var currentYear = new Date().getFullYear();
 	$scope.years = Array.apply(null, {length:100}).map(Number.call, Number).map(function(i) { return currentYear - i - 13; });
 	$scope.months = Array.apply(null, {length:12}).map(Number.call, Number).map(function(i) { return i + 1; });
@@ -97,7 +99,40 @@ function($scope, pageService, userManager, eventHandler) {
 		});
 	};
 
-	$scope.DeleteProfileButtonClick = function() {
-
+	$scope.DeactiveProfileButtonClick = function() {
+		return ngDialog.open({
+			closeByNavigation: true,
+			width: 320,
+			template: 'editProfile/deactivate.html',
+			controller: ['$scope', function($scope) {
+				$scope.closeAlert = function(){ $scope.alert = null; };
+				$scope.alert = null;
+				$scope.hideLoading = false;
+				$scope.reason = null;
+				$scope.CancelButtonClick = function() {
+					$scope.closeThisDialog({ deactivate: false });
+				};
+				$scope.DeactivateButtonClick = function() {
+					eventHandler.interaction('Profile', 'Deactivate');
+					$scope.hideLoading = true;
+					userManager.DeactivateUser({ reason: $scope.reason })
+					.then(function() {
+						$scope.$apply(function() {
+							$scope.closeThisDialog({ deactivate: true });
+						});
+					}, function() {
+						$scope.$apply(function() {
+							$scope.alert = { type: 'danger', msg: 'Failed to deactivate profile.' };
+							$scope.hideLoading = false;
+						});
+						throw 'Failed to deactivate profile';
+					})
+					.then(function() {
+						return logoutService.Logout();
+					})
+				};
+			}],
+			className: 'ngdialog-theme-default'
+		}).closePromise;
 	};
 }]);

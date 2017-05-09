@@ -8,11 +8,10 @@ angular.module(SERIFYAPP).controller('updateController', [
 	'loginStatusProvider',
 	'pageService',
 	'userManager',
-	'ngDialog',
 	'utilities',
 	'linkManager',
 	'eventHandler',
-function($scope, $anchorScroll, $routeParams, loginStatusProvider, pageService, userManager, ngDialog, utilities, linkManager, eventHandler) {
+function($scope, $anchorScroll, $routeParams, loginStatusProvider, pageService, userManager, utilities, linkManager, eventHandler) {
 	/******** SignInButton Block ********/
 	$scope.isLoading = true;
 	$scope.closeAlert = function(){ $scope.alert = null; };
