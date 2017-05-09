@@ -11,8 +11,8 @@
 		{{profile}}
 		<hr>
 	</div>
-	<div ng-show="!user && !error" class="do-not-animate">
-		<img id="spinner" src="image/spinner.gif" class="fadeFast">
+	<div ng-show="!user && !error" style="text-align: center" class="do-not-animate">
+		<img class="spinner" src="image/spinner.gif" class="fadeFast">
 	</div>
 	<div ng-show="error" class="do-not-animate">
 			<h4 id="publicProfileUsername">{{error}}</h4>

@@ -153,6 +153,11 @@ body {
 	padding: 0;
 }
 
+.spinner {
+	height: 25px;
+	width: auto;
+}
+
 h1 {
 	font-size: 24px;
 	font-weight: normal;
@@ -170,7 +175,7 @@ h1 {
 	margin: auto;
 }
 
-#spinner {
+#spinnerSignUp {
 	height: 25px;
 	width: auto;
 	position: absolute;
