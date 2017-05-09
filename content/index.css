@@ -176,8 +176,6 @@ h1 {
 }
 
 #spinnerSignUp {
-	height: 25px;
-	width: auto;
 	position: absolute;
 	z-index: 10;
 	margin: 57.5% 134.5px 0 134.5px;
