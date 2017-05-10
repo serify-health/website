@@ -129,7 +129,7 @@ function($scope, pageService, userManager, eventHandler, ngDialog, logoutService
 					})
 					.then(function() {
 						return logoutService.Logout();
-					})
+					});
 				};
 			}],
 			className: 'ngdialog-theme-default'
