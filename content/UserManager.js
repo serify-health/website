@@ -77,4 +77,17 @@ angular.module(SERIFYAPP).service('userManager', [ 'apiService', 'loginStatusPro
 			});
 		});
 	};
+	this.DeactivateUser = function(reasonData) {
+		return apiService.getPromise('DELETE', '/user', reasonData)
+		.then(function(result) {
+			return result;
+		})
+		.catch(function(failure) {
+			console.error(JSON.stringify({Title: 'Failed to deactivate user.', Error: failure.stack || failure.toString(), Detail: failure}, null, 2));
+			return Promise.reject({
+				Error: 'Unable to deactivate user.',
+				Detail: failure
+			});
+		});
+	};
 }]);

@@ -1,0 +1,29 @@
+<div class="dialog-contents" style="height:310px">
+	<form style="height:310px;overflow-y:hidden;">
+		<div>
+			<div class="form-inline" style="width:90%; margin:auto">
+				<div style="text-align: center">
+					<h3>DEACTIVATE PROFILE</h3>
+					<div>
+						<h5>This action cannot be undone. Your profile will permanently deactivated, and all shared links will be disabled.</h5>
+						<h5>You also agree to our <a href="https://serify.org/#/terms" target="_blank">Terms of Use</a> regarding deactivation.</h5>
+					</div>
+				</div>
+				<div class="form-group" style="margin-bottom: 5px; width: 100%;">
+					<center>
+						<img ng-show="hideLoading" src="image/spinner.gif" class="spinner fadeFast">
+						<div ng-show="!hideLoading" style="text-align: center; position:relative; width: 100%; height: 49px; padding:5px 0px;">
+							<div class="form-group" style="width:100%;">
+								<input type="text" class="form-control" id="reason" ng-model="reason" placeholder="Deactivation Reason" style="width:100%;">
+							</div>
+							<br>
+							<button id="signupButton" style="max-width:100px; margin: 0px;" class="btn btn-info fadeFast" ng-click="CancelButtonClick()">CANCEL</button>
+							<button ng-disabled="!reason" id="signinButton" style="max-width:100px; margin: 10px;" type="submit" class="btn btn-danger fadeFast" ng-click="DeactivateButtonClick()">DEACTIVATE</button>
+						</div>
+					</center>
+				</div>
+			</div>
+		</div>
+		<div ng-show="alert" style="margin-top:50px; text-align: center" uib-alert ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert()" dismiss-on-timeout="5000">{{alert.msg}}</div>
+	</form>
+</div>

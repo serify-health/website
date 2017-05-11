@@ -7,12 +7,11 @@ angular.module(SERIFYAPP).controller('viewController', [
 	'loginStatusProvider',
 	'pageService',
 	'userManager',
-	'ngDialog',
 	'utilities',
 	'linkManager',
 	'eventHandler',
 	'storageProviderService',
-function($scope, $routeParams, loginStatusProvider, pageService, userManager, ngDialog, utilities, linkManager, eventHandler, storageProviderService) {
+function($scope, $routeParams, loginStatusProvider, pageService, userManager, utilities, linkManager, eventHandler, storageProviderService) {
 	eventHandler.interaction('PublicView', 'View', null, $routeParams.base64hash);
 	var storageProvider = storageProviderService.GetStorageProvider('announcements');
 	$scope.hideBanner = true;
