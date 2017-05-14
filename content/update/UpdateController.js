@@ -63,6 +63,7 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, pageService, 
 	var signaturePad = new SignaturePad(canvas);
 
 	$scope.SubmitVerificationsButtonClick = function() {
+		$scope.alert = null;
 		eventHandler.interaction('Verifications', 'SubmitAttempt');
 		if($scope.verifications.length < 1) {
 			$scope.alert = { type: 'danger', msg: 'Add a test to verify.' };
@@ -97,7 +98,14 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, pageService, 
 			clinicName: $scope.clinicName,
 			signature: signaturePad.toDataURL()
 		};
+		var hasVerification = {};
 		var verifications = $scope.verifications.filter(function(v){ return v.Name; }).map(function(v) {
+			if (hasVerification[v.Name]) {
+				$scope.alert = { type: 'danger', msg: '' + v.Name + ' has been listed more than once.' };
+				return;
+			}
+
+			hasVerification[v.Name] = true;
 			return {
 				Date: v.Month + '/' + v.Year,
 				Name: v.Name,
@@ -105,6 +113,12 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, pageService, 
 				Status: v.Status
 			};
 		});
+
+		if ($scope.alert) {
+			$anchorScroll();
+			return;
+		}
+
 		eventHandler.interaction('Verifications', 'Submitted');
 		var verificationPromise = userManager.VerificationRequest(verifications, userDetails)
 		.then(function(){
