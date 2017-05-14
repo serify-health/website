@@ -54,7 +54,7 @@
 
 	</head>
 	<body ng-controller="navController" ng-style="isPublicProfile() ? {'background': '#f5f8fa'} : {'background': 'white'}">
-		<nav class="navbar navbar-default">
+		<nav ng-cloak ng-show="finishedLoading" class="navbar navbar-default">
 	        <div ng-cloak class="container-fluid">
 	            <!-- Brand and toggle get grouped for better mobile display -->
 	            <div class="navbar-header custom-navbar">
@@ -63,15 +63,16 @@
 	                </a>
 	                <ul class="visible-xs" style="list-style: none;">
 	                    <li class="pull-right">
-	                        <button ng-cloak id="signInButton" type="button" class="btn btn-warning navbar-btn navbar-right" ng-click="SignInButtonClick()">{{authentication.UserAuthenticated ? 'Sign out' : 'Sign in'}}</button>
+	                        <button ng-cloak ng-show="authentication.UserAuthenticated" id="signInButton" type="button" class="btn btn-warning navbar-btn navbar-right" ng-click="SignInButtonClick()">Sign out</button>
+							<button ng-cloak ng-show="!authentication.UserAuthenticated" id="signInButton" type="button" class="btn btn-warning navbar-btn navbar-right" ng-click="SignInButtonClick()">Sign in</button>
 	                    </li>
-	                    <li ng-show="authentication.IsAdmin && authentication.UserAuthenticated && !isActive('/admin')" class="pull-right">
+	                    <li ng-cloak ng-show="authentication.IsAdmin && authentication.UserAuthenticated && !isActive('/admin')" class="pull-right">
 	                        <button id="adminButton" type="button" class="btn btn-warning navbar-btn" ng-click="AdminButtonClick()">Admin</button>
 	                    </li>
-	                    <li class="pull-right" ng-hide="isActive('/')">
+	                    <li ng-cloak class="pull-right" ng-hide="isActive('/')">
 	                        <button id="profileButton" type="button" class="btn btn-warning navbar-btn" ng-click="ProfileButtonClick()">Profile</button>
 	                    </li>
-	                    <li ng-show="authentication.UserAuthenticated && isActive('/')" class="pull-right">
+	                    <li ng-cloak ng-show="authentication.UserAuthenticated && isActive('/')" class="pull-right">
 	                        <button id="publicProfileButton" type="button" class="btn btn-info navbar-btn" ng-click="PublicProfileButtonClick()">Public Profile</button>
 	                    </li>
 	                </ul>
@@ -80,16 +81,17 @@
 	            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	                <ul class="nav navbar-nav navbar-right">
 	                    <li class="pull-right">
-	                        <button ng-cloak id="signInButton" type="button" class="btn btn-warning navbar-btn" ng-click="SignInButtonClick()">{{authentication.UserAuthenticated ? 'Sign out' : 'Sign in'}}</button>
+	                        <button ng-cloak ng-show="authentication.UserAuthenticated" id="signInButton" type="button" class="btn btn-warning navbar-btn navbar-right" ng-click="SignInButtonClick()">Sign out</button>
+	                        <button ng-cloak ng-show="!authentication.UserAuthenticated" id="signInButton" type="button" class="btn btn-warning navbar-btn navbar-right" ng-click="SignInButtonClick()">Sign in</button>
 	                    </li>
 	                    <li ng-show="authentication.IsAdmin && authentication.UserAuthenticated && !isActive('/admin')" class="pull-right">
-	                        <button id="adminButton" type="button" class="btn btn-warning navbar-btn" ng-click="AdminButtonClick()">Admin</button>
+	                        <button ng-cloak id="adminButton" type="button" class="btn btn-warning navbar-btn" ng-click="AdminButtonClick()">Admin</button>
 	                    </li>
 	                    <li class="pull-right" ng-hide="isActive('/')">
-	                        <button id="profileButton" type="button" class="btn btn-warning navbar-btn" ng-click="ProfileButtonClick()">Profile</button>
+	                        <button ng-cloak id="profileButton" type="button" class="btn btn-warning navbar-btn" ng-click="ProfileButtonClick()">Profile</button>
 	                    </li>
 	                    <li ng-show="authentication.UserAuthenticated && isActive('/')" class="pull-right">
-	                        <button id="publicProfileButton" type="button" class="btn btn-info navbar-btn" ng-click="PublicProfileButtonClick()">Public Profile</button>
+	                        <button ng-cloak id="publicProfileButton" type="button" class="btn btn-info navbar-btn" ng-click="PublicProfileButtonClick()">Public Profile</button>
 	                    </li>
 	                </ul>
 	            </div>

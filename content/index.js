@@ -102,6 +102,7 @@ angular.module(SERIFYAPP).controller('navController', [
 	'linkManager',
 	'logoutService',
 function($scope, $rootScope, $routeParams, $location, $uibModal, loginStatusProvider, eventHandler, pageService, userManager, ngDialog, utilities, linkManager, logoutService) {
+	$scope.finishedLoading = false;
 	// Check current location
 	$scope.isActive = function(viewLocation) {
 		return viewLocation === pageService.GetCurrentPage();
@@ -155,7 +156,12 @@ function($scope, $rootScope, $routeParams, $location, $uibModal, loginStatusProv
 				$rootScope.authentication.complete = true;
 			});
 		})
-		.catch(function(f){ console.log(f); });
+		.catch(function(f){ console.log(f); })
+		.then(function() {
+			$scope.$apply(function() {
+				$scope.finishedLoading = true;
+			});
+		});
 	}
 
 	$scope.ShowFeedBackFormClick = function () {
