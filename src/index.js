@@ -60,7 +60,14 @@ let users = [
 		UserId: localUserId,
         userData: {
             username: 'Tester Username',
-            profile: 'This is the test profile'
+            profile: 'This is the test profile',
+            demographics: {
+                firstName: 'Unit',
+                lastName: 'Tester',
+                selectedDobDay: 1,
+                selectedDobMonth: 1,
+                selectedDobYear: 2000
+            }
         },
         Verifications: verifications,
         verifications: verifications,

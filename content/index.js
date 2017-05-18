@@ -102,6 +102,7 @@ angular.module(SERIFYAPP).controller('navController', [
 	'linkManager',
 	'logoutService',
 function($scope, $rootScope, $routeParams, $location, $uibModal, loginStatusProvider, eventHandler, pageService, userManager, ngDialog, utilities, linkManager, logoutService) {
+	$scope.finishedLoading = false;
 	// Check current location
 	$scope.isActive = function(viewLocation) {
 		return viewLocation === pageService.GetCurrentPage();
@@ -155,31 +156,14 @@ function($scope, $rootScope, $routeParams, $location, $uibModal, loginStatusProv
 				$rootScope.authentication.complete = true;
 			});
 		})
-		.catch(function(f){ console.log(f); });
+		.catch(function(f){ console.log(f); })
+		.then(function() {
+			$scope.$apply(function() {
+				$scope.finishedLoading = true;
+			});
+		});
 	}
 
-	$scope.ShowFeedBackFormClick = function () {
-		eventHandler.interaction('Feedback', 'ShowForm');
-		var modalInstance = $uibModal.open({
-			templateUrl: 'feedback/feedbackForm.html',
-			controller: 'feedbackController',
-			resolve: {
-				form: function() {
-					return {
-						userAuthenticated: $rootScope.authentication.UserAuthenticated,
-						username: $rootScope.authentication.username,
-						email: $rootScope.authentication.email
-					};
-				}
-			}
-		});
-
-		modalInstance.result.then(function (selectedItem) {
-			$scope.selected = selectedItem;
-		}, function () {
-			console.log('Modal dismissed at: ' + new Date());
-		});
-	};
 	$rootScope.SignInButtonClick = function() {
 		if($rootScope.authentication.UserAuthenticated) {
 			eventHandler.interaction('Profile', 'Logout');
@@ -222,15 +206,6 @@ function($scope, $rootScope, $routeParams, $location, $uibModal, loginStatusProv
 			pageService.NavigateToPage('view/' + link);
 		});
 	};
-	$scope.PrivacyButtonClick = function() {
-		eventHandler.interaction('Navigation', 'Policy');
-		pageService.NavigateToPage('policy');
-	};
-	$scope.TermsOfServiceButtonClick = function() {
-		eventHandler.interaction('Navigation', 'Terms');
-		pageService.NavigateToPage('terms');
-	};
-	$scope.copyRightDate = new Date().getFullYear();
 }]);
 
 var mainApp = document.getElementsByTagName('body');
