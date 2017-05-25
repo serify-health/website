@@ -357,12 +357,13 @@ h1 {
 	margin: auto;
 }
 
-.footer .footer-left {
+.footer .footer-center {
 	height: auto;
 	margin: auto;
+	text-align: center;
 }
 
-.footer .footer-left p{
+.footer .footer-center p{
 	color:  #CCCCCC;
 	font-size: 12px;
 	margin: 0;
