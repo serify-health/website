@@ -7,7 +7,7 @@
 
         <div style="text-align: center">
             <h4>Private Medical Release Information</h4>
-            This information is required to verify released verifications. Anything entered below <strong>will not</strong> be shared on your public profile, unless explicitly released by you.
+            This information is required to verify released verifications. Anything entered below <strong>will not</strong> be shared on your public profile, unless explicitly specified below.
         </div>
         <br>
         <div>
@@ -33,6 +33,42 @@
             </table>
         </div>
 
+        <div style="text-align: center">
+            <h5>Optional Release</h5>
+        </div>
+        <div>
+            <style>
+                .release-botton-true {
+                    border-color: #46b8da;
+                    background-color: #5bc0de;
+                    color: white;
+                }
+                .release-botton-true:focus {
+                    border-color: #46b8da;
+                    background-color: #5bc0de;
+                    color: white;
+                }
+            </style>
+            <table ng-show="release" id="medicalReleaseTable"class="table table-bordered table-hover">
+                <tbody>
+                    <tr>
+                        <td class="text-center">Name release</td>
+                        <td class="text-center">
+                            <button style="margin: 2px 0px" ng-click="toggleRelease('firstName')" class="btn btn-default" ng-class="'release-botton-' + release.firstName">First</button>
+                            <button style="margin: 2px 0px" ng-click="toggleRelease('middleName')" class="btn btn-default" ng-class="'release-botton-' + release.middleName">Middle</button>
+                            <button style="margin: 2px 0px" ng-click="toggleRelease('lastName')" class="btn btn-default" ng-class="'release-botton-' + release.lastName">Last</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">Age release</td>
+                        <td class="text-center">
+                            <button ng-click="toggleRelease('age')" class="btn btn-default" ng-class="'release-botton-' + release.age">Show Age</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
         <hr style="border: 2px solid #000000;">
 
         <div style="text-align: center">
@@ -42,10 +78,16 @@
         <br>
         <div class="container">
             <form class="form-horizontal" style="width: 100%;">
-                <div class="form-group">
+                <div ng-show="(!release.firstName && !release.middleName && !release.lastName) || !formattedReleaseName()" class="form-group">
                     <label for="username" class="col-sm-1 col-md-3 control-label">Profile name </label>
                     <div class="col-sm-11 col-md-6">
                         <input id="nameTextBox" type="text" class="form-control" id="username" ng-model="username" placeholder="Anonymous">
+                    </div>
+                </div>
+                <div ng-show="(release.firstName || release.middleName || release.lastName) && formattedReleaseName()" class="form-group">
+                    <label for="username" class="col-sm-1 col-md-3 control-label">Profile name </label>
+                    <div class="col-sm-11 col-md-6">
+                        {{ formattedReleaseName() }}
                     </div>
                 </div>
                 <div class="form-group">
@@ -67,7 +109,7 @@
             </div>
             <div class="hidden-lg visible-xs" style="text-align:center">
                 <br>
-                <button ng-click="DeactiveProfileButtonClick()" class="btn btn-danger">Deactivate Profile</button>
+                <button ng-click="DeactiveProfileButtonClick()" class="btn btn-default btn-sm" style="border-color: #d9534f; color:#d9534f;">Deactivate Profile</button>
             </div>
         </div>
     </div>

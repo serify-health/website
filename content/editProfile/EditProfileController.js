@@ -23,6 +23,8 @@ function($scope, pageService, userManager, eventHandler, ngDialog, logoutService
 		selectedDobMonth: null,
 		selectedDobDay: null
 	};
+	$scope.release = {};
+	$scope.formattedReleaseName = null;
 
 	$scope.closeAlert = function(){ $scope.alert = null; };
 	/******** SignInButton Block ********/
@@ -42,12 +44,36 @@ function($scope, pageService, userManager, eventHandler, ngDialog, logoutService
 					$scope.userProfile = (user.userData || {}).profile;
 					$scope.username = (user.userData || {}).username;
 					$scope.demographics = (user.userData || {}).demographics || {};
+					/* jshint -W041 */
+					$scope.release = {
+						firstName: $scope.demographics.releaseFirstName || $scope.demographics.releaseFirstName == null,
+						middleName: $scope.demographics.releaseMiddleName,
+						lastName: $scope.demographics.releaseLastName,
+						age: $scope.demographics.releaseAge || $scope.demographics.releaseAge == null
+					};
+					/* jshint +W041 */
 					$scope.isLoading = false;
 				});
 			});
 			return Promise.all([usernamemetadataPromise]).catch(function(f){ console.log(f); });
 		}
 	}
+
+	$scope.toggleRelease = function(property) {
+		$scope.release[property] = !$scope.release[property];
+	};
+
+	$scope.formattedReleaseName = function () {
+		var releaseName = '';
+		if ($scope.release.firstName) { releaseName += $scope.demographics.firstName + ' '; }
+		if ($scope.release.middleName && $scope.demographics.middleName && $scope.demographics.middleName.trim().length !== 0) { releaseName += $scope.demographics.middleName + ' '; }
+		if ($scope.release.lastName) { releaseName += $scope.demographics.lastName + ' '; }
+		if ($scope.release.age) {
+			var formattedAge = moment().diff(moment($scope.demographics.selectedDobYear + '-' + $scope.demographics.selectedDobMonth + '-' + $scope.demographics.selectedDobDay, 'YYYY-MM-DD'), 'years');
+			releaseName += '(' + formattedAge + ')';
+		}
+		return releaseName.trim().length === 0 ? null : releaseName;
+	};
 
 	$scope.CancelButtonClick = function() {
 		eventHandler.interaction('Profile', 'CancelEdit');
@@ -74,8 +100,13 @@ function($scope, pageService, userManager, eventHandler, ngDialog, logoutService
 			selectedDobMonth: $scope.demographics.selectedDobMonth,
 			selectedDobDay: $scope.demographics.selectedDobDay,
 			firstName: $scope.demographics.firstName,
-			lastName: $scope.demographics.lastName
+			lastName: $scope.demographics.lastName,
+			releaseFirstName: $scope.release.firstName || false,
+			releaseMiddleName: $scope.release.middleName || false,
+			releaseLastName: $scope.release.lastName || false,
+			releaseAge: $scope.release.age || false
 		};
+		console.log(demographics);
 		if ($scope.demographics.middleName && $scope.demographics.middleName.trim().length !== 0) {
 			demographics.middleName = $scope.demographics.middleName;
 		}
