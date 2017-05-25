@@ -36,5 +36,9 @@ function($scope, $rootScope, $uibModal, eventHandler, pageService) {
 		eventHandler.interaction('Navigation', 'Terms');
 		pageService.NavigateToPage('terms');
 	};
+	$scope.AboutButtonClick = function() {
+		eventHandler.interaction('Navigation', 'About');
+		pageService.NavigateToPage('about');
+	};
 	$scope.copyRightDate = new Date().getFullYear();
 }]);
