@@ -105,11 +105,6 @@
 
 		<footer class="footer" ng-controller="footerController">
 		    <div class="footer-container">
-		        <div class="footer-right">
-		            <a href="https://www.facebook.com/Serify-1820992791522117/" target="_blank"><i class="fa fa-facebook"></i></a>
-		            <!-- <a href="https://twitter.com/serifyhealth"><i class="fa fa-twitter"></i></a> -->
-		            <!-- uncomment this when the twitter page is ready -->
-		        </div>
 		        <div class="footer-center">
 		            <p class="footer-links">
 		                <a ng-click="ShowFeedBackFormClick()">Contact Us</a>
@@ -120,8 +115,15 @@
 		                ·
 		                <a ng-click="AboutButtonClick()">About Serify</a>
 		            </p>
-		            <p>Serify &copy; {{ copyRightDate }}</p>
 		        </div>
+				<div class="footer-center">
+		            <a class="social-icon" href="https://www.facebook.com/Serify-1820992791522117/" target="_blank"><i class="fa fa-facebook"></i></a>
+		            <!-- <a href="https://twitter.com/serifyhealth"><i class="fa fa-twitter"></i></a> -->
+		            <!-- uncomment this when the twitter page is ready -->
+		        </div>
+				<div class="footer-center">
+					<p>Serify &copy; {{ copyRightDate }}</p>
+				</div>
 		    </div>
 		</footer>
 
