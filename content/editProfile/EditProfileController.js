@@ -61,6 +61,7 @@ function($scope, pageService, userManager, eventHandler, ngDialog, logoutService
 
 	$scope.toggleRelease = function(property) {
 		$scope.release[property] = !$scope.release[property];
+		eventHandler.interaction('Profile', $scope.release[property] ? 'ShowReleaseInfo' : 'HideReleaseInfo', property);
 	};
 
 	$scope.formattedReleaseName = function () {
