@@ -109,7 +109,7 @@ function($scope, $rootScope, $routeParams, $location, $uibModal, loginStatusProv
 	};
 
 	$scope.isPublicProfile = function() {
- 		return pageService.GetCurrentPage().includes('/view');
+ 		return pageService.GetCurrentPage().indexOf('/view') !== -1;
  	};
 
 	/******** SignInButton Block ********/

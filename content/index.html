@@ -53,7 +53,7 @@
 		<!-- End Google Analytics -->
 
 	</head>
-	<body ng-controller="navController" style="background: #f5f8fa">
+	<body ng-controller="navController" style="background: white;">
 		<nav class="navbar navbar-default">
 	        <div ng-cloak class="container-fluid">
 	            <!-- Brand and toggle get grouped for better mobile display -->
@@ -63,8 +63,8 @@
 	                </a>
 	                <ul class="visible-xs" style="list-style: none;">
 	                    <li class="pull-right">
-	                        <button ng-cloak ng-show="authentication.UserAuthenticated" id="signInButton" type="button" class="btn btn-warning navbar-btn navbar-right" ng-click="SignInButtonClick()">Sign out</button>
-							<button ng-cloak ng-show="!authentication.UserAuthenticated" id="signInButton" type="button" class="btn btn-warning navbar-btn navbar-right" ng-click="SignInButtonClick()">Sign in</button>
+	                        <button ng-cloak ng-show="authentication.UserAuthenticated" id="signInButton" style="margin-right: 15px;" type="button" class="btn btn-warning navbar-btn navbar-right" ng-click="SignInButtonClick()">Sign out</button>
+							<button ng-cloak ng-show="!authentication.UserAuthenticated" id="signInButton" style="margin-right: 15px;" type="button" class="btn btn-warning navbar-btn navbar-right" ng-click="SignInButtonClick()">Sign in</button>
 	                    </li>
 	                    <li ng-cloak ng-show="authentication.IsAdmin && authentication.UserAuthenticated && !isActive('/admin')" class="pull-right">
 	                        <button id="adminButton" type="button" class="btn btn-warning navbar-btn" ng-click="AdminButtonClick()">Admin</button>

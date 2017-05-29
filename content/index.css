@@ -340,7 +340,6 @@ h1 {
 
 #main {
 	padding-top: 20px;
-	background-color: white;
 }
 
 /********** FOOTER **********/
@@ -515,6 +514,9 @@ h1 {
 	}
 	/* Nav Bar */
 	#loginContainer {
+		width: 90%;
+	}
+	.ui {
 		width: 90%;
 	}
 	/* Footer */
