@@ -173,6 +173,11 @@ function($scope, $routeParams, loginStatusProvider, eventHandler, pageService, u
                         $scope.alert = { type: 'danger', msg: 'Please check your username and password and sign in again.'};
                     });
                     break;
+                case 'NotAuthorizedException':
+                    $scope.$apply(function(){
+                        $scope.alert = { type: 'danger', msg: 'Account has been deactivated, contact us to reactivate.'};
+                    });
+                    break;
                 default:
                     $scope.$apply(function(){
                         $scope.alert = { type: 'danger', msg: 'Failed to sign in with user.'};
