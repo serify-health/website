@@ -11,9 +11,12 @@ angular.module(SERIFYAPP).service('userManager', [ 'apiService', 'loginStatusPro
 	};
 
 	this.CaptureUserIdentity = function(data) {
-		return apiService.getPromise('PUT', '/user', data)
+		return this.GetUserIdPromise()
+		.then(function(userId) {
+			return apiService.getPromise('PUT', '/user', data);
+		})
 		.then(function(result) {
-			console.log(JSON.stringify({Title: 'User Update Result', Result: result.toString(), Detail: result}, null, 2));
+			console.log(JSON.stringify({ Title: 'User Identity Captured', Result: result.toString(), Detail: result, userId: this.UserId }, null, 2));
 			return result;
 		})
 		.catch(function(failure) {
