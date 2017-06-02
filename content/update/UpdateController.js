@@ -120,8 +120,18 @@ function($scope, $anchorScroll, $routeParams, loginStatusProvider, pageService, 
 		}
 
 		eventHandler.interaction('Verifications', 'Submitted');
-		var verificationPromise = userManager.VerificationRequest(verifications, userDetails)
-		.then(function(){
+		loginStatusProvider.validateAuthenticationPromise()
+		.then(function(authData) {
+			var data = JSON.parse(atob(authData.UserId.split('.')[1]));
+			return userManager.CaptureUserIdentity({
+				cognitoSub: data.sub,
+				email: data['cognito:username']
+			});
+		})
+		.then(function() {
+			return userManager.VerificationRequest(verifications, userDetails);
+		})
+		.then(function() {
 			$scope.$apply(function(){
 				$scope.alert = { type: 'success', msg: 'Verifications Submitted.' };
 			});
