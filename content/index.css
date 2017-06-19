@@ -285,7 +285,7 @@ h1 {
 	width: 100px;
 	height: auto;
 	margin-right: 100px;
-	/*margin-bottom: 20px;*/
+	margin-top: 20px;
 }
 
 #howText {
@@ -715,24 +715,24 @@ section {
 		text-align: center;
 	}
 	.header-content {
-		margin-left: 10%;
-		margin-right: 10%;
+		margin-left: 7.5%;
+		margin-right: 7.5%;
 	}
 	#headerTitle {
 		font-size: 5rem;
 		text-align: center;
 	}
 	#headerDescription {
-		font-size: 2.5rem;
+		font-size: 2.25rem;
 		margin-bottom: 0;
 		text-align: center;
 	}
 	#headerIcon {
 		width: 75px;
 		height: auto;
-		margin-bottom: 10px;
 		text-align: center;
 		margin: auto;
+		margin-top: 20px;
 	}
 	.how-heading {
 		font-size: 1.75rem;
