@@ -3,6 +3,9 @@ var TESTS = (function(){
         "HIV": {
             name: "HIV"
         },
+        "HIVLoad": {
+            name: "Undetectable HIV Viral Load"
+        },
         "Gonorrhea": {
             name: "Gonorrhea"
         },
