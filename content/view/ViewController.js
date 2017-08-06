@@ -42,7 +42,7 @@ function($scope, $routeParams, loginStatusProvider, pageService, userManager, ut
 				$scope.profile = userData.profile;
 				var verifications = user.verifications || [];
 				verifications.map(function(verification) {
-					verification.Inverse = verification.Name !== 'HPV' && verification.Name !== 'PrEP';
+					verification.Inverse = verification.Name !== 'HPV' && verification.Name !== 'PrEP' && verification.Name !== 'HIVLoad';
 				});
 				var uniqueVerificationsMap = {};
 				verifications.filter(function(v) { return TESTS[v.Name] && v.Status === 'Verified'; }).map(function(v){

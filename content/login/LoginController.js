@@ -23,7 +23,7 @@ function($scope, pageService, userManager, linkManager, eventHandler) {
 					$scope.username = (user.userData || {}).username;
 					var originalVerifications = (user || {}).Verifications || [];
 					var verifications = originalVerifications.filter(function(v) { return TESTS[v.Name]; }).map(function(verification) {
-						verification.Inverse = verification.Name !== 'HPV' && verification.Name !== 'PrEP';
+						verification.Inverse = verification.Name !== 'HPV' && verification.Name !== 'PrEP' && verification.Name !== 'HIVLoad';
 						verification.Name = TESTS[verification.Name || verification.name].name;
 						return verification;
 					});
